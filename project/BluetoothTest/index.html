@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="index">
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hoge</title>
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+  
+  <!-- Frameworks -->
+  <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
+  <script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
+  <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+  <!-- Angular modules -->
+  <script src="./bluetooth_module.js"></script>
+</head>
+<body>
+  <ul ng-controller="BluetoothSelectController">
+    <li ng-repeat="device in devices">
+      <span>Address: {{device.address}}</span>
+      <p>Name: {{device.name}}</p>
+      <button class="btn btn-small btn-info" ng-click="onSelectDevice(device.address)">Select</button>
+    </li>
+    <li>
+      <button class="btn btn-success" ng-click="updateScannedDevices()">Update device list</button>
+    </li>
+    <li>
+      <p>{{selectedDevice.name}}</p>
+    </li>
+  </ul>
+
+  <div ng-controller="BluetoothConnectionController">
+    <form class="simple-form">
+      <input type="text"></input>
+      <input type="button" ng-click="send()" value="Send"></input>
+    </form>
+  </div>
+</body>
+</html>
