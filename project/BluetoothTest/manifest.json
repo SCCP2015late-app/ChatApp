@@ -20,5 +20,11 @@
   "bluetooth": {
     "uuids": [ "180D" ],
     "socket": true
+  },
+  "sockets": {
+    "udp": {
+      "bind" : "*",
+      "send" : "*"
+    }
   }
 }

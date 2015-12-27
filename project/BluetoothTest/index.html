@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="index">
+<html ng-app="message">
 <head>
   <meta charset="utf-8">
   
@@ -14,28 +14,43 @@
   <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
 
   <!-- Angular modules -->
-  <script src="./bluetooth_module.js"></script>
+  <!--<script src="./bluetooth_module.js"></script>-->
+  <script src="./udp_module.js"></script>
 </head>
 <body>
-  <ul ng-controller="BluetoothSelectController">
-    <li ng-repeat="device in devices">
-      <span>Address: {{device.address}}</span>
-      <p>Name: {{device.name}}</p>
-      <button class="btn btn-small btn-info" ng-click="onSelectDevice(device.address)">Select</button>
-    </li>
-    <li>
-      <button class="btn btn-success" ng-click="updateScannedDevices()">Update device list</button>
-    </li>
-    <li>
-      <p>{{selectedDevice.name}}</p>
-    </li>
-  </ul>
+  <!--<ul ng-controller="BluetoothSelectController">-->
+  <!--  <li ng-repeat="device in devices">-->
+  <!--    <span>Address: {{device.address}}</span>-->
+  <!--    <p>Name: {{device.name}}</p>-->
+  <!--    <button class="btn btn-small btn-info" ng-click="onSelectDevice(device.address)">Select</button>-->
+  <!--  </li>-->
+  <!--  <li>-->
+  <!--    <button class="btn btn-success" ng-click="updateScannedDevices()">Update device list</button>-->
+  <!--  </li>-->
+  <!--  <li>-->
+  <!--    <p>{{selectedDevice.name}}</p>-->
+  <!--  </li>-->
+  <!--</ul>-->
 
-  <div ng-controller="BluetoothConnectionController">
+  <!--<div ng-controller="BluetoothConnectionController">-->
+  <!--  <form class="simple-form">-->
+  <!--    <input type="text"></input>-->
+  <!--    <input type="button" ng-click="send()" value="Send"></input>-->
+  <!--  </form>-->
+  <!--</div>-->
+  
+  <div ng-controller="UdpConnectionController">
     <form class="simple-form">
-      <input type="text"></input>
-      <input type="button" ng-click="send()" value="Send"></input>
+      <input type="text" name="message" ng-model="newMessage"></input>
+      <input type="button" ng-click="onSend()" value="UDP Send"></input>
     </form>
+    
+    <ul>
+      <li ng-repeat="message in messageRepo">
+        <span>Socket ID: {{message.socketId}}</span>
+        <p>Data: {{message.data}}</p>
+      </li>
+    </ul>
   </div>
 </body>
 </html>
