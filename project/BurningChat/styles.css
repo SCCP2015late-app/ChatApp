@@ -8,6 +8,21 @@ li {
   margin: 0px;
 }
 
+#group_header img {
+  padding: 10px;
+  float: left;
+}
+
+#group_header p {
+  padding-top: 20px;
+  left: 70px;
+  width: 170px;
+  height: 70px;
+  float: right;
+  top: 0;
+  text-align: left;
+}
+
 #contents {
   height: 100%;
   background: #FFF8E1;
@@ -16,7 +31,7 @@ li {
 #navigation_panel {
   color: #EFEBE9;
   background: #FF6F00;
-  width: 200px;
+  width: 240px;
   float: left;
   top: 0;
   position: fixed;
@@ -32,7 +47,7 @@ li {
   width: 100%;
   top: 0;
   right: 0;
-  left: 200px;
+  left: 240px;
   float: right;
   margin: 0 auto;
 }
