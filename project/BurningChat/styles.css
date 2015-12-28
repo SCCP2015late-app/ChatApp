@@ -56,32 +56,3 @@ li {
   color: #3E2723;
   background: #FFECB3;
 }
-
-.message-form{
-  background-color:#fff;
-  border-top:1px solid #ddd
-}
-.message-form button,
-.message-form label,
-.message-form textarea{
-  background-color:transparent;
-  border:none!important;
-  box-shadow:none!important;
-  outline:0!important
-}
-.message-form textarea{
-  box-sizing:content-box;
-  padding:8px 0 8px 8px;
-  min-height:36px;
-  max-height:400px;
-  resize:none
-}
-.message-form 
-.file-select-button{
-  display:-webkit-flex;
-  display:-ms-flexbox;
-  display:flex;
-  -webkit-align-items:center;
-  -ms-flex-align:center;
-  align-items:center
-}
