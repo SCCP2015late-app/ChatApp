@@ -51,6 +51,14 @@ app.controller('UdpConnectionController', function($scope) {
     console.log(info.socketId + " : " + buffer_to_string(info.data));
   };
 
+  $scope.interfaces = {};
+
+  var networkInterfacesCallback = function(interfaces) {
+    $scope.interfaces = interfaces;
+  };
+  
   chrome.sockets.udp.onReceive.addListener(receiveCallback);
+  
+  chrome.system.network.getNetworkInterfaces(networkInterfacesCallback);
 });
 

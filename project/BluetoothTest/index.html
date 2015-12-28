@@ -38,8 +38,31 @@
   <!--    <input type="button" ng-click="send()" value="Send"></input>-->
   <!--  </form>-->
   <!--</div>-->
-  
+  <script type="text/ng-template" id="T_inProgress">
+    <div class="modal-header">
+        <h3>
+            <span ng-show="remotingProgress < 100">処理中</span>
+            <span ng-show="remotingProgress == 100">完了</span>
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div>{{remotingStatus}}</div>
+        <progressbar ng-class="(remotingProgress < 100) ? 'progress-striped active' : 'progress'" value="remotingProgress" type="success"></progressbar>
+    </div>
+    <div class="modal-footer" ng-show="remotingProgress == 100">
+        <button type="button" class="btn btn-success" ng-click="$close()">閉じる</button>
+    </div>
+  </script>
+
   <div ng-controller="UdpConnectionController">
+    <h1>Network Interfaces</h1>
+    <ul>
+      <li ng-repeat="if in interfaces">
+        <span>Name: {{if.name}}</span>
+        <p>Address: {{if.address}}</p>
+      </li>
+    </ul>
+    
     <form class="simple-form">
       <input type="text" name="message" ng-model="newMessage"></input>
       <input type="button" ng-click="onSend()" value="UDP Send"></input>

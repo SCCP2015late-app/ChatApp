@@ -26,5 +26,8 @@
       "bind" : "*",
       "send" : "*"
     }
-  }
+  },
+  "permissions": [
+    "system.network"
+  ]
 }
