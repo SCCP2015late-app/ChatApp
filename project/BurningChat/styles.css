@@ -1,1 +1,87 @@
 /* CSS file placeholder. */
+ul {
+  list-style-type: none;
+  margin: 0px;
+}
+
+li {
+  margin: 0px;
+}
+
+#contents {
+  height: 100%;
+  background: #FFF8E1;
+}
+
+#navigation_panel {
+  color: #EFEBE9;
+  background: #FF6F00;
+  width: 200px;
+  float: left;
+  top: 0;
+  position: fixed;
+  height: 100%;
+  margin: 0 auto;
+}
+
+#message_area {
+  color: #3E2723;
+  background: #FFF8E1;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 200px;
+  float: right;
+  margin: 0 auto;
+}
+
+#time_line {
+  color: #3E2723;
+  background: #FFF8E1;
+  overflow-y: scroll;
+  float: top;
+  height: 100%;
+  width: 100%;
+  bottom: 0;
+  margin: 0 auto;
+}
+
+#mention_form {
+  position: fixed;
+	bottom: 0px;
+	height: 48px;
+	width: 100%;
+  color: #3E2723;
+  background: #FFECB3;
+}
+
+.message-form{
+  background-color:#fff;
+  border-top:1px solid #ddd
+}
+.message-form button,
+.message-form label,
+.message-form textarea{
+  background-color:transparent;
+  border:none!important;
+  box-shadow:none!important;
+  outline:0!important
+}
+.message-form textarea{
+  box-sizing:content-box;
+  padding:8px 0 8px 8px;
+  min-height:36px;
+  max-height:400px;
+  resize:none
+}
+.message-form 
+.file-select-button{
+  display:-webkit-flex;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-align-items:center;
+  -ms-flex-align:center;
+  align-items:center
+}
