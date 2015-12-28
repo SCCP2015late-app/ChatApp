@@ -50,9 +50,9 @@ li {
 
 #mention_form {
   position: fixed;
-	bottom: 0px;
-	height: 48px;
-	width: 100%;
+  bottom: 0px;
+  height: 48px;
+  width: 100%;
   color: #3E2723;
   background: #FFECB3;
 }
