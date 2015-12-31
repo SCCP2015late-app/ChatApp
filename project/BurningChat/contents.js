@@ -34,5 +34,5 @@ var app = angular.module('burning', [], function($provide) {
 });
 
 app.controller('NavigationPanelController', function($scope) {
-  $scope.group = new ChatGroup(GROUP_ID, GROUP_NAME, members);
+  $scope.group = new ChatGroup(GROUP_ID, GROUP_NAME, MEMBERS);
 });
