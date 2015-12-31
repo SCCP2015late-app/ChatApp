@@ -1,4 +1,3 @@
-"use strict";
 // Code for Debug[START]
 const GROUP_NAME = "mogemoge group";
 const GROUP_ID = 1919;
