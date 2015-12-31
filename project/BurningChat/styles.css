@@ -24,6 +24,20 @@
   font-family: Georgia;
 }
 
+#group_members_list h3 {
+  padding: 10px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#group_members_list {
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 6px -2px #444;
+  background: #FF8F00;
+  margin: 6px;
+}
+
 #contents {
   height: 100%;
   background: #FFF8E1;
