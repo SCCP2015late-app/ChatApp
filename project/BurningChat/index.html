@@ -9,6 +9,7 @@
   <script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
   
+  <script type="text/javascript" src="chat_group.js"></script>
   <script type="text/javascript" src="main.js"></script>
   <script type="text/javascript" src="contents.js"></script>
 </head>
@@ -18,8 +19,8 @@
   <div id="contents">
     <div id="navigation_panel" ng-controller="NavigationPanelController">
       <div id="group_header">
-        <h2>{{group.name[0]}}</h2>
-        <p>{{group.name}}</p>
+        <h2>{{group.getName()[0]}}</h2>
+        <p>{{group.getName()}}</p>
       </div>
     </div>
     <div id="message_area">
