@@ -9,6 +9,10 @@ class ChatGroup {
   getName() {
     return this.name;
   }
+  
+  getMemberArray() {
+    return this.memberArray;
+  }
 }
 
 class RegistrationItem {
@@ -16,12 +20,28 @@ class RegistrationItem {
     this.name = name;
     this.email = email;
   }
+  
+  getName() {
+    return this.name;
+  }
+  
+  getEmail() {
+    return this.email;
+  }
 }
 
 class BaseUser {
   constructor(id, regItem) {
     this.id = id;
     this.regItem = regItem;
+  }
+  
+  getId() {
+    return this.id;
+  }
+  
+  getRegItem() {
+    return this.regItem;
   }
 }
 

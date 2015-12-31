@@ -25,11 +25,8 @@
       <div id="group_members_list">
         <h3>Group Members</h3>
         <ul>
-          <li>
-            poepoe
-          </li>
-          <li>
-            poepoe
+          <li ng-repeat="member in group.getMemberArray()">
+            {{member.getRegItem().getName()}}
           </li>
         </ul>
       </div>
