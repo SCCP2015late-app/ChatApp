@@ -1,4 +1,23 @@
 /* CSS file placeholder. */
+
+#contents {
+  height: 100%;
+  background: #FFF8E1;
+}
+
+#navigation_panel {
+  color: #EFEBE9;
+  background: #FF6F00;
+  width: 240px;
+  float: left;
+  top: 0;
+  position: fixed;
+  height: 100%;
+  margin-right: 14px;
+  z-index: 1;
+  box-shadow: 0px 0px 14px -2px #444;
+}
+
 #group_header {
   border-radius: 4px;
   box-shadow: 0px 0px 6px -2px #444;
@@ -42,20 +61,19 @@
   color: #6D4C41;
 }
 
-#contents {
-  height: 100%;
-  background: #FFF8E1;
+#navigation_tool {
+  background: #FF5F20;
+  position: fixed;
+  bottom: 0;
+  width: 240px;
+  box-shadow: 0px 0px 6px -2px #444;
+  margin-top: 6px;
 }
 
-#navigation_panel {
-  color: #EFEBE9;
-  background: #FF6F00;
-  width: 240px;
-  float: left;
-  top: 0;
-  position: fixed;
-  height: 100%;
-  margin: 0 auto;
+#navigation_tool img{
+  padding: 10px;
+  height: 48px;
+  width: 48px;
 }
 
 #message_area {
