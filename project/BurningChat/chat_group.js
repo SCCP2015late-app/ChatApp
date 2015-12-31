@@ -1,8 +1,9 @@
 "use strict";
 class ChatGroup {
-  constructor(id, name, memberArray) {
+  constructor(id, name, owner, memberArray) {
     this.id = id;
     this.name = name;
+    this.owner = owner;
     this.memberArray = memberArray;
   }
   
@@ -36,6 +37,10 @@ class BaseUser {
     this.regItem = regItem;
   }
   
+  static equals(userA, userB) {
+    return userA.getId() == userB.getId();
+  }
+  
   getId() {
     return this.id;
   }
@@ -46,14 +51,21 @@ class BaseUser {
 }
 
 class Participant extends BaseUser {
-  constructor(id, regItem, group) {
+  constructor(id, regItem) {
     super(id, regItem);
-    this.group = group;
+  }
+  
+  isOwner() {
+    return false;
   }
 }
 
 class Owner extends Participant {
-  constructor(id, regItem, group) {
-    super(id, regItem, group);
+  constructor(id, regItem) {
+    super(id, regItem);
+  }
+  
+  isOwner() {
+    return true;
   }
 }

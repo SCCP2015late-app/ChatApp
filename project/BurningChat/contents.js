@@ -18,13 +18,25 @@ let PROP_01 = new RegistrationItem(NAME_01, EMAIL_01);
 let PROP_02 = new RegistrationItem(NAME_02, EMAIL_02);
 let PROP_03 = new RegistrationItem(NAME_03, EMAIL_03);
 
+let OWNER = new Owner(0, PROP_00);
+
 let MEMBERS = [
-    new Owner(0, PROP_00, GROUP_NAME),
-    new Participant(1, PROP_01, GROUP_NAME),
-    new Participant(2, PROP_02, GROUP_NAME),
-    new Participant(3, PROP_03, GROUP_NAME)
+    OWNER,
+    new Participant(1, PROP_01),
+    new Participant(2, PROP_02),
+    new Participant(3, PROP_03)
   ];
+  
+let YOU = new Participant(2, new RegistrationItem("magro", ""));
 // Code for Debug[END]
+
+var youOrNot = function(user) {
+  if (BaseUser.equals(YOU, user)) {
+    return "you";
+  } else {
+    return "other";
+  }
+};
 
 var app = angular.module('burning', [], function($provide) {
       $provide.decorator('$window', function($delegate) {
@@ -34,5 +46,9 @@ var app = angular.module('burning', [], function($provide) {
 });
 
 app.controller('NavigationPanelController', function($scope) {
-  $scope.group = new ChatGroup(GROUP_ID, GROUP_NAME, MEMBERS);
+  $scope.you = YOU;
+  
+  $scope.youOrNot = youOrNot;
+  
+  $scope.group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS);
 });
