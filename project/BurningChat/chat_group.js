@@ -5,18 +5,25 @@
   name: String - グループ名
   owner: Owner - オーナーユーザー
   memberArray: Member[] - 参加しているメンバーの配列
+  messageArray: Message[] - 投稿されたメッセージの配列
 */
 class ChatGroup {
-  constructor(id, name, owner, memberArray) {
+  constructor(id, name, owner, memberArray, messageArray) {
     this.id = id;
     this.name = name;
     this.owner = owner;
     this.memberArray = memberArray;
+    this.messageArray = messageArray;
   }
   
   // getter
   getName() { return this.name; }
   getMemberArray() { return this.memberArray; }
+  getMessageArray() { return this.messageArray; }
+  
+  addMessage(message) {
+    this.messageArray.push(message);
+  }
 }
 
 /* ユーザの登録情報

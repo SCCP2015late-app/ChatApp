@@ -122,6 +122,7 @@
 }
 
 #time_line_item #text_message {
+  word-break: break-all;
 }
 
 #time_line_item #image_message {

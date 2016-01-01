@@ -28,6 +28,10 @@
     ];
     
   const YOU = new Member(2, new RegistrationItem("magro", ""));
+  
+  const MESSAGES = [
+      new Message(0, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false)
+    ];
   // Code for Debug[END]
   
   var youOrNot = function(user) {
@@ -47,11 +51,20 @@
     });
   });
   
+  var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  
   app.controller('NavigationPanelController', function($scope) {
     
     $scope.you = YOU;
     $scope.youOrNot = youOrNot;
-    $scope.group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS);
+    $scope.group = group;
+    
+  });
+  
+  app.controller('TimeLineController', function($scope) {
+    
+    $scope.group = group;
+    console.log("Message length: " + $scope.group.getMessageArray().length);
     
   });
   

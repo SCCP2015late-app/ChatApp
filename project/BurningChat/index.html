@@ -35,12 +35,14 @@
       </div>
     </div>
     <div id="message_area">
-      <div id="time_line">
-        <div id="time_line_item">
-            <h2 id="initial">m</h2>
-            <p id="name">name</p>
-            <p id="text_message">message</p>
-            <img id="image_message" src="./assets/misoton.png" height="100px"/>
+      <div id="time_line" ng-controller="TimeLineController">
+        <div ng-repeat="message in group.getMessageArray()">
+          <div id="time_line_item">
+            <h2 id="initial">{{message.getUser().getRegItem().getName().toUpperCase()[0]}}</h2>
+            <p id="name">{{message.getUser().getRegItem().getName()}}</p>
+            <p id="text_message">{{message.getBody()}}</p>
+            <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.getImage() == null}}"/>
+          </div>
         </div>
       </div>
       <div id="mention_form">
