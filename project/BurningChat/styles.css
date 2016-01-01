@@ -1,5 +1,9 @@
 /* CSS file placeholder. */
 
+input:focus {
+  outline: none;
+}
+
 #contents {
   height: 100%;
   background: #FFF8E1;
@@ -97,7 +101,7 @@
   height: 100%;
   width: 100%;
   bottom: 48px;
-  margin-bottom: 48px;
+  padding-bottom: 52px;
 }
 
 #time_line_item {
@@ -132,10 +136,37 @@
 }
 
 #mention_form {
-  position: fixed;
+  position: absolute;
   bottom: 0px;
   height: 48px;
-  width: 100%;
+  width: calc(100% - 16px);
   color: #3E2723;
+  border: 2px solid #aaa;
+  border-radius: 4px;
   background: #FFECB3;
+  box-shadow: 0px 0px 6px -2px #000;
+  margin: 6px;
+}
+
+#mention_form input[type="image"]:hover {
+  background: #FFCC80;
+  margin: auto auto;
+}
+
+#mention_form input[type="text"] {
+  float: right;
+  border: 0;
+  position: absolute;
+  font-family: Arial, sans-serif;
+  font-size: 1.4em;
+  color: #222;
+  border-left: 2px solid #aaa;
+  height: 100%;
+  background: #FFECB3;
+  width: calc(100% - 48px);
+  padding: 10px;
+}
+
+#mention_form input[type="text"]:focus {
+  border-bottom: 1px solid #FFF;
 }
