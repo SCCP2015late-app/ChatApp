@@ -79,7 +79,7 @@ class Owner extends Member {
 
 /* チャットメッセージ
   id: String - メッセージID
-  user: Participant - 送信者
+  user: Member - 送信者
   date: Date - 送信日時
   body: String - 本文
   image: Image - 添付画像
