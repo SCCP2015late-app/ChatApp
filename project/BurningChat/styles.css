@@ -81,7 +81,7 @@
   background: #FFF8E1;
   height: 100%;
   position: fixed;
-  width: 100%;
+  width: calc(100% - 240px);
   top: 0;
   right: 0;
   left: 240px;
@@ -98,6 +98,36 @@
   width: 100%;
   bottom: 48px;
   margin-bottom: 48px;
+}
+
+#time_line_item {
+  margin: 8px;
+  border-bottom: solid 1px #aaa;
+}
+
+#time_line_item #initial {
+  float: left;
+  margin: 10px;
+  padding: 2px;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background: #f44336;
+  color: #FFF8F1;
+  box-shadow: 0px 0px 6px -2px #000;
+}
+
+#time_line_item #name {
+}
+
+#time_line_item #text_message {
+}
+
+#time_line_item #image_message {
+  display: block;
+  margin: 4px auto;
+  border: solid 1px #888;
 }
 
 #mention_form {
