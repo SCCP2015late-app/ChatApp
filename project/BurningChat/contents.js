@@ -22,12 +22,12 @@
   
   const MEMBERS = [
       OWNER,
-      new Participant(1, PROP_01),
-      new Participant(2, PROP_02),
-      new Participant(3, PROP_03)
+      new Member(1, PROP_01),
+      new Member(2, PROP_02),
+      new Member(3, PROP_03)
     ];
     
-  const YOU = new Participant(2, new RegistrationItem("magro", ""));
+  const YOU = new Member(2, new RegistrationItem("magro", ""));
   // Code for Debug[END]
   
   var youOrNot = function(user) {

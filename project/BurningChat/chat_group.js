@@ -57,7 +57,7 @@ class BaseUser {
   id: String - ユーザID
   regItem: RegistrationItem - 登録情報
 */
-class Participant extends BaseUser {
+class Member extends BaseUser {
   constructor(id, regItem) {
     super(id, regItem);
   }
@@ -69,7 +69,7 @@ class Participant extends BaseUser {
   id: String - ユーザID
   regItem: RegistrationItem - 登録情報
 */
-class Owner extends Participant {
+class Owner extends Member {
   constructor(id, regItem) {
     super(id, regItem);
   }
