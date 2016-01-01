@@ -69,3 +69,38 @@ class Owner extends Participant {
     return true;
   }
 }
+
+class Message {
+  constructor(id, user, date, body, image, flag) {
+    this.id = id;
+    this.user = user;
+    this.date = date;
+    this.image = image;
+    this.body = body;
+    this.flag = flag;
+  }
+  
+  getId() {
+    return this.id;
+  }
+  
+  getUser() {
+    return this.user;
+  }
+  
+  getDate() {
+    return this.date;
+  }
+  
+  getBody() {
+    return this.body;
+  }
+  
+  getImage() {
+    return this.image;
+  }
+  
+  getFlag() {
+    return this.flag;
+  }
+}
