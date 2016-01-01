@@ -1,4 +1,11 @@
 "use strict";
+
+/* チャットグループ
+  id: String - グループのID
+  name: String - グループ名
+  owner: Owner - オーナーユーザー
+  memberArray: Member[] - 参加しているメンバーの配列
+*/
 class ChatGroup {
   constructor(id, name, owner, memberArray) {
     this.id = id;
@@ -7,30 +14,30 @@ class ChatGroup {
     this.memberArray = memberArray;
   }
   
-  getName() {
-    return this.name;
-  }
-  
-  getMemberArray() {
-    return this.memberArray;
-  }
+  // getter
+  getName() { return this.name; }
+  getMemberArray() { return this.memberArray; }
 }
 
+/* ユーザの登録情報
+  name: String - ユーザ名
+  email: String - Eメールアドレス
+*/
 class RegistrationItem {
   constructor(name, email) {
     this.name = name;
     this.email = email;
   }
   
-  getName() {
-    return this.name;
-  }
-  
-  getEmail() {
-    return this.email;
-  }
+  // getter
+  getName() { return this.name; }
+  getEmail() { return this.email; }
 }
 
+/* 全ユーザのベースクラス
+  id: String - ユーザID
+  regItem: RegistrationItem - 登録情報
+*/
 class BaseUser {
   constructor(id, regItem) {
     this.id = id;
@@ -41,35 +48,43 @@ class BaseUser {
     return userA.getId() == userB.getId();
   }
   
-  getId() {
-    return this.id;
-  }
-  
-  getRegItem() {
-    return this.regItem;
-  }
+  // getter
+  getId() { return this.id; }
+  getRegItem() { return this.regItem; }
 }
 
+/* グループ参加者
+  id: String - ユーザID
+  regItem: RegistrationItem - 登録情報
+*/
 class Participant extends BaseUser {
   constructor(id, regItem) {
     super(id, regItem);
   }
   
-  isOwner() {
-    return false;
-  }
+  isOwner() { return false; }
 }
 
+/* グループのオーナー
+  id: String - ユーザID
+  regItem: RegistrationItem - 登録情報
+*/
 class Owner extends Participant {
   constructor(id, regItem) {
     super(id, regItem);
   }
   
-  isOwner() {
-    return true;
-  }
+  isOwner() { return true; }
 }
 
+/* チャットメッセージ
+  id: String - メッセージID
+  user: Participant - 送信者
+  date: Date - 送信日時
+  body: String - 本文
+  image: Image - 添付画像
+  flag: Boolean - 既読フラグ
+*/
 class Message {
   constructor(id, user, date, body, image, flag) {
     this.id = id;
@@ -80,27 +95,11 @@ class Message {
     this.flag = flag;
   }
   
-  getId() {
-    return this.id;
-  }
-  
-  getUser() {
-    return this.user;
-  }
-  
-  getDate() {
-    return this.date;
-  }
-  
-  getBody() {
-    return this.body;
-  }
-  
-  getImage() {
-    return this.image;
-  }
-  
-  getFlag() {
-    return this.flag;
-  }
+  // getter
+  getId() { return this.id; }
+  getUser() { return this.user; }
+  getDate() { return this.date; }
+  getBody() { return this.body; }
+  getImage() { return this.image; }
+  getFlag() { return this.flag; }
 }
