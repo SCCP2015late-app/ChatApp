@@ -41,6 +41,14 @@ class RegistrationItem {
   getEmail() { return this.email; }
 }
 
+const USER_COLORS = [
+  "#f44336", //RED
+  "#2196F3", //BLUE
+  "#4CAF50", // GREEN
+  "#FF9800", // ORANGE
+  "#3F51B5"  // INDIGO
+];
+
 /* 全ユーザのベースクラス
   id: String - ユーザID
   regItem: RegistrationItem - 登録情報
@@ -58,6 +66,14 @@ class BaseUser {
   // getter
   getId() { return this.id; }
   getRegItem() { return this.regItem; }
+  
+  getUserColor() {
+    return USER_COLORS[this.id % USER_COLORS.length];
+  }
+  
+  getUserColorStyle() {
+    return {'background-color': this.getUserColor()};
+  }
 }
 
 /* グループ参加者
