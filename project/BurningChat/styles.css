@@ -175,3 +175,17 @@ input:focus {
 .inout_animation.ng-enter.ng-enter-active {
   opacity: 1;
 }
+
+.rotate_hover_animation:hover {
+  animation: rotate 0.8s;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  
+  to {
+    transform: rotate(180deg);
+  }
+}
