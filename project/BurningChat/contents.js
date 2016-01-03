@@ -70,7 +70,7 @@
     $scope.youOrNot = youOrNot;
     $scope.group = group;
     
-    $scope.toolsOpened = true;
+    $scope.toolsOpened = false;
     
     $scope.onToolClick = function() {
       $scope.toolsOpened = !$scope.toolsOpened;
