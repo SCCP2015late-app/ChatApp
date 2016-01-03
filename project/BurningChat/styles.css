@@ -167,6 +167,11 @@ input:focus {
   padding: 10px;
 }
 
-#mention_form input[type="text"]:focus {
-  border-bottom: 1px solid #FFF;
+.inout_animation.ng-enter {
+  transition: 0.2s linear all;
+  opacity: 0;
+}
+
+.inout_animation.ng-enter.ng-enter-active {
+  opacity: 1;
 }
