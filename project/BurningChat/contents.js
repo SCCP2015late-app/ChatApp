@@ -55,7 +55,7 @@
     
   };
   
-  var app = angular.module('burning', [], function($provide) {
+  var app = angular.module('burning', ['ngAnimate'], function($provide) {
     $provide.decorator('$window', function($delegate) {
       $delegate.history = null;
       return $delegate;
@@ -69,6 +69,13 @@
     $scope.you = YOU;
     $scope.youOrNot = youOrNot;
     $scope.group = group;
+    
+    $scope.toolsOpened = true;
+    
+    $scope.onToolClick = function() {
+      $scope.toolsOpened = !$scope.toolsOpened;
+      console.log("click");
+    };
     
   });
   
