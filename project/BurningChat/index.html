@@ -11,7 +11,8 @@
   <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script type="text/javascript" src="./bower_components/angular-animate/angular-animate.min.js"></script>
   
-  <script type="text/javascript" src="chatgroup.js"></script>
+  <script type="text/javascript" src="./BurningChatScala/target/scala-2.11/burningchatscala-fastopt.js"></script>
+  <!--<script type="text/javascript" src="chatgroup.js"></script>-->
   <script type="text/javascript" src="main.js"></script>
   <script type="text/javascript" src="contents.js"></script>
 </head>
@@ -22,14 +23,14 @@
     <div id="navigation_panel" ng-controller="NavigationPanelController">
       <div class="inout_animation" ng-if="!toolsOpened">
       <div id="group_header">
-        <h2>{{group.getName().toUpperCase()[0]}}</h2>
-        <p>{{group.getName()}}</p>
+        <h2>{{group.name.toUpperCase()[0]}}</h2>
+        <p>{{group.name}}</p>
       </div>
       <div id="group_members_list">
         <h3>Group Members</h3>
         <ul>
-          <li ng-repeat="member in group.getMemberArray()" >
-            <p id={{youOrNot(member)}}>{{member.getRegItem().getName()}}</p>
+          <li ng-repeat="member in group.memberArray" >
+            <p id={{youOrNot(member)}}>{{member.regItem.name}}</p>
           </li>
         </ul>
       </div>
@@ -43,12 +44,12 @@
     </div>
     <div id="message_area">
       <div id="time_line" ng-controller="TimeLineController">
-        <div ng-repeat="message in group.getMessageArray()">
+        <div ng-repeat="message in group.messageArray">
           <div id="time_line_item">
-            <h2 id="initial" ng-style="message.getUser().getUserColorStyle()">{{message.getUser().getRegItem().getName().toUpperCase()[0]}}</h2>
-            <p id="name">{{message.getUser().getRegItem().getName()}}</p>
-            <p id="text_message">{{message.getBody()}}</p>
-            <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.getImage() == null}}"/>
+            <h2 id="initial" ng-style="toStyle(message.member.userColor)">{{message.member.regItem.name.toUpperCase()[0]}}</h2>
+            <p id="name">{{message.member.regItem.name}}</p>
+            <p id="text_message">{{message.body}}</p>
+            <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.image == null}}"/>
           </div>
         </div>
       </div>

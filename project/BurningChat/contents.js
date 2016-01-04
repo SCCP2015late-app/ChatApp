@@ -1,4 +1,5 @@
 (function(){
+  
   // Code for Debug[START]
   const GROUP_NAME = "mogemoge group";
   const GROUP_ID = 1919;
@@ -33,21 +34,23 @@
   const YOU = new Member(2, new RegistrationItem("magro", ""));
   
   const MESSAGES = [
-      new Message(0, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(1, MEMBER_01, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(2, MEMBER_02, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(3, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(4, MEMBER_03, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(5, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(6, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(7, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(8, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false)
+      new Message(0, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(1, MEMBER_01, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(2, MEMBER_02, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(3, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(4, MEMBER_03, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(5, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(6, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(7, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(8, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false)
     ];
   // Code for Debug[END]
   
+  console.log("poepoe");
+  
   var youOrNot = function(user) {
     
-    if (BaseUser.equals(YOU, user)) {
+    if (YOU.equals(user)) {
       return "you";
     } else {
       return "other";
@@ -66,6 +69,8 @@
   
   app.controller('NavigationPanelController', function($scope) {
     
+    console.log(YOU);
+    
     $scope.you = YOU;
     $scope.youOrNot = youOrNot;
     $scope.group = group;
@@ -76,12 +81,15 @@
       $scope.toolsOpened = !$scope.toolsOpened;
       console.log("click");
     };
-    
   });
   
   app.controller('TimeLineController', function($scope) {
     
     $scope.group = group;
+    
+    $scope.toStyle = function(color) {
+      return {'background-color': color};
+    };
     
   });
   
