@@ -66,10 +66,10 @@
           </div>
         </div>
       </div>
-      <div id="mention_form">
+      <div id="mention_form" ng-controller="MentionForm">
         <form>
-          <input type="image" src="./assets/plus.png" height="44px" width="44px"/>
-          <input type="text"/>
+          <input type="image" ng-click="onSend()"  src="./assets/plus.png" height="44px" width="44px"/>
+          <input type="text" ng-model="messageBody"/>
         </form>
       </div>
     </div>

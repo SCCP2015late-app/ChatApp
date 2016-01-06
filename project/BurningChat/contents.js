@@ -103,4 +103,20 @@
     $scope.onClickMessageListener = Env().onClickMessageListener;
   });
   
+  app.controller('MentionForm', function($scope, ngDialog) {
+    $scope.group = group;
+    
+    Env().onSendMessageListener.addCallback(function(message) {
+      console.log("Send message: " + message.body + " from " + message.member.regItem.name);
+    });
+    
+    $scope.onClickSendMessageListener = Env().onSendMessageListener;
+    
+    $scope.onSend = function() {
+      var message = new Message(0, OWNER, "" + new Date(), $scope.messageBody, null, false);
+      console.log(message);
+      $scope.onClickSendMessageListener.callAllCallback(message);
+    };
+  });
+  
 })();
