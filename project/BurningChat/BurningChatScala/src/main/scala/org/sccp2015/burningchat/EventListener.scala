@@ -25,5 +25,5 @@ class EventListener[T] {
 @JSExport("OnClickMessageListener")
 class OnClickMessageListener extends EventListener[Message]
 
-@JSExport("OnClickSendingButtonListener")
-class OnClickSendingButtonListener extends EventListener[Message]
+@JSExport("OnSendMessageListener")
+class OnSendMessageListener extends EventListener[Message]

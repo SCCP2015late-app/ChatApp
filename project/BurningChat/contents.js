@@ -91,7 +91,7 @@
       return {'background-color': color};
     };
     
-    Environment().onClickMessageListener.addCallback(function(message) {
+    Env().onClickMessageListener.addCallback(function(message) {
       console.log("hello");
       $scope.lastClickMessage = message;
       ngDialog.open({template: 'messageDetailDialog',controller: ['$scope', function($scope) {
@@ -100,8 +100,7 @@
       }]});
     });
     
-    $scope.onClickMessageListener = Environment().onClickMessageListener;
-    
+    $scope.onClickMessageListener = Env().onClickMessageListener;
   });
   
 })();

@@ -3,7 +3,7 @@ package org.sccp2015.burningchat
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 
-@JSExport("Environment")
+@JSExport("Env")
 object AppEnvironment {
 
   @JSExport
@@ -17,4 +17,7 @@ object AppEnvironment {
 
   @JSExport
   val onClickMessageListener = new OnClickMessageListener
+
+  @JSExport
+  val onSendMessageListener = new OnSendMessageListener
 }
