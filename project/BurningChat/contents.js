@@ -58,7 +58,7 @@
     
   };
   
-  var app = angular.module('burning', ['ngAnimate'], function($provide) {
+  var app = angular.module('burning', ['ngAnimate', 'ngDialog'], function($provide) {
     $provide.decorator('$window', function($delegate) {
       $delegate.history = null;
       return $delegate;
@@ -67,9 +67,9 @@
   
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   
-  app.controller('NavigationPanelController', function($scope) {
+  app.controller('NavigationPanelController', function($scope, ngDialog) {
     
-    console.log(YOU);
+    console.log(ngDialog);
     
     $scope.you = YOU;
     $scope.youOrNot = youOrNot;
@@ -83,7 +83,7 @@
     };
   });
   
-  app.controller('TimeLineController', function($scope) {
+  app.controller('TimeLineController', function($scope, ngDialog) {
     
     $scope.group = group;
     
@@ -93,6 +93,11 @@
     
     Environment().onClickMessageListener.addCallback(function(message) {
       console.log("hello");
+      $scope.lastClickMessage = message;
+      ngDialog.open({template: 'messageDetailDialog',controller: ['$scope', function($scope) {
+        $scope.message = message;
+        $scope.group = group;
+      }]});
     });
     
     $scope.onClickMessageListener = Environment().onClickMessageListener;

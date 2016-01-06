@@ -4,12 +4,17 @@
   <title>BurningChat</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog.css">
+  <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog.css">
+  <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog-theme-default.css">
+  <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog-theme-plain.css">
   
   <!-- Components -->
   <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script type="text/javascript" src="./bower_components/angular-animate/angular-animate.min.js"></script>
+  <script type="text/javascript" src="./bower_components/ng-dialog/js/ngDialog.js"></script>
   
   <script type="text/javascript" src="./BurningChatScala/target/scala-2.11/burningchatscala-fastopt.js"></script>
   <!--<script type="text/javascript" src="chatgroup.js"></script>-->
@@ -50,6 +55,14 @@
             <p id="name">{{message.member.regItem.name}}</p>
             <p id="text_message">{{message.body}}</p>
             <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.image == null}}"/>
+            
+            <!--Dialog Script-->
+            <script type="text/ng-template" id="messageDetailDialog">
+		      	  <h3>[From] @{{message.member.id}}#{{group.id}}: {{message.member.regItem.name}}</h3>
+		      	  <p>ID: {{message.id}}</p>
+		      	  <p>Body: {{message.body}}</p>
+		      	  <p>Date: {{message.date}}</p>
+		        </script>
           </div>
         </div>
       </div>
@@ -60,7 +73,6 @@
         </form>
       </div>
     </div>
-    
   </div>
 </body>
 </html>
