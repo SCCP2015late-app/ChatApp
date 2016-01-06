@@ -45,7 +45,7 @@
     <div id="message_area">
       <div id="time_line" ng-controller="TimeLineController">
         <div ng-repeat="message in group.messageArray">
-          <div id="time_line_item">
+          <div id="time_line_item" ng-click="onClickMessageListener.callAllCallback(message)">
             <h2 id="initial" ng-style="toStyle(message.member.userColor)">{{message.member.regItem.name.toUpperCase()[0]}}</h2>
             <p id="name">{{message.member.regItem.name}}</p>
             <p id="text_message">{{message.body}}</p>

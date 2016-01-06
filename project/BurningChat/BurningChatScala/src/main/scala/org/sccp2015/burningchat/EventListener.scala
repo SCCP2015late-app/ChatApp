@@ -1,17 +1,21 @@
 package org.sccp2015.burningchat
 
-import scala.scalajs.js.annotation.JSExport
+import scala.scalajs.js
+import scala.scalajs.js.annotation.{JSExportAll, JSExport}
 
-abstract class EventListener[T] {
-  type Callback = (T => Unit)
+@JSExport("EventListener")
+class EventListener[T] {
 
-  var callbackArray: Array[Callback] = new Array[Callback](0)
+  @JSExport
+  var callbackArray: Array[js.Function1[js.Any, js.Any]] = new Array[js.Function1[js.Any, js.Any]](0)
 
-  def addClickListener(callback: Callback): Unit = {
+  @JSExport
+  def addCallback(callback: js.Function1[js.Any, js.Any]): Unit = {
     this.callbackArray = this.callbackArray :+ callback
   }
 
-  def callAllCallback(obj: T): Unit = {
+  @JSExport
+  def callAllCallback(obj: js.Any): Unit = {
     for(callback <- this.callbackArray) {
       callback(obj)
     }

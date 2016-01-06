@@ -15,4 +15,6 @@ object AppEnvironment {
     "#3F51B5"  // INDIGO
   )
 
+  @JSExport
+  val onClickMessageListener = new OnClickMessageListener
 }

@@ -91,6 +91,12 @@
       return {'background-color': color};
     };
     
+    Environment().onClickMessageListener.addCallback(function(message) {
+      console.log("hello");
+    });
+    
+    $scope.onClickMessageListener = Environment().onClickMessageListener;
+    
   });
   
 })();
