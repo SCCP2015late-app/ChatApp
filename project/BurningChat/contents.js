@@ -30,7 +30,7 @@
       MEMBER_03
     ];
 
-  const YOU = new Member(2, new RegistrationItem("magro", "test@u-aizu.ac.jp"));
+  const YOU = new Member(2, new RegistrationItem("magro", "114514test@u-aizu.ac.jp"));
 
   const MESSAGES = [
       new Message(0, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
