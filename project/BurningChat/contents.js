@@ -70,6 +70,8 @@
     $scope.youOrNot = youOrNot;
     $scope.group = group;
 
+    $scope.set_name = ' ';
+    $scope.set_email = '';
 
     $scope.toolsOpened = false;
     $scope.toolsNameOpened = false;
