@@ -1,4 +1,5 @@
 (function(){
+
   // Code for Debug[START]
   const GROUP_NAME = "mogemoge group";
   const GROUP_ID = 1919;
@@ -33,21 +34,22 @@
   const YOU = new Member(2, new RegistrationItem("magro", "114514test@u-aizu.ac.jp"));
 
   const MESSAGES = [
-      new Message(0, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(1, MEMBER_01, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(2, MEMBER_02, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(3, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(4, MEMBER_03, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(5, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(6, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(7, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(8, OWNER, Date.now(), "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false)
+      new Message(0, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(1, MEMBER_01, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(2, MEMBER_02, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(3, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(4, MEMBER_03, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(5, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(6, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(7, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
+      new Message(8, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false)
     ];
   // Code for Debug[END]
 
+
   var youOrNot = function(user) {
 
-    if (BaseUser.equals(YOU, user)) {
+    if (YOU.equals(user)) {
       return "you";
     } else {
       return "other";
@@ -55,16 +57,30 @@
 
   };
 
-  var app = angular.module('burning', ['ngAnimate'], function($provide) {
+
+  var app = angular.module('burning', ['ngAnimate', 'ngDialog'], function($provide) {
     $provide.decorator('$window', function($delegate) {
       $delegate.history = null;
       return $delegate;
     });
   });
 
+  app.directive('keepScrollPosition', function() {
+    return function(scope, el, attrs) {
+      scope.$watch(
+        function() { return el[0].clientHeight; },
+        function(newHeight, oldHeight) {
+          console.debug('Height was changed', oldHeight, newHeight);
+          el[0].scrollTop = newHeight - oldHeight;
+        });
+    };
+  });
+
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
 
-  app.controller('NavigationPanelController', function($scope) {
+  app.controller('NavigationPanelController', function($scope, ngDialog) {
+
+    console.log(ngDialog);
 
     $scope.you = YOU;
     $scope.youOrNot = youOrNot;
@@ -92,12 +108,59 @@
       console.log("emailclick");
     };
 
+
   });
 
-  app.controller('TimeLineController', function($scope) {
+  app.controller('TimeLineController', function($scope, ngDialog) {
 
     $scope.group = group;
 
+    $scope.toStyle = function(color) {
+      return {'background-color': color};
+    };
+
+    Env().onClickMessageListener.addCallback(function(message) {
+      console.log("hello");
+      $scope.lastClickMessage = message;
+      ngDialog.open({template: 'messageDetailDialog',controller: ['$scope', function($scope) {
+        $scope.message = message;
+        $scope.group = group;
+      }]});
+    });
+
+    Env().onUpdateMessageListener.addCallback(function(message) {
+
+    });
+
+    $scope.onClickMessageListener = Env().onClickMessageListener;
+  });
+
+  app.controller('MentionForm', function($scope, ngDialog) {
+    $scope.group = group;
+
+    $scope.messageBody = '';
+
+    Env().onSendMessageListener.addCallback(function(message) {
+      $scope.group.addMessage(message);
+      console.log("Send message: " + message.body + " from " + message.member.regItem.name);
+    });
+
+    $scope.onClickSendMessageListener = Env().onSendMessageListener;
+
+    $scope.onSend = function() {
+      if($scope.messageBody === '') {
+        return;
+      }
+
+      var message = new Message(0, YOU, "" + new Date(), $scope.messageBody, null, false);
+      console.log(message);
+      $scope.onClickSendMessageListener.callAllCallback(message);
+      $scope.messageBody = '';
+    };
+
+    $scope.addImage = function() {
+      console.log("addImage");
+    };
   });
 
 })();
