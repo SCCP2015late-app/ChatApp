@@ -1,41 +1,54 @@
 function msgBroadcastRequest(uid, body){
-    var pict_flag = false;
-    var pict_name = "";
-    if(itHasPicture) {
-        pict_flag = true;
-        pict_name = rename(pict);
-        pictBroadcastRequest(pict_name, pict);
-    }
-    var msgObject = JSON.stringify({u_id: uid, date: new Date().getTime(), body: body, pict_flag: pict_flag, pict_name: pict_name});
-    sendToMaster(msgObject);
-};
-
-function pictBroadcastRequest(name, pict){
-    var pictObject = JSON.stringify({name: name, data: base64encode(pict)});
-    sendToMaster(pictObject);
-};
-
-function recvObject(){
-
-};
-
-function sendMsgList(){
-    sendToUser(uid, listObject);
-};
-
-//TODO
-function recvRequest() {
-    switch broadcastMsg() or broadcastPict();
-};
 
 }
-function broadcastMsg(){
 
-};
+function pictBroadcastRequest(name, pict){
 
-function broadcastPict(){
+}
 
-};
+function msgObjectRecv(){
+
+}
+
+function pictObjectRecv(){
+
+}
+
+function updateMsgList(){
+
+}
+
+function savePict(){
+
+}
+
+function sendGroupInfo(){
+
+}
+
+function sendMsgList(){
+
+}
+
+function requestRecv(){
+
+}
+
+function msgBroadcast(){
+
+}
+
+function pictBroadcast(){
+
+}
+
+function modifyUserInfo(){
+
+}
+
+function initializeGroup(){
+
+}
 
 // BASE64 (RFC2045) Encode/Decode for string in JavaScript
 // Version 1.2 Apr. 8 2004 written by MIZUTANI Tociyuki
@@ -55,8 +68,7 @@ function broadcastPict(){
 
 var base64list = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
-function base64encode(s)
-{
+function base64encode(s) {
     var t = '', p = -6, a = 0, i = 0, v = 0, c;
 
     while ( (i < s.length) || (p > -6) ) {
@@ -77,8 +89,7 @@ function base64encode(s)
     return t;
 }
 
-function base64decode(s)
-{
+function base64decode(s) {
     var t = '', p = -8, a = 0, c, d;
 
     for( var i = 0; i < s.length; i++ ) {
