@@ -2,6 +2,7 @@
 <html ng-app="burning">
 <head>
   <title>BurningChat</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-16">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog.css">
@@ -68,8 +69,9 @@
       </div>
       <div id="mention_form" ng-controller="MentionForm">
         <form>
-          <input type="image" ng-click="onSend()"  src="./assets/plus.png" height="44px" width="44px"/>
-          <input type="text" ng-model="messageBody"/>
+          <input type="image" id="message_sender" ng-click="onSend()" src="./assets/plus.png" height="0px" width="0px"/>
+          <input type="text" ng-model="messageBody" ng-click="onSend()"/>
+          <input type="image" ng-click="addImage()" src="./assets/plus.png" height="44px" width="44px" />
         </form>
       </div>
     </div>

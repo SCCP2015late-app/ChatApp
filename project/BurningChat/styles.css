@@ -153,9 +153,14 @@ input:focus {
   margin: auto auto;
 }
 
+#mention_form #message_sender {
+  display: none;
+}
+
 #mention_form input[type="text"] {
   float: right;
   border: 0;
+  right: 0;
   position: absolute;
   font-family: Arial, sans-serif;
   font-size: 1.4em;
@@ -163,7 +168,7 @@ input:focus {
   border-left: 2px solid #aaa;
   height: 100%;
   background: #FFECB3;
-  width: calc(100% - 48px);
+  width: calc(100% - 44px);
   padding: 10px;
 }
 

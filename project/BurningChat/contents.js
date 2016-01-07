@@ -65,6 +65,17 @@
     });
   });
   
+  app.directive('keepScrollPosition', function() {
+    return function(scope, el, attrs) {
+      scope.$watch(
+        function() { return el[0].clientHeight; },
+        function(newHeight, oldHeight) {
+          console.debug('Height was changed', oldHeight, newHeight);
+          el[0].scrollTop = newHeight - oldHeight;
+        });
+    };
+  });
+  
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   
   app.controller('NavigationPanelController', function($scope, ngDialog) {
@@ -100,22 +111,38 @@
       }]});
     });
     
+    Env().onUpdateMessageListener.addCallback(function(message) {
+      
+    });
+    
     $scope.onClickMessageListener = Env().onClickMessageListener;
   });
   
   app.controller('MentionForm', function($scope, ngDialog) {
     $scope.group = group;
     
+    $scope.messageBody = '';
+    
     Env().onSendMessageListener.addCallback(function(message) {
+      $scope.group.addMessage(message);
       console.log("Send message: " + message.body + " from " + message.member.regItem.name);
     });
     
     $scope.onClickSendMessageListener = Env().onSendMessageListener;
     
     $scope.onSend = function() {
-      var message = new Message(0, OWNER, "" + new Date(), $scope.messageBody, null, false);
+      if($scope.messageBody === '') {
+        return;
+      }
+      
+      var message = new Message(0, YOU, "" + new Date(), $scope.messageBody, null, false);
       console.log(message);
       $scope.onClickSendMessageListener.callAllCallback(message);
+      $scope.messageBody = '';
+    };
+    
+    $scope.addImage = function() {
+      console.log("addImage");
     };
   });
   
