@@ -15,10 +15,15 @@ case class ChatGroup(_id: Int, _name: String, _owner: Owner, _memberArray: js.Ar
   val owner = _owner
 
   @JSExport
-  val memberArray = _memberArray
+  var memberArray = _memberArray
 
   @JSExport
-  val messageArray = _messageArray
+  var messageArray = _messageArray
+
+  @JSExport
+  def addMessage(message: Message): Unit = {
+    this.messageArray = this.messageArray :+ message
+  }
 }
 
 @JSExport("RegistrationItem")

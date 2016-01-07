@@ -4,7 +4,7 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExportAll, JSExport}
 
 @JSExport("EventListener")
-class EventListener[T] {
+class EventListener {
 
   @JSExport
   var callbackArray: Array[js.Function1[js.Any, js.Any]] = new Array[js.Function1[js.Any, js.Any]](0)
@@ -21,9 +21,3 @@ class EventListener[T] {
     }
   }
 }
-
-@JSExport("OnClickMessageListener")
-class OnClickMessageListener extends EventListener[Message]
-
-@JSExport("OnSendMessageListener")
-class OnSendMessageListener extends EventListener[Message]
