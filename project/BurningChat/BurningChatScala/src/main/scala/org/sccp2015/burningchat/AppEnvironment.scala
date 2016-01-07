@@ -16,8 +16,11 @@ object AppEnvironment {
   )
 
   @JSExport
-  val onClickMessageListener = new OnClickMessageListener
+  val onClickMessageListener = new EventListener
 
   @JSExport
-  val onSendMessageListener = new OnSendMessageListener
+  val onSendMessageListener = new EventListener
+
+  @JSExport
+  val onUpdateMessageListener = new EventListener
 }
