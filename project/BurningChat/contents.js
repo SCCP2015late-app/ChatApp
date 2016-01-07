@@ -112,7 +112,8 @@
     });
     
     Env().onUpdateMessageListener.addCallback(function(message) {
-      
+      $scope.group.addMessage(message);
+      console.log("add message: " + message.body);
     });
     
     $scope.onClickMessageListener = Env().onClickMessageListener;
