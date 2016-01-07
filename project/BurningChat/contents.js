@@ -58,6 +58,7 @@
     
   };
   
+  // Burning Chat module
   var app = angular.module('burning', ['ngAnimate', 'ngDialog'], function($provide) {
     $provide.decorator('$window', function($delegate) {
       $delegate.history = null;
@@ -65,6 +66,7 @@
     });
   });
   
+  // スクロール位置を保存してくれるらしい
   app.directive('keepScrollPosition', function() {
     return function(scope, el, attrs) {
       scope.$watch(
@@ -76,11 +78,11 @@
     };
   });
   
+  // デバッグよう
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   
+  // 左オレンジの領域NavigationPanel
   app.controller('NavigationPanelController', function($scope, ngDialog) {
-    
-    console.log(ngDialog);
     
     $scope.you = YOU;
     $scope.youOrNot = youOrNot;
@@ -94,6 +96,20 @@
     };
   });
   
+  app.controller('MainAreaController', function($scope, ngDialog) {
+    // モード（グループ選択、メッセージリスト）
+    $scope.MODES = {GROUP: 'group', MESSAGE: 'message'};
+    
+    $scope.mode = $scope.MODES.MESSAGE;
+    $scope.groups = [group];
+    
+    $scope.onClick = function(selectedGroup) {
+      ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
+        $scope.group = selectedGroup;
+      }]});
+    };
+  });
+  
   app.controller('TimeLineController', function($scope, ngDialog) {
     
     $scope.group = group;
@@ -103,16 +119,11 @@
     };
     
     Env().onClickMessageListener.addCallback(function(message) {
-      console.log("hello");
       $scope.lastClickMessage = message;
       ngDialog.open({template: 'messageDetailDialog',controller: ['$scope', function($scope) {
         $scope.message = message;
         $scope.group = group;
       }]});
-    });
-    
-    Env().onUpdateMessageListener.addCallback(function(message) {
-      
     });
     
     $scope.onClickMessageListener = Env().onClickMessageListener;

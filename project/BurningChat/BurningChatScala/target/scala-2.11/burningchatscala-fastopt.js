@@ -3701,12 +3701,6 @@ $e["ChatGroup"].prototype = $c_Lorg_sccp2015_burningchat_ChatGroup.prototype;
 /** @constructor */
 function $c_Lorg_sccp2015_burningchat_Message() {
   $c_O.call(this);
-  this.$$undid$1 = 0;
-  this.$$undmember$1 = null;
-  this.$$unddate$1 = null;
-  this.$$undbody$1 = null;
-  this.$$undimage$1 = null;
-  this.$$undflag$1 = false;
   this.id$1 = 0;
   this.member$1 = null;
   this.date$1 = null;
@@ -3732,15 +3726,15 @@ $c_Lorg_sccp2015_burningchat_Message.prototype.equals__O__Z = (function(x$1) {
     return true
   } else if ($is_Lorg_sccp2015_burningchat_Message(x$1)) {
     var Message$1 = $as_Lorg_sccp2015_burningchat_Message(x$1);
-    if ((this.$$undid$1 === Message$1.$$undid$1)) {
-      var x = this.$$undmember$1;
-      var x$2 = Message$1.$$undmember$1;
+    if ((this.id$1 === Message$1.id$1)) {
+      var x = this.member$1;
+      var x$2 = Message$1.member$1;
       var jsx$1 = (x === x$2)
     } else {
       var jsx$1 = false
     };
-    if ((((jsx$1 && (this.$$unddate$1 === Message$1.$$unddate$1)) && (this.$$undbody$1 === Message$1.$$undbody$1)) && (this.$$undimage$1 === Message$1.$$undimage$1))) {
-      return (this.$$undflag$1 === Message$1.$$undflag$1)
+    if ((((jsx$1 && (this.date$1 === Message$1.date$1)) && (this.body$1 === Message$1.body$1)) && (this.image$1 === Message$1.image$1))) {
+      return (this.flag$1 === Message$1.flag$1)
     } else {
       return false
     }
@@ -3751,27 +3745,27 @@ $c_Lorg_sccp2015_burningchat_Message.prototype.equals__O__Z = (function(x$1) {
 $c_Lorg_sccp2015_burningchat_Message.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.$$undid$1;
+      return this.id$1;
       break
     }
     case 1: {
-      return this.$$undmember$1;
+      return this.member$1;
       break
     }
     case 2: {
-      return this.$$unddate$1;
+      return this.date$1;
       break
     }
     case 3: {
-      return this.$$undbody$1;
+      return this.body$1;
       break
     }
     case 4: {
-      return this.$$undimage$1;
+      return this.image$1;
       break
     }
     case 5: {
-      return this.$$undflag$1;
+      return this.flag$1;
       break
     }
     default: {
@@ -3785,19 +3779,13 @@ $c_Lorg_sccp2015_burningchat_Message.prototype.$$js$exported$prop$member__O = (f
 $c_Lorg_sccp2015_burningchat_Message.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lorg_sccp2015_burningchat_Message.prototype.init___I__Lorg_sccp2015_burningchat_Member__T__T__T__Z = (function(_id, _member, _date, _body, _image, _flag) {
-  this.$$undid$1 = _id;
-  this.$$undmember$1 = _member;
-  this.$$unddate$1 = _date;
-  this.$$undbody$1 = _body;
-  this.$$undimage$1 = _image;
-  this.$$undflag$1 = _flag;
-  this.id$1 = _id;
-  this.member$1 = _member;
-  this.date$1 = _date;
-  this.body$1 = _body;
-  this.image$1 = _image;
-  this.flag$1 = _flag;
+$c_Lorg_sccp2015_burningchat_Message.prototype.init___I__Lorg_sccp2015_burningchat_Member__T__T__T__Z = (function(id, member, date, body, image, flag) {
+  this.id$1 = id;
+  this.member$1 = member;
+  this.date$1 = date;
+  this.body$1 = body;
+  this.image$1 = image;
+  this.flag$1 = flag;
   return this
 });
 $c_Lorg_sccp2015_burningchat_Message.prototype.$$js$exported$prop$flag__O = (function() {
@@ -3811,12 +3799,12 @@ $c_Lorg_sccp2015_burningchat_Message.prototype.$$js$exported$prop$id__O = (funct
 });
 $c_Lorg_sccp2015_burningchat_Message.prototype.hashCode__I = (function() {
   var acc = (-889275714);
-  acc = $m_sr_Statics$().mix__I__I__I(acc, this.$$undid$1);
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.$$undmember$1));
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.$$unddate$1));
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.$$undbody$1));
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.$$undimage$1));
-  acc = $m_sr_Statics$().mix__I__I__I(acc, (this.$$undflag$1 ? 1231 : 1237));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, this.id$1);
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.member$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.date$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.body$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.image$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, (this.flag$1 ? 1231 : 1237));
   return $m_sr_Statics$().finalizeHash__I__I__I(acc, 6)
 });
 $c_Lorg_sccp2015_burningchat_Message.prototype.$$js$exported$prop$body__O = (function() {

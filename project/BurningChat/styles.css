@@ -80,6 +80,21 @@ input:focus {
   width: 48px;
 }
 
+#main_area {
+  color: #3E2723;
+  background: #FFF8E1;
+  height: 100%;
+  position: fixed;
+  width: calc(100% - 240px);
+  top: 0;
+  right: 0;
+  left: 240px;
+  float: right;
+  margin: 0 auto;
+  color: #3E2723;
+  background: #FFF8E1;
+}
+
 #message_area {
   color: #3E2723;
   background: #FFF8E1;
@@ -193,4 +208,38 @@ input:focus {
   to {
     transform: rotate(180deg);
   }
+}
+
+#group_selection {
+  color: #3E2723;
+  background: #FFF8E1;
+  height: 100%;
+  position: fixed;
+  width: 400px;
+  top: 0;
+  right: 0;
+  left: 240px;
+  float: right;
+  margin: 0 auto;
+}
+
+#group_selection h2{
+  text-align: center;
+}
+
+#group_item {
+  text-align: center;
+  padding: 30px;
+}
+
+#group_item:hover{
+  background: #FFE0B2;
+}
+
+#group_item h3{
+  margin: auto auto;
+}
+
+#group_item #join_group_button {
+  right: 0;
 }
