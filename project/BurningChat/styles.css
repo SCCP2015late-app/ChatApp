@@ -238,6 +238,7 @@ input:focus {
 
 #group_item h3{
   margin: auto auto;
+  word-break: break-all;
 }
 
 #group_item #join_group_button {
