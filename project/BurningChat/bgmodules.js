@@ -1,26 +1,59 @@
-function msgBroadcastRequest(uid, body){
+//ワシ担当
+
+function msgBroadcastRequest(Message){//massageを受け取ってjsonにしてownerになげる
+    var nowDate = new Date();
+    var picnum = 0;
+    var msg = {
+    　"u_id": Message.id.toString(),
+    　//"u_name": string, //ユーザー判別, 要話し合い
+    　"date": nowDate,
+    　"body": Message.body,
+    　"pict_flag": false, //画像が添付されているかどうか
+    　"pict_name": null,
+    　"request_type": "request", //requestか
+    };
+    
+    if(Message.image==null){
+        json_text = JSON.stringify(msg);
+        msgBroadcast(json_text);
+    } else {
+        msg["pict_flag"] = true;
+        msg["pict_name"] = "pic" + picnum.toString();
+        picName++;
+        var pict{
+            "name": msg["pict_name"],
+            "data": Message.image,
+        }
+        
+        var json_text = JSON.stringify(msg);
+        msgBroadcast(json_text);
+        pictBroadcastRequest(pict);
+    }
+    
+}
+
+function pictBroadcastRequest(pict){//pictをエンコードしてjsonにしてownerに投げる
+    pict["data"] = base64encode(pict["data"]);
+    var json_pict = JSON.stringify(pict);
+    pictBroadcast(json_pict);
+}
+
+function msgObjectRecv(){//ownerから投げられたmassageを受け取る
 
 }
 
-function pictBroadcastRequest(name, pict){
+function pictObjectRecv(){//ownerから投げられたpictのjsonデータをデコードして表示
 
 }
 
-function msgObjectRecv(){
+function updateMsgList(){//
 
 }
 
-function pictObjectRecv(){
+function savePict(){//ローカルストレージに保存
 
 }
-
-function updateMsgList(){
-
-}
-
-function savePict(){
-
-}
+// ここまで
 
 function sendGroupInfo(){
 
