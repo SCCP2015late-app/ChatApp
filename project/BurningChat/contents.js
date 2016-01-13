@@ -74,6 +74,8 @@
           el[0].scrollTop = newHeight - oldHeight;
         });
     };
+
+
   });
 
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
@@ -85,6 +87,9 @@
     $scope.you = YOU;
     $scope.youOrNot = youOrNot;
     $scope.group = group;
+
+    $scope.set_name = " ";
+    $scope.set_email = "";
 
     $scope.toolsOpened = false;
     $scope.toolsNameOpened = false;
@@ -103,6 +108,21 @@
     $scope.onToolEmailClick = function(){
       $scope.toolsEmailOpened = !$scope.toolsEmailOpened;
       console.log("emailclick");
+    };
+
+    $scope.click_ch_name = function(){
+      var regitem = new RegistrationItem($scope.set_name, $scope.you.regItem.email);
+
+      $scope.onToolNameClick();
+      Env().onSetRegistrationItemListener.callAllCallback(regitem);
+    };
+
+    $scope.click_ch_email = function(){
+      console.log("test");
+      var regitem = new RegistrationItem($scope.you.regItem.name, $scope.set_email);
+
+      $scope.onToolEmailClick();
+      Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
   });
 
