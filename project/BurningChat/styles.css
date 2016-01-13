@@ -200,11 +200,15 @@ input:focus {
   animation: rotate 0.8s;
 }
 
+.rotate_infhover_animation:hover {
+  animation: rotate 2.0s infinite;
+}
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);
   }
-  
+
   to {
     transform: rotate(180deg);
   }
@@ -239,6 +243,37 @@ input:focus {
 #group_item h3{
   margin: auto auto;
   word-break: break-all;
+}
+
+#group_item #join_group_button {
+  right: 0;
+}
+
+#user_setting_header {
+  border-radius: 4px;
+  box-shadow: 0px 0px 6px -2px #444;
+  background: #FF8F00;
+  margin: 6px;
+}
+
+
+#user_setting_header h3 {
+  padding: 10px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+#user_setting_list {
+  border-radius: 4px;
+  box-shadow: 0px 0px 6px -2px #444;
+  background: #FF8F00;
+  margin: 6px;
+}
+
+#user_setting_list h1{
+  padding: 10px;
+  margin: 0 auto;
+  text-align: left;
 }
 
 #join_button_group {

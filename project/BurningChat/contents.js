@@ -58,7 +58,6 @@
     
   };
   
-  // Burning Chat module
   var app = angular.module('burning', ['ngAnimate', 'ngDialog'], function($provide) {
     $provide.decorator('$window', function($delegate) {
       $delegate.history = null;
@@ -66,7 +65,6 @@
     });
   });
   
-  // スクロール位置を保存してくれるらしい
   app.directive('keepScrollPosition', function() {
     return function(scope, el, attrs) {
       scope.$watch(
@@ -78,11 +76,11 @@
     };
   });
   
-  // デバッグよう
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   
-  // 左オレンジの領域NavigationPanel
   app.controller('NavigationPanelController', function($scope, ngDialog) {
+    
+    console.log(ngDialog);
     
     $scope.you = YOU;
     $scope.youOrNot = youOrNot;
@@ -106,27 +104,13 @@
     // モード（グループ選択、メッセージリスト）
     $scope.MODES = {GROUP: 'group', MESSAGE: 'message'};
     
-    $scope.mode = $scope.MODES.GROUP;
+    $scope.mode = $scope.MODES.MESSAGE;
     $scope.groups = [group];
     
     $scope.onClick = function(selectedGroup) {
-      // ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
-      //   $scope.group = selectedGroup;
-      // }]});
-      console.log('POPOPOPOPO');
-      var bind_address = '127.0.0.1';
-      var bind_port = 22222;
-      var server_address = '127.0.0.1';
-      var server_port = 33333;
-      var data = string_to_buffer("hogehoge");
-      chrome.sockets.udp.create({}, function(createInfo) {
-        chrome.sockets.udp.bind(createInfo.socketId, bind_address, bind_port, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, data, server_address, server_port, function(sendInfo) {
-           console.log('poe: ' + sendInfo.resultCode);
-            chrome.sockets.udp.close(createInfo.socketId, function(){});
-          });
-        });
-      });
+      ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
+        $scope.group = selectedGroup;
+      }]});
     };
   });
   
@@ -139,11 +123,17 @@
     };
     
     Env().onClickMessageListener.addCallback(function(message) {
+      console.log("hello");
       $scope.lastClickMessage = message;
       ngDialog.open({template: 'messageDetailDialog',controller: ['$scope', function($scope) {
         $scope.message = message;
         $scope.group = group;
       }]});
+    });
+    
+    Env().onUpdateMessageListener.addCallback(function(message) {
+      $scope.group.addMessage(message);
+      console.log("add message: " + message.body);
     });
     
     $scope.onClickMessageListener = Env().onClickMessageListener;
