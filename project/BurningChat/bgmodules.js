@@ -1,40 +1,52 @@
 //ワシ担当
 
-function msgBroadcastRequest(Message){//massageを受け取ってjsonにしてownerになげる
-    var nowDate = new Date();
-    var picnum = 0;
+function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる
     var msg = {
-    　"u_id": Message.id.toString(),
-    　//"u_name": string,
-    　"date": nowDate,
-    　"body": Message.body,
-    　"pict_flag": false, //画像が添付されているかどうか
-    　"pict_name": null,
+        　"u_id": message.id.toString(),
+        　//"u_name": string,
+        　"date": Date.now(),
+        　"body": message.body,
+        　"pict_flag": false, //画像が添付されているかどうか
+        　"pict_name": null,
     };
-    
-    if(Message.image==null){
+
+    if(message.image==null){
         json_text = JSON.stringify(msg);
         msgBroadcast(json_text);
     } else {
         msg["pict_flag"] = true;
-        msg["pict_name"] = "pic" + picnum.toString();
-        picName++;
+        var extension = getExtension(message.image);//拡張子のみを取得
+        extension.toLowerCase();//拡張子を小文字に変換
+        msg["pict_name"] = '' + Date.now() + "." + extension;
         var pict = {
             "name": msg["pict_name"],
-            "data": Message.image,
+            "data": message.image,
         };
-        
+
         var json_text = JSON.stringify(msg);
         msgBroadcast(json_text);
         pictBroadcastRequest(pict);
     }
-    
+
+}
+
+function getExtension(fileName) {
+    var ret;
+    if (!fileName) {
+        return ret;
+    }
+    var fileTypes = fileName.split(".");
+    var len = fileTypes.length;
+    if (len === 0) {
+        return ret;
+    }
+    ret = fileTypes[len - 1];
+    return ret;
 }
 
 //TODO least priority
 function pictBroadcastRequest(name, pict){
-    //画像の拡張子を全て小文字に変換する処理を入れる必要がある
-    pict["data"] = base64encode(pict["data"]);
+    pict["data"] = base64encode();//バイナリを読みこませる
     var json_pict = JSON.stringify(pict);
     pictBroadcast(json_pict);
 }
@@ -93,11 +105,11 @@ function pictBroadcast(){
 }
 
 function modifyUserInfo(){
-//ユーザ情報の変更
+    //ユーザ情報の変更
 }
 
 function initializeGroup(){
-//ストレージからとってきたデータを使ってグループを初期化する
+    //ストレージからとってきたデータを使ってグループを初期化する
 }
 
 function jsonizeMessages(){
@@ -145,7 +157,7 @@ function base64encode(s) {
             p += 8;
         }
         t += base64list.charAt( ( v > 0 )? (a>>p)&63 : 64 )
-        p -= 6;
+            p -= 6;
         v -= 6;
     }
     return t;
@@ -203,15 +215,15 @@ function getLocalIP(callback) {
 }
 
 /*
- MD5
- Copyright (C) 2007 MITSUNARI Shigeo at Cybozu Labs, Inc.
- license:new BSD license
- how to use
- CybozuLabs.MD5.calc(<ascii string>);
- CybozuLabs.MD5.calc(<unicode(UTF16) string>, CybozuLabs.MD5.BY_UTF16);
+   MD5
+   Copyright (C) 2007 MITSUNARI Shigeo at Cybozu Labs, Inc.
+   license:new BSD license
+   how to use
+   CybozuLabs.MD5.calc(<ascii string>);
+   CybozuLabs.MD5.calc(<unicode(UTF16) string>, CybozuLabs.MD5.BY_UTF16);
 
- ex. CybozuLabs.MD5.calc("abc") == "900150983cd24fb0d6963f7d28e17f72";
- */
+   ex. CybozuLabs.MD5.calc("abc") == "900150983cd24fb0d6963f7d28e17f72";
+   */
 var CybozuLabs = {
     MD5 : {
         // for Firefox
@@ -363,7 +375,7 @@ var CybozuLabs = {
             t = (bL >> 10) | ((bH <<  6) & 65535); bH = (bH >> 10) | ((bL <<  6) & 65535);
             bL = t + cL; bH += cH; if (bL > 65535) { bL &= 65535; bH++; }
             bH &= 65535;
-///
+            ///
             aL += ((bL & dL) | (cL & ~dL)) + tmpL1 + 0x2562; aH += ((bH & dH) | (cH & ~dH)) + tmpH1 + 0xf61e;
             aH += aL >> 16;
             aL &= 65535; aH &= 65535;
@@ -460,7 +472,7 @@ var CybozuLabs = {
             t = (bL >> 12) | ((bH <<  4) & 65535); bH = (bH >> 12) | ((bL <<  4) & 65535);
             bL = t + cL; bH += cH; if (bL > 65535) { bL &= 65535; bH++; }
             bH &= 65535;
-///
+            ///
             aL += ((bL ^ cL) ^ dL) + tmpL5 + 0x3942; aH += ((bH ^ cH) ^ dH) + tmpH5 + 0xfffa;
             aH += aL >> 16;
             aL &= 65535; aH &= 65535;
@@ -557,7 +569,7 @@ var CybozuLabs = {
             t = (bL >>  9) | ((bH <<  7) & 65535); bH = (bH >>  9) | ((bL <<  7) & 65535);
             bL = t + cL; bH += cH; if (bL > 65535) { bL &= 65535; bH++; }
             bH &= 65535;
-///
+            ///
             aL += (cL ^ ((65535 - dL) | bL)) + tmpL0 + 0x2244; aH += (cH ^ ((65535 - dH) | bH)) + tmpH0 + 0xf429;
             aH += aL >> 16;
             aL &= 65535; aH &= 65535;
@@ -654,7 +666,7 @@ var CybozuLabs = {
             t = (bL >> 11) | ((bH <<  5) & 65535); bH = (bH >> 11) | ((bL <<  5) & 65535);
             bL = t + cL; bH += cH; if (bL > 65535) { bL &= 65535; bH++; }
             bH &= 65535;
-///
+            ///
             t = this.a_[0] += aL; this.a_[1] += aH; if (t > 65535) { this.a_[0] -= 65536; this.a_[1]++; } this.a_[1] &= 65535;
             t = this.b_[0] += bL; this.b_[1] += bH; if (t > 65535) { this.b_[0] -= 65536; this.b_[1]++; } this.b_[1] &= 65535;
             t = this.c_[0] += cL; this.c_[1] += cH; if (t > 65535) { this.c_[0] -= 65536; this.c_[1]++; } this.c_[1] &= 65535;
