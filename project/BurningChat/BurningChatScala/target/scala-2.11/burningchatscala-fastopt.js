@@ -1143,91 +1143,6 @@ function $m_Lorg_sccp2015_burningchat_AppEnvironment$() {
 }
 $e["Env"] = $m_Lorg_sccp2015_burningchat_AppEnvironment$;
 /** @constructor */
-function $c_Lorg_sccp2015_burningchat_BaseUser() {
-  $c_O.call(this);
-  this.id$1 = 0;
-  this.regItem$1 = null;
-  this.userColor$1 = null
-}
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype = new $h_O();
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype.constructor = $c_Lorg_sccp2015_burningchat_BaseUser;
-/** @constructor */
-function $h_Lorg_sccp2015_burningchat_BaseUser() {
-  /*<skip>*/
-}
-$h_Lorg_sccp2015_burningchat_BaseUser.prototype = $c_Lorg_sccp2015_burningchat_BaseUser.prototype;
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype.$$js$exported$meth$equals__Lorg_sccp2015_burningchat_BaseUser__O = (function(baseUser) {
-  return this.equals__Lorg_sccp2015_burningchat_BaseUser__Z(baseUser)
-});
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype.equals__Lorg_sccp2015_burningchat_BaseUser__Z = (function(baseUser) {
-  return (this.id$1 === baseUser.id$1)
-});
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype.$$js$exported$prop$userColor__O = (function() {
-  return this.userColor$1
-});
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype.$$js$exported$prop$id__O = (function() {
-  return this.id$1
-});
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem = (function(_id, _regItem) {
-  this.id$1 = _id;
-  this.regItem$1 = _regItem;
-  this.userColor$1 = $as_T($m_Lorg_sccp2015_burningchat_AppEnvironment$().USER$undCOLORS$1[(this.id$1 % $uI($m_Lorg_sccp2015_burningchat_AppEnvironment$().USER$undCOLORS$1["length"]))]);
-  return this
-});
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype.$$js$exported$prop$regItem__O = (function() {
-  return this.regItem$1
-});
-Object["defineProperty"]($c_Lorg_sccp2015_burningchat_BaseUser.prototype, "id", {
-  "get": (function() {
-    return this.$$js$exported$prop$id__O()
-  }),
-  "enumerable": true
-});
-Object["defineProperty"]($c_Lorg_sccp2015_burningchat_BaseUser.prototype, "regItem", {
-  "get": (function() {
-    return this.$$js$exported$prop$regItem__O()
-  }),
-  "enumerable": true
-});
-Object["defineProperty"]($c_Lorg_sccp2015_burningchat_BaseUser.prototype, "userColor", {
-  "get": (function() {
-    return this.$$js$exported$prop$userColor__O()
-  }),
-  "enumerable": true
-});
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype["equals"] = (function(arg$1) {
-  var prep0 = $as_Lorg_sccp2015_burningchat_BaseUser(arg$1);
-  return this.$$js$exported$meth$equals__Lorg_sccp2015_burningchat_BaseUser__O(prep0)
-});
-function $is_Lorg_sccp2015_burningchat_BaseUser(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lorg_sccp2015_burningchat_BaseUser)))
-}
-function $as_Lorg_sccp2015_burningchat_BaseUser(obj) {
-  return (($is_Lorg_sccp2015_burningchat_BaseUser(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "org.sccp2015.burningchat.BaseUser"))
-}
-function $isArrayOf_Lorg_sccp2015_burningchat_BaseUser(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lorg_sccp2015_burningchat_BaseUser)))
-}
-function $asArrayOf_Lorg_sccp2015_burningchat_BaseUser(obj, depth) {
-  return (($isArrayOf_Lorg_sccp2015_burningchat_BaseUser(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lorg.sccp2015.burningchat.BaseUser;", depth))
-}
-var $d_Lorg_sccp2015_burningchat_BaseUser = new $TypeData().initClass({
-  Lorg_sccp2015_burningchat_BaseUser: 0
-}, false, "org.sccp2015.burningchat.BaseUser", {
-  Lorg_sccp2015_burningchat_BaseUser: 1,
-  O: 1
-});
-$c_Lorg_sccp2015_burningchat_BaseUser.prototype.$classData = $d_Lorg_sccp2015_burningchat_BaseUser;
-/** @constructor */
-$e["BaseUser"] = (function(arg$1, arg$2) {
-  var $thiz = new $c_Lorg_sccp2015_burningchat_BaseUser();
-  var prep0 = $uI(arg$1);
-  var prep1 = $as_Lorg_sccp2015_burningchat_RegistrationItem(arg$2);
-  $c_Lorg_sccp2015_burningchat_BaseUser.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem.call($thiz, prep0, prep1);
-  return $thiz
-});
-$e["BaseUser"].prototype = $c_Lorg_sccp2015_burningchat_BaseUser.prototype;
-/** @constructor */
 function $c_Lorg_sccp2015_burningchat_EventListener() {
   $c_O.call(this);
   this.callbackArray$1 = null
@@ -2317,72 +2232,6 @@ function $m_sr_Statics$() {
   };
   return $n_sr_Statics$
 }
-/** @constructor */
-function $c_Lorg_sccp2015_burningchat_Member() {
-  $c_Lorg_sccp2015_burningchat_BaseUser.call(this);
-  this.member$undid$2 = 0;
-  this.member$undregItem$2 = null
-}
-$c_Lorg_sccp2015_burningchat_Member.prototype = new $h_Lorg_sccp2015_burningchat_BaseUser();
-$c_Lorg_sccp2015_burningchat_Member.prototype.constructor = $c_Lorg_sccp2015_burningchat_Member;
-/** @constructor */
-function $h_Lorg_sccp2015_burningchat_Member() {
-  /*<skip>*/
-}
-$h_Lorg_sccp2015_burningchat_Member.prototype = $c_Lorg_sccp2015_burningchat_Member.prototype;
-$c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$prop$member$undid__O = (function() {
-  return this.member$undid$2
-});
-$c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$prop$member$undregItem__O = (function() {
-  return this.member$undregItem$2
-});
-$c_Lorg_sccp2015_burningchat_Member.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem = (function(_member_id, _member_regItem) {
-  $c_Lorg_sccp2015_burningchat_BaseUser.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem.call(this, _member_id, _member_regItem);
-  this.member$undid$2 = _member_id;
-  this.member$undregItem$2 = _member_regItem;
-  return this
-});
-Object["defineProperty"]($c_Lorg_sccp2015_burningchat_Member.prototype, "member_id", {
-  "get": (function() {
-    return this.$$js$exported$prop$member$undid__O()
-  }),
-  "enumerable": true
-});
-Object["defineProperty"]($c_Lorg_sccp2015_burningchat_Member.prototype, "member_regItem", {
-  "get": (function() {
-    return this.$$js$exported$prop$member$undregItem__O()
-  }),
-  "enumerable": true
-});
-function $is_Lorg_sccp2015_burningchat_Member(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lorg_sccp2015_burningchat_Member)))
-}
-function $as_Lorg_sccp2015_burningchat_Member(obj) {
-  return (($is_Lorg_sccp2015_burningchat_Member(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "org.sccp2015.burningchat.Member"))
-}
-function $isArrayOf_Lorg_sccp2015_burningchat_Member(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lorg_sccp2015_burningchat_Member)))
-}
-function $asArrayOf_Lorg_sccp2015_burningchat_Member(obj, depth) {
-  return (($isArrayOf_Lorg_sccp2015_burningchat_Member(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lorg.sccp2015.burningchat.Member;", depth))
-}
-var $d_Lorg_sccp2015_burningchat_Member = new $TypeData().initClass({
-  Lorg_sccp2015_burningchat_Member: 0
-}, false, "org.sccp2015.burningchat.Member", {
-  Lorg_sccp2015_burningchat_Member: 1,
-  Lorg_sccp2015_burningchat_BaseUser: 1,
-  O: 1
-});
-$c_Lorg_sccp2015_burningchat_Member.prototype.$classData = $d_Lorg_sccp2015_burningchat_Member;
-/** @constructor */
-$e["Member"] = (function(arg$1, arg$2) {
-  var $thiz = new $c_Lorg_sccp2015_burningchat_Member();
-  var prep0 = $uI(arg$1);
-  var prep1 = $as_Lorg_sccp2015_burningchat_RegistrationItem(arg$2);
-  $c_Lorg_sccp2015_burningchat_Member.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem.call($thiz, prep0, prep1);
-  return $thiz
-});
-$e["Member"].prototype = $c_Lorg_sccp2015_burningchat_Member.prototype;
 var $d_jl_Boolean = new $TypeData().initClass({
   jl_Boolean: 0
 }, false, "java.lang.Boolean", {
@@ -2620,73 +2469,6 @@ var $d_sr_IntRef = new $TypeData().initClass({
   Ljava_io_Serializable: 1
 });
 $c_sr_IntRef.prototype.$classData = $d_sr_IntRef;
-/** @constructor */
-function $c_Lorg_sccp2015_burningchat_Owner() {
-  $c_Lorg_sccp2015_burningchat_Member.call(this);
-  this.owner$undid$3 = 0;
-  this.owner$undregItem$3 = null
-}
-$c_Lorg_sccp2015_burningchat_Owner.prototype = new $h_Lorg_sccp2015_burningchat_Member();
-$c_Lorg_sccp2015_burningchat_Owner.prototype.constructor = $c_Lorg_sccp2015_burningchat_Owner;
-/** @constructor */
-function $h_Lorg_sccp2015_burningchat_Owner() {
-  /*<skip>*/
-}
-$h_Lorg_sccp2015_burningchat_Owner.prototype = $c_Lorg_sccp2015_burningchat_Owner.prototype;
-$c_Lorg_sccp2015_burningchat_Owner.prototype.$$js$exported$prop$owner$undid__O = (function() {
-  return this.owner$undid$3
-});
-$c_Lorg_sccp2015_burningchat_Owner.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem = (function(_owner_id, _owner_regItem) {
-  $c_Lorg_sccp2015_burningchat_Member.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem.call(this, _owner_id, _owner_regItem);
-  this.owner$undid$3 = _owner_id;
-  this.owner$undregItem$3 = _owner_regItem;
-  return this
-});
-$c_Lorg_sccp2015_burningchat_Owner.prototype.$$js$exported$prop$owner$undregItem__O = (function() {
-  return this.owner$undregItem$3
-});
-Object["defineProperty"]($c_Lorg_sccp2015_burningchat_Owner.prototype, "owner_id", {
-  "get": (function() {
-    return this.$$js$exported$prop$owner$undid__O()
-  }),
-  "enumerable": true
-});
-Object["defineProperty"]($c_Lorg_sccp2015_burningchat_Owner.prototype, "owner_regItem", {
-  "get": (function() {
-    return this.$$js$exported$prop$owner$undregItem__O()
-  }),
-  "enumerable": true
-});
-function $is_Lorg_sccp2015_burningchat_Owner(obj) {
-  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lorg_sccp2015_burningchat_Owner)))
-}
-function $as_Lorg_sccp2015_burningchat_Owner(obj) {
-  return (($is_Lorg_sccp2015_burningchat_Owner(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "org.sccp2015.burningchat.Owner"))
-}
-function $isArrayOf_Lorg_sccp2015_burningchat_Owner(obj, depth) {
-  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lorg_sccp2015_burningchat_Owner)))
-}
-function $asArrayOf_Lorg_sccp2015_burningchat_Owner(obj, depth) {
-  return (($isArrayOf_Lorg_sccp2015_burningchat_Owner(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lorg.sccp2015.burningchat.Owner;", depth))
-}
-var $d_Lorg_sccp2015_burningchat_Owner = new $TypeData().initClass({
-  Lorg_sccp2015_burningchat_Owner: 0
-}, false, "org.sccp2015.burningchat.Owner", {
-  Lorg_sccp2015_burningchat_Owner: 1,
-  Lorg_sccp2015_burningchat_Member: 1,
-  Lorg_sccp2015_burningchat_BaseUser: 1,
-  O: 1
-});
-$c_Lorg_sccp2015_burningchat_Owner.prototype.$classData = $d_Lorg_sccp2015_burningchat_Owner;
-/** @constructor */
-$e["Owner"] = (function(arg$1, arg$2) {
-  var $thiz = new $c_Lorg_sccp2015_burningchat_Owner();
-  var prep0 = $uI(arg$1);
-  var prep1 = $as_Lorg_sccp2015_burningchat_RegistrationItem(arg$2);
-  $c_Lorg_sccp2015_burningchat_Owner.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem.call($thiz, prep0, prep1);
-  return $thiz
-});
-$e["Owner"].prototype = $c_Lorg_sccp2015_burningchat_Owner.prototype;
 var $d_jl_Byte = new $TypeData().initClass({
   jl_Byte: 0
 }, false, "java.lang.Byte", {
@@ -3483,11 +3265,6 @@ $c_sc_AbstractIterator.prototype.addString__scm_StringBuilder__T__T__T__scm_Stri
 /** @constructor */
 function $c_Lorg_sccp2015_burningchat_ChatGroup() {
   $c_O.call(this);
-  this.$$undid$1 = 0;
-  this.$$undname$1 = null;
-  this.$$undowner$1 = null;
-  this.$$undmemberArray$1 = null;
-  this.$$undmessageArray$1 = null;
   this.id$1 = 0;
   this.name$1 = null;
   this.owner$1 = null;
@@ -3515,15 +3292,15 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.equals__O__Z = (function(x$1) {
     return true
   } else if ($is_Lorg_sccp2015_burningchat_ChatGroup(x$1)) {
     var ChatGroup$1 = $as_Lorg_sccp2015_burningchat_ChatGroup(x$1);
-    if (((this.$$undid$1 === ChatGroup$1.$$undid$1) && (this.$$undname$1 === ChatGroup$1.$$undname$1))) {
-      var x = this.$$undowner$1;
-      var x$2 = ChatGroup$1.$$undowner$1;
-      var jsx$1 = (x === x$2)
+    if (((this.id$1 === ChatGroup$1.id$1) && (this.name$1 === ChatGroup$1.name$1))) {
+      var x = this.owner$1;
+      var x$2 = ChatGroup$1.owner$1;
+      var jsx$1 = ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
     } else {
       var jsx$1 = false
     };
-    if ((jsx$1 && $m_sr_BoxesRunTime$().equals__O__O__Z(this.$$undmemberArray$1, ChatGroup$1.$$undmemberArray$1))) {
-      return $m_sr_BoxesRunTime$().equals__O__O__Z(this.$$undmessageArray$1, ChatGroup$1.$$undmessageArray$1)
+    if ((jsx$1 && $m_sr_BoxesRunTime$().equals__O__O__Z(this.memberArray$1, ChatGroup$1.memberArray$1))) {
+      return $m_sr_BoxesRunTime$().equals__O__O__Z(this.messageArray$1, ChatGroup$1.messageArray$1)
     } else {
       return false
     }
@@ -3534,23 +3311,23 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.equals__O__Z = (function(x$1) {
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.$$undid$1;
+      return this.id$1;
       break
     }
     case 1: {
-      return this.$$undname$1;
+      return this.name$1;
       break
     }
     case 2: {
-      return this.$$undowner$1;
+      return this.owner$1;
       break
     }
     case 3: {
-      return this.$$undmemberArray$1;
+      return this.memberArray$1;
       break
     }
     case 4: {
-      return this.$$undmessageArray$1;
+      return this.messageArray$1;
       break
     }
     default: {
@@ -3563,6 +3340,14 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$memberArray_
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burningchat_Member__sjs_js_Array__sjs_js_Array = (function(id, name, owner, memberArray, messageArray) {
+  this.id$1 = id;
+  this.name$1 = name;
+  this.owner$1 = owner;
+  this.memberArray$1 = memberArray;
+  this.messageArray$1 = messageArray;
+  return this
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$owner__O = (function() {
   return this.owner$1
@@ -3584,19 +3369,6 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.addMessage__Lorg_sccp2015_burni
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$messageArray__O = (function() {
   return this.messageArray$1
 });
-$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burningchat_Owner__sjs_js_Array__sjs_js_Array = (function(_id, _name, _owner, _memberArray, _messageArray) {
-  this.$$undid$1 = _id;
-  this.$$undname$1 = _name;
-  this.$$undowner$1 = _owner;
-  this.$$undmemberArray$1 = _memberArray;
-  this.$$undmessageArray$1 = _messageArray;
-  this.id$1 = _id;
-  this.name$1 = _name;
-  this.owner$1 = _owner;
-  this.memberArray$1 = _memberArray;
-  this.messageArray$1 = _messageArray;
-  return this
-});
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$messageArray__sjs_js_Array__O = (function(x$1) {
   this.messageArray$1 = x$1
 });
@@ -3605,11 +3377,11 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$id__O = (fun
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.hashCode__I = (function() {
   var acc = (-889275714);
-  acc = $m_sr_Statics$().mix__I__I__I(acc, this.$$undid$1);
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.$$undname$1));
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.$$undowner$1));
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.$$undmemberArray$1));
-  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.$$undmessageArray$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, this.id$1);
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.name$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.owner$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.memberArray$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.messageArray$1));
   return $m_sr_Statics$().finalizeHash__I__I__I(acc, 5)
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.productIterator__sc_Iterator = (function() {
@@ -3691,13 +3463,151 @@ $e["ChatGroup"] = (function(arg$1, arg$2, arg$3, arg$4, arg$5) {
   var $thiz = new $c_Lorg_sccp2015_burningchat_ChatGroup();
   var prep0 = $uI(arg$1);
   var prep1 = $as_T(arg$2);
-  var prep2 = $as_Lorg_sccp2015_burningchat_Owner(arg$3);
+  var prep2 = $as_Lorg_sccp2015_burningchat_Member(arg$3);
   var prep3 = arg$4;
   var prep4 = arg$5;
-  $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burningchat_Owner__sjs_js_Array__sjs_js_Array.call($thiz, prep0, prep1, prep2, prep3, prep4);
+  $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burningchat_Member__sjs_js_Array__sjs_js_Array.call($thiz, prep0, prep1, prep2, prep3, prep4);
   return $thiz
 });
 $e["ChatGroup"].prototype = $c_Lorg_sccp2015_burningchat_ChatGroup.prototype;
+/** @constructor */
+function $c_Lorg_sccp2015_burningchat_Member() {
+  $c_O.call(this);
+  this.id$1 = 0;
+  this.regItem$1 = null;
+  this.userColor$1 = null
+}
+$c_Lorg_sccp2015_burningchat_Member.prototype = new $h_O();
+$c_Lorg_sccp2015_burningchat_Member.prototype.constructor = $c_Lorg_sccp2015_burningchat_Member;
+/** @constructor */
+function $h_Lorg_sccp2015_burningchat_Member() {
+  /*<skip>*/
+}
+$h_Lorg_sccp2015_burningchat_Member.prototype = $c_Lorg_sccp2015_burningchat_Member.prototype;
+$c_Lorg_sccp2015_burningchat_Member.prototype.productPrefix__T = (function() {
+  return "Member"
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.productArity__I = (function() {
+  return 2
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.equals__O__Z = (function(x$1) {
+  if ((this === x$1)) {
+    return true
+  } else if ($is_Lorg_sccp2015_burningchat_Member(x$1)) {
+    var Member$1 = $as_Lorg_sccp2015_burningchat_Member(x$1);
+    if ((this.id$1 === Member$1.id$1)) {
+      var x = this.regItem$1;
+      var x$2 = Member$1.regItem$1;
+      return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.productElement__I__O = (function(x$1) {
+  switch (x$1) {
+    case 0: {
+      return this.id$1;
+      break
+    }
+    case 1: {
+      return this.regItem$1;
+      break
+    }
+    default: {
+      throw new $c_jl_IndexOutOfBoundsException().init___T(("" + x$1))
+    }
+  }
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.toString__T = (function() {
+  return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$prop$userColor__O = (function() {
+  return this.userColor$1
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.equals__Lorg_sccp2015_burningchat_Member__Z = (function(member) {
+  return (this.id$1 === member.id$1)
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$prop$id__O = (function() {
+  return this.id$1
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.hashCode__I = (function() {
+  var acc = (-889275714);
+  acc = $m_sr_Statics$().mix__I__I__I(acc, this.id$1);
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.regItem$1));
+  return $m_sr_Statics$().finalizeHash__I__I__I(acc, 2)
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem = (function(id, regItem) {
+  this.id$1 = id;
+  this.regItem$1 = regItem;
+  this.userColor$1 = $as_T($m_Lorg_sccp2015_burningchat_AppEnvironment$().USER$undCOLORS$1[(id % $uI($m_Lorg_sccp2015_burningchat_AppEnvironment$().USER$undCOLORS$1["length"]))]);
+  return this
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.productIterator__sc_Iterator = (function() {
+  return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$meth$equals__Lorg_sccp2015_burningchat_Member__O = (function(member) {
+  return this.equals__Lorg_sccp2015_burningchat_Member__Z(member)
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$prop$regItem__O = (function() {
+  return this.regItem$1
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_Member.prototype, "id", {
+  "get": (function() {
+    return this.$$js$exported$prop$id__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_Member.prototype, "regItem", {
+  "get": (function() {
+    return this.$$js$exported$prop$regItem__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_Member.prototype, "userColor", {
+  "get": (function() {
+    return this.$$js$exported$prop$userColor__O()
+  }),
+  "enumerable": true
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype["equals"] = (function(arg$1) {
+  var prep0 = $as_Lorg_sccp2015_burningchat_Member(arg$1);
+  return this.$$js$exported$meth$equals__Lorg_sccp2015_burningchat_Member__O(prep0)
+});
+function $is_Lorg_sccp2015_burningchat_Member(obj) {
+  return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lorg_sccp2015_burningchat_Member)))
+}
+function $as_Lorg_sccp2015_burningchat_Member(obj) {
+  return (($is_Lorg_sccp2015_burningchat_Member(obj) || (obj === null)) ? obj : $throwClassCastException(obj, "org.sccp2015.burningchat.Member"))
+}
+function $isArrayOf_Lorg_sccp2015_burningchat_Member(obj, depth) {
+  return (!(!(((obj && obj.$classData) && (obj.$classData.arrayDepth === depth)) && obj.$classData.arrayBase.ancestors.Lorg_sccp2015_burningchat_Member)))
+}
+function $asArrayOf_Lorg_sccp2015_burningchat_Member(obj, depth) {
+  return (($isArrayOf_Lorg_sccp2015_burningchat_Member(obj, depth) || (obj === null)) ? obj : $throwArrayCastException(obj, "Lorg.sccp2015.burningchat.Member;", depth))
+}
+var $d_Lorg_sccp2015_burningchat_Member = new $TypeData().initClass({
+  Lorg_sccp2015_burningchat_Member: 0
+}, false, "org.sccp2015.burningchat.Member", {
+  Lorg_sccp2015_burningchat_Member: 1,
+  O: 1,
+  s_Product: 1,
+  s_Equals: 1,
+  s_Serializable: 1,
+  Ljava_io_Serializable: 1
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.$classData = $d_Lorg_sccp2015_burningchat_Member;
+/** @constructor */
+$e["Member"] = (function(arg$1, arg$2) {
+  var $thiz = new $c_Lorg_sccp2015_burningchat_Member();
+  var prep0 = $uI(arg$1);
+  var prep1 = $as_Lorg_sccp2015_burningchat_RegistrationItem(arg$2);
+  $c_Lorg_sccp2015_burningchat_Member.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem.call($thiz, prep0, prep1);
+  return $thiz
+});
+$e["Member"].prototype = $c_Lorg_sccp2015_burningchat_Member.prototype;
 /** @constructor */
 function $c_Lorg_sccp2015_burningchat_Message() {
   $c_O.call(this);
@@ -3729,7 +3639,7 @@ $c_Lorg_sccp2015_burningchat_Message.prototype.equals__O__Z = (function(x$1) {
     if ((this.id$1 === Message$1.id$1)) {
       var x = this.member$1;
       var x$2 = Message$1.member$1;
-      var jsx$1 = (x === x$2)
+      var jsx$1 = ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
     } else {
       var jsx$1 = false
     };
@@ -3891,8 +3801,6 @@ $e["Message"].prototype = $c_Lorg_sccp2015_burningchat_Message.prototype;
 /** @constructor */
 function $c_Lorg_sccp2015_burningchat_RegistrationItem() {
   $c_O.call(this);
-  this.$$undname$1 = null;
-  this.$$undemail$1 = null;
   this.name$1 = null;
   this.email$1 = null
 }
@@ -3903,15 +3811,13 @@ function $h_Lorg_sccp2015_burningchat_RegistrationItem() {
   /*<skip>*/
 }
 $h_Lorg_sccp2015_burningchat_RegistrationItem.prototype = $c_Lorg_sccp2015_burningchat_RegistrationItem.prototype;
-$c_Lorg_sccp2015_burningchat_RegistrationItem.prototype.init___T__T = (function(_name, _email) {
-  this.$$undname$1 = _name;
-  this.$$undemail$1 = _email;
-  this.name$1 = _name;
-  this.email$1 = _email;
-  return this
-});
 $c_Lorg_sccp2015_burningchat_RegistrationItem.prototype.productPrefix__T = (function() {
   return "RegistrationItem"
+});
+$c_Lorg_sccp2015_burningchat_RegistrationItem.prototype.init___T__T = (function(name, email) {
+  this.name$1 = name;
+  this.email$1 = email;
+  return this
 });
 $c_Lorg_sccp2015_burningchat_RegistrationItem.prototype.productArity__I = (function() {
   return 2
@@ -3924,7 +3830,7 @@ $c_Lorg_sccp2015_burningchat_RegistrationItem.prototype.equals__O__Z = (function
     return true
   } else if ($is_Lorg_sccp2015_burningchat_RegistrationItem(x$1)) {
     var RegistrationItem$1 = $as_Lorg_sccp2015_burningchat_RegistrationItem(x$1);
-    return ((this.$$undname$1 === RegistrationItem$1.$$undname$1) && (this.$$undemail$1 === RegistrationItem$1.$$undemail$1))
+    return ((this.name$1 === RegistrationItem$1.name$1) && (this.email$1 === RegistrationItem$1.email$1))
   } else {
     return false
   }
@@ -3932,11 +3838,11 @@ $c_Lorg_sccp2015_burningchat_RegistrationItem.prototype.equals__O__Z = (function
 $c_Lorg_sccp2015_burningchat_RegistrationItem.prototype.productElement__I__O = (function(x$1) {
   switch (x$1) {
     case 0: {
-      return this.$$undname$1;
+      return this.name$1;
       break
     }
     case 1: {
-      return this.$$undemail$1;
+      return this.email$1;
       break
     }
     default: {
