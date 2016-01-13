@@ -3,4 +3,6 @@
 /project/*-shim.sbt
 /project/project/
 /project/target/
+/target/
+!./BurningChatScala/target/scala-2.11/burningchatscala-fastopt.js
 /.idea/

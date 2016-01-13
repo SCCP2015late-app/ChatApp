@@ -19,7 +19,7 @@
   const PROP_02 = new RegistrationItem(NAME_02, EMAIL_02);
   const PROP_03 = new RegistrationItem(NAME_03, EMAIL_03);
   
-  const OWNER = new Owner(0, PROP_00);
+  const OWNER = new Member(0, PROP_00);
   const MEMBER_01 = new Member(1, PROP_01);
   const MEMBER_02 = new Member(2, PROP_02);
   const MEMBER_03 = new Member(3, PROP_03);
@@ -94,6 +94,26 @@
     };
   });
   
+  var string_to_buffer = function(src) {
+  return (new Uint8Array([].map.call(src, function(c) {
+    return c.charCodeAt(0);
+  }))).buffer;
+};
+  
+  app.controller('MainAreaController', function($scope, ngDialog) {
+    // モード（グループ選択、メッセージリスト）
+    $scope.MODES = {GROUP: 'group', MESSAGE: 'message'};
+    
+    $scope.mode = $scope.MODES.MESSAGE;
+    $scope.groups = [group];
+    
+    $scope.onClick = function(selectedGroup) {
+      ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
+        $scope.group = selectedGroup;
+      }]});
+    };
+  });
+  
   app.controller('TimeLineController', function($scope, ngDialog) {
     
     $scope.group = group;
@@ -112,7 +132,8 @@
     });
     
     Env().onUpdateMessageListener.addCallback(function(message) {
-      
+      $scope.group.addMessage(message);
+      console.log("add message: " + message.body);
     });
     
     $scope.onClickMessageListener = Env().onClickMessageListener;

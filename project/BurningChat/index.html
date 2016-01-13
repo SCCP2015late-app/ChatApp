@@ -5,20 +5,20 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-16">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+
   <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog.css">
   <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog.css">
   <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog-theme-default.css">
   <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog-theme-plain.css">
-  
+
   <!-- Components -->
   <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script type="text/javascript" src="./bower_components/angular-animate/angular-animate.min.js"></script>
   <script type="text/javascript" src="./bower_components/ng-dialog/js/ngDialog.js"></script>
-  
+
   <script type="text/javascript" src="./BurningChatScala/target/scala-2.11/burningchatscala-fastopt.js"></script>
-  <!--<script type="text/javascript" src="chatgroup.js"></script>-->
   <script type="text/javascript" src="main.js"></script>
   <script type="text/javascript" src="contents.js"></script>
 </head>
@@ -42,37 +42,79 @@
       </div>
       </div>
       <div class="inout_animation" ng-if="toolsOpened">
-        <h3>Moge-</h3>
+        <div id="user_setting_header">
+          <h3>User Setting</h3>
+        </div>
+        <div id="user_setting_list">
+          <div class="inout_animation" ng-if="!toolsNameOpened" >
+          <h3>Name:<br>{{you.regItem.name}}
+            <img class="rotate_hover_animation" ng-click="onToolNameClick()" src="./assets/settings.png" width="28px" height="28px" />
+          </div>
+          <div class="inout_animation" ng-if="toolsNameOpened">
+            <h3>Name:<br>{{you.regItem.name}}
+            <img class="rotate_hover_animation" ng-click="onToolNameClick()" src="./assets/settings.png" width="28px" height="28px" />
+            <input type="text" size="10" name="change_name" style="color:#424242" ng-model="set_name" ng-required="true" ng-minlength=1 ng-maxlength=8>
+            <img class="rotate_infhover_animation" ng-click="!onToolNameClick()" src="./assets/set_refresh.png" width="24px" height="24px" />
+          </div>
+          <div class="inout_animation" ng-if="!toolsEmailOpened">
+          <h3>E-mail:<br>{{you.regItem.email}}
+            <img class="rotate_hover_animation" ng-click="onToolEmailClick()" src="./assets/settings.png" width="28px" height="28px" />
+          </div>
+          <div class="inout_animation" ng-if="toolsEmailOpened" >
+            <h3>E-mail:<br>{{you.regItem.email}}
+            <img class="rotate_hover_animation" ng-click="onToolEmailClick()" src="./assets/settings.png" width="28px" height="28px" />
+            <input type="text" name="change_email" size="10" ng-model="set_email" style="color:#424242" ng-required="true" ng-minlength=1 ng-maxlength=4>
+            <img class="rotate_infhover_animation" ng-click="!onToolEmailClick()" src="./assets/set_refresh.png" width="24px" height="24px" />
+          </div>
+        </div>
       </div>
       <div id="navigation_tool">
         <img class="rotate_hover_animation" ng-click="onToolClick()" src="./assets/settings.png" width="28px" height="28px" />
       </div>
     </div>
-    <div id="message_area">
-      <div id="time_line" ng-controller="TimeLineController">
-        <div ng-repeat="message in group.messageArray">
-          <div id="time_line_item" ng-click="onClickMessageListener.callAllCallback(message)">
-            <h2 id="initial" ng-style="toStyle(message.member.userColor)">{{message.member.regItem.name.toUpperCase()[0]}}</h2>
-            <p id="name">{{message.member.regItem.name}}</p>
-            <p id="text_message">{{message.body}}</p>
-            <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.image == null}}"/>
-            
-            <!--Dialog Script-->
-            <script type="text/ng-template" id="messageDetailDialog">
-		      	  <h3>[From] @{{message.member.id}}#{{group.id}}: {{message.member.regItem.name}}</h3>
-		      	  <p>ID: {{message.id}}</p>
-		      	  <p>Body: {{message.body}}</p>
-		      	  <p>Date: {{message.date}}</p>
-		        </script>
+    <div id="main_area" ng-controller="MainAreaController">
+      <div id="message_area" ng-if="mode == MODES.MESSAGE">
+        <div id="time_line" ng-controller="TimeLineController">
+          <div ng-repeat="message in group.messageArray">
+            <div id="time_line_item" ng-click="onClickMessageListener.callAllCallback(message)">
+              <h2 id="initial" ng-style="toStyle(message.member.userColor)">{{message.member.regItem.name.toUpperCase()[0]}}</h2>
+              <p id="name">{{message.member.regItem.name}}</p>
+              <p id="text_message">{{message.body}}</p>
+              <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.image == null}}"/>
+              
+              <!--Dialog Script-->
+              <script type="text/ng-template" id="messageDetailDialog">
+		        	  <h3>[From] @{{message.member.id}}#{{group.id}}: {{message.member.regItem.name}}</h3>
+		        	  <p>ID: {{message.id}}</p>
+		        	  <p>Body: {{message.body}}</p>
+		        	  <p>Date: {{message.date}}</p>
+		          </script>
+            </div>
           </div>
         </div>
+        <div id="mention_form" ng-controller="MentionForm">
+          <form>
+            <input type="image" id="message_sender" ng-click="onSend()" src="./assets/plus.png" height="0px" width="0px"/>
+            <input type="text" ng-model="messageBody" ng-click="onSend()"/>
+            <input type="image" ng-click="addImage()" src="./assets/plus.png" height="44px" width="44px" />
+          </form>
+        </div>
       </div>
-      <div id="mention_form" ng-controller="MentionForm">
-        <form>
-          <input type="image" id="message_sender" ng-click="onSend()" src="./assets/plus.png" height="0px" width="0px"/>
-          <input type="text" ng-model="messageBody" ng-click="onSend()"/>
-          <input type="image" ng-click="addImage()" src="./assets/plus.png" height="44px" width="44px" />
-        </form>
+      <div id="group_selection" ng-if="mode == MODES.GROUP">
+        <h2>Group Selection</h2>
+        <div id="group_item" ng-repeat="group in groups">
+          <div ng-click="onClick(group)">
+            <h3>{{group.name}}</h3>
+          </div>
+        </div>
+        <script type="text/ng-template" id="groupDetailDialog">
+          <div id="group_detail_dialog">
+            <h3 id="group_owner">Owner: {{group.owner.owner_regItem.name}}</h3>
+            <div id="join_button_group">
+              <img id="join_button" src="./assets/join.png" height="40px" width="40px"></img>
+            </div>
+          </div>
+          </script>
       </div>
     </div>
   </div>
