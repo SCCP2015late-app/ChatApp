@@ -1,0 +1,17 @@
+[0m[[0minfo[0m] [0mFast optimizing /Users/misoton/work/sccp/SCCP2015/late/ChatApp/project/BurningChat/BurningChatScala/target/scala-2.11/burningchatscala-fastopt.js[0m
+[0m[[0mdebug[0m] [0mLinker: Read info: 10861 us[0m
+[0m[[0mdebug[0m] [0mLinker: Compute reachability: 146698 us[0m
+[0m[[0mdebug[0m] [0mLinker: Assemble LinkedClasses: 34829 us[0m
+[0m[[0mdebug[0m] [0mLinker: cache stats: reused: 3301 -- invalidated: 9 -- trees read: 6[0m
+[0m[[0mdebug[0m] [0mLinker: 197458 us[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Batch mode: false[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Incremental part: 63298 us[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Optimizing 85 methods.[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Optimizer part: 10453 us[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: 78810 us[0m
+[0m[[0mdebug[0m] [0mRefiner: Compute reachability: 54077 us[0m
+[0m[[0mdebug[0m] [0mRefiner: Assemble LinkedClasses: 3822 us[0m
+[0m[[0mdebug[0m] [0mRefiner: 58098 us[0m
+[0m[[0mdebug[0m] [0mEmitter: Class tree cache stats: reused: 73 -- invalidated: 6[0m
+[0m[[0mdebug[0m] [0mEmitter: Method tree cache stats: resued: 195 -- invalidated: 53[0m
+[0m[[0mdebug[0m] [0mEmitter (write output): 59609 us[0m
