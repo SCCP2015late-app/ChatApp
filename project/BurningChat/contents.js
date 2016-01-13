@@ -96,6 +96,12 @@
     };
   });
   
+  var string_to_buffer = function(src) {
+  return (new Uint8Array([].map.call(src, function(c) {
+    return c.charCodeAt(0);
+  }))).buffer;
+};
+  
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
     $scope.MODES = {GROUP: 'group', MESSAGE: 'message'};
@@ -104,9 +110,23 @@
     $scope.groups = [group];
     
     $scope.onClick = function(selectedGroup) {
-      ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
-        $scope.group = selectedGroup;
-      }]});
+      // ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
+      //   $scope.group = selectedGroup;
+      // }]});
+      console.log('POPOPOPOPO');
+      var bind_address = '127.0.0.1';
+      var bind_port = 22222;
+      var server_address = '127.0.0.1';
+      var server_port = 33333;
+      var data = string_to_buffer("hogehoge");
+      chrome.sockets.udp.create({}, function(createInfo) {
+        chrome.sockets.udp.bind(createInfo.socketId, bind_address, bind_port, function(result){
+          chrome.sockets.udp.send(createInfo.socketId, data, server_address, server_port, function(sendInfo) {
+           console.log('poe: ' + sendInfo.resultCode);
+            chrome.sockets.udp.close(createInfo.socketId, function(){});
+          });
+        });
+      });
     };
   });
   

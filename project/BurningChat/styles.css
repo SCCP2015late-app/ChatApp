@@ -241,6 +241,13 @@ input:focus {
   word-break: break-all;
 }
 
-#group_item #join_group_button {
-  right: 0;
+#join_button_group {
+  right: 30px;
+  top: 30px;
+  position: absolute;
+  width: 40px;
+}
+
+#group_detail_dialog h3 {
+  width: 200px;
 }

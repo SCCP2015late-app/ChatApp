@@ -15,5 +15,11 @@
     "background": {
       "scripts": ["background.js"]
     }
+  },
+  "sockets": {
+    "udp": {
+      "bind" : "*",
+      "send" : "*"
+    }
   }
 }

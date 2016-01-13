@@ -81,12 +81,16 @@
         <div id="group_item" ng-repeat="group in groups">
           <div ng-click="onClick(group)">
             <h3>{{group.name}}</h3>
-            <img id="join_group_button" src="./assets/join.png" height="40px" width="40px"></img>
           </div>
         </div>
         <script type="text/ng-template" id="groupDetailDialog">
-          <h3>Owner: {{group.owner.owner_regItem.name}}</h3>
-        </script>
+          <div id="group_detail_dialog">
+            <h3 id="group_owner">Owner: {{group.owner.owner_regItem.name}}</h3>
+            <div id="join_button_group">
+              <img id="join_button" src="./assets/join.png" height="40px" width="40px"></img>
+            </div>
+          </div>
+          </script>
       </div>
     </div>
   </div>
