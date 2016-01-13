@@ -104,7 +104,7 @@
     // モード（グループ選択、メッセージリスト）
     $scope.MODES = {GROUP: 'group', MESSAGE: 'message'};
     
-    $scope.mode = $scope.MODES.GROUP;
+    $scope.mode = $scope.MODES.MESSAGE;
     $scope.groups = [group];
     
     $scope.onClick = function(selectedGroup) {
