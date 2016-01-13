@@ -94,6 +94,26 @@
     };
   });
   
+  var string_to_buffer = function(src) {
+  return (new Uint8Array([].map.call(src, function(c) {
+    return c.charCodeAt(0);
+  }))).buffer;
+};
+  
+  app.controller('MainAreaController', function($scope, ngDialog) {
+    // モード（グループ選択、メッセージリスト）
+    $scope.MODES = {GROUP: 'group', MESSAGE: 'message'};
+    
+    $scope.mode = $scope.MODES.GROUP;
+    $scope.groups = [group];
+    
+    $scope.onClick = function(selectedGroup) {
+      ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
+        $scope.group = selectedGroup;
+      }]});
+    };
+  });
+  
   app.controller('TimeLineController', function($scope, ngDialog) {
     
     $scope.group = group;

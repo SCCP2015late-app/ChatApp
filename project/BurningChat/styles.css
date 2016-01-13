@@ -242,6 +242,7 @@ input:focus {
 
 #group_item h3{
   margin: auto auto;
+  word-break: break-all;
 }
 
 #group_item #join_group_button {
@@ -273,4 +274,15 @@ input:focus {
   padding: 10px;
   margin: 0 auto;
   text-align: left;
+}
+
+#join_button_group {
+  right: 30px;
+  top: 30px;
+  position: absolute;
+  width: 40px;
+}
+
+#group_detail_dialog h3 {
+  width: 200px;
 }
