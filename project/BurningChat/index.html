@@ -60,7 +60,7 @@
           <h3>E-mail:<br>{{you.regItem.email}}
             <img class="rotate_hover_animation" ng-click="onToolEmailClick()" src="./assets/settings.png" width="28px" height="28px" />
           </div>
-          <div class="inout_animation" ng-if="toolsEmailOpened" >
+          <div class="inout_animation" ng-if="toolsEmailOpened">
             <h3>E-mail:<br>{{you.regItem.email}}
             <img class="rotate_hover_animation" ng-click="onToolEmailClick()" src="./assets/settings.png" width="28px" height="28px" />
             <input type="text" name="change_email" size="10" ng-model="set_email" style="color:#424242" ng-required="true" ng-minlength=1 ng-maxlength=4>
@@ -81,7 +81,7 @@
               <p id="name">{{message.member.regItem.name}}</p>
               <p id="text_message">{{message.body}}</p>
               <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.image == null}}"/>
-              
+
               <!--Dialog Script-->
               <script type="text/ng-template" id="messageDetailDialog">
 		        	  <h3>[From] @{{message.member.id}}#{{group.id}}: {{message.member.regItem.name}}</h3>
