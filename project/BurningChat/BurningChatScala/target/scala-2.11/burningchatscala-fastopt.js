@@ -1074,7 +1074,9 @@ function $c_Lorg_sccp2015_burningchat_AppEnvironment$() {
   this.USER$undCOLORS$1 = null;
   this.onClickMessageListener$1 = null;
   this.onSendMessageListener$1 = null;
-  this.onUpdateMessageListener$1 = null
+  this.onUpdateMessageListener$1 = null;
+  this.onSetRegistrationItemListener$1 = null;
+  this.onAddImageListener$1 = null
 }
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype = new $h_O();
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.constructor = $c_Lorg_sccp2015_burningchat_AppEnvironment$;
@@ -1083,16 +1085,21 @@ function $h_Lorg_sccp2015_burningchat_AppEnvironment$() {
   /*<skip>*/
 }
 $h_Lorg_sccp2015_burningchat_AppEnvironment$.prototype = $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype;
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onClickMessageListener__O = (function() {
+  return this.onClickMessageListener$1
+});
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.init___ = (function() {
   $n_Lorg_sccp2015_burningchat_AppEnvironment$ = this;
   this.USER$undCOLORS$1 = ["#f44336", "#2196F3", "#4CAF50", "#FF9800", "#3F51B5"];
   this.onClickMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onSendMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onUpdateMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onSetRegistrationItemListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onAddImageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   return this
 });
-$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onClickMessageListener__O = (function() {
-  return this.onClickMessageListener$1
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onSetRegistrationItemListener__O = (function() {
+  return this.onSetRegistrationItemListener$1
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onUpdateMessageListener__O = (function() {
   return this.onUpdateMessageListener$1
@@ -1102,6 +1109,9 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$USER$u
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onSendMessageListener__O = (function() {
   return this.onSendMessageListener$1
+});
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onAddImageListener__O = (function() {
+  return this.onAddImageListener$1
 });
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "USER_COLORS", {
   "get": (function() {
@@ -1124,6 +1134,18 @@ Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype,
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onUpdateMessageListener", {
   "get": (function() {
     return this.$$js$exported$prop$onUpdateMessageListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onSetRegistrationItemListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onSetRegistrationItemListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onAddImageListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onAddImageListener__O()
   }),
   "enumerable": true
 });
@@ -3341,6 +3363,9 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$memberArray_
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$owner__O = (function() {
+  return this.owner$1
+});
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burningchat_Member__sjs_js_Array__sjs_js_Array = (function(id, name, owner, memberArray, messageArray) {
   this.id$1 = id;
   this.name$1 = name;
@@ -3348,9 +3373,6 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burn
   this.memberArray$1 = memberArray;
   this.messageArray$1 = messageArray;
   return this
-});
-$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$owner__O = (function() {
-  return this.owner$1
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.addMessage__Lorg_sccp2015_burningchat_Message__V = (function(message) {
   var array = this.messageArray$1;
