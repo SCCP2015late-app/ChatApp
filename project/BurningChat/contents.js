@@ -19,11 +19,11 @@
   const PROP_02 = new RegistrationItem(NAME_02, EMAIL_02);
   const PROP_03 = new RegistrationItem(NAME_03, EMAIL_03);
 
-  const OWNER = new Member(0, PROP_00);
+  const OWNER = new Member("zero", 0, PROP_00);
 
-  const MEMBER_01 = new Member(1, PROP_01);
-  const MEMBER_02 = new Member(2, PROP_02);
-  const MEMBER_03 = new Member(3, PROP_03);
+  const MEMBER_01 = new Member("one", 1, PROP_01);
+  const MEMBER_02 = new Member("two", 2, PROP_02);
+  const MEMBER_03 = new Member("three", 3, PROP_03);
 
   const MEMBERS = [
       OWNER,
@@ -32,7 +32,7 @@
       MEMBER_03
     ];
 
-  const YOU = new Member(2, new RegistrationItem("magro", "test@u-aizu.ac.jp"));
+  const YOU = new Member("two", 2, new RegistrationItem("magro", "test@u-aizu.ac.jp"));
 
   const MESSAGES = [
       new Message(0, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
@@ -76,7 +76,6 @@
           el[0].scrollTop = newHeight - oldHeight;
         });
     };
-
 
   });
 
