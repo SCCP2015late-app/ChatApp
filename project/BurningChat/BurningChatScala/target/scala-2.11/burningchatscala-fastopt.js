@@ -1076,7 +1076,8 @@ function $c_Lorg_sccp2015_burningchat_AppEnvironment$() {
   this.onSendMessageListener$1 = null;
   this.onUpdateMessageListener$1 = null;
   this.onSetRegistrationItemListener$1 = null;
-  this.onAddImageListener$1 = null
+  this.onAddImageListener$1 = null;
+  this.onErrorOccurredListener$1 = null
 }
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype = new $h_O();
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.constructor = $c_Lorg_sccp2015_burningchat_AppEnvironment$;
@@ -1088,6 +1089,9 @@ $h_Lorg_sccp2015_burningchat_AppEnvironment$.prototype = $c_Lorg_sccp2015_burnin
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onClickMessageListener__O = (function() {
   return this.onClickMessageListener$1
 });
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onErrorOccurredListener__O = (function() {
+  return this.onErrorOccurredListener$1
+});
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.init___ = (function() {
   $n_Lorg_sccp2015_burningchat_AppEnvironment$ = this;
   this.USER$undCOLORS$1 = ["#f44336", "#2196F3", "#4CAF50", "#FF9800", "#3F51B5"];
@@ -1096,6 +1100,7 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.init___ = (function() {
   this.onUpdateMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onSetRegistrationItemListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onAddImageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onErrorOccurredListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   return this
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onSetRegistrationItemListener__O = (function() {
@@ -1146,6 +1151,12 @@ Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype,
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onAddImageListener", {
   "get": (function() {
     return this.$$js$exported$prop$onAddImageListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onErrorOccurredListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onErrorOccurredListener__O()
   }),
   "enumerable": true
 });
