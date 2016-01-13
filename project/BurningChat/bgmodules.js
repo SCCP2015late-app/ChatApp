@@ -1,10 +1,42 @@
-function msgBroadcastRequest(uid, body){
+//ワシ担当
 
+function msgBroadcastRequest(Message){//massageを受け取ってjsonにしてownerになげる
+    var nowDate = new Date();
+    var picnum = 0;
+    var msg = {
+    　"u_id": Message.id.toString(),
+    　//"u_name": string,
+    　"date": nowDate,
+    　"body": Message.body,
+    　"pict_flag": false, //画像が添付されているかどうか
+    　"pict_name": null,
+    };
+    
+    if(Message.image==null){
+        json_text = JSON.stringify(msg);
+        msgBroadcast(json_text);
+    } else {
+        msg["pict_flag"] = true;
+        msg["pict_name"] = "pic" + picnum.toString();
+        picName++;
+        var pict = {
+            "name": msg["pict_name"],
+            "data": Message.image,
+        };
+        
+        var json_text = JSON.stringify(msg);
+        msgBroadcast(json_text);
+        pictBroadcastRequest(pict);
+    }
+    
 }
 
 //TODO least priority
 function pictBroadcastRequest(name, pict){
     //画像の拡張子を全て小文字に変換する処理を入れる必要がある
+    pict["data"] = base64encode(pict["data"]);
+    var json_pict = JSON.stringify(pict);
+    pictBroadcast(json_pict);
 }
 
 function msgObjectRecv(){
@@ -22,7 +54,7 @@ function pictObjectRecv(){
     }
 }
 
-function updateMsgList(){
+function updateMsgList(){//
 
 }
 
@@ -31,6 +63,7 @@ function savePict(filename, encodedPict){
     var binPict = base64decode(encodedPict);
     var filepath = "./downloads/" + filename;
 }
+// ここまで
 
 function sendGroupInfo(){
     var r = JSON.stringify({g_id: id, owner_id: owner, members: jsonizeMembers(), msglist: jsonizeMessages()});
