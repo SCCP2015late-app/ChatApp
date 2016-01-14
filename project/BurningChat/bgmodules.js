@@ -1,4 +1,4 @@
-//ワシ担当
+
 
 function msgBroadcastRequest(Message){//massageを受け取ってjsonにしてownerになげる
     var nowDate = new Date();
@@ -54,7 +54,7 @@ function pictObjectRecv(){
     }
 }
 
-function updateMsgList(){//
+function updateMsgList(){
 
 }
 
@@ -63,53 +63,80 @@ function savePict(filename, encodedPict){
     var binPict = base64decode(encodedPict);
     var filepath = "./downloads/" + filename;
 }
-// ここまで
 
 function sendGroupInfo(){
-    var r = JSON.stringify({g_id: id, owner_id: owner, members: jsonizeMembers(), msglist: jsonizeMessages()});
-    //TODO
-    sendToUser(r);
+    var group_info = jsonizeGroupInfo();
+    sendTo(dest_IP, group_info);
 }
 
 function sendMsgList(){
-
+    var msg_list = jsonizeMessages();
+    sendTo(dest_IP, msg_list);
 }
-
 
 function requestRecv(){
-    if(obj.isMessage == true){
-        msgBroadcast(obj);
-    }else if(obj.isPicture == true){
-        pictBroadcast(obj);
-    }
+
 }
+
 
 function msgBroadcast(){
     sendToAll(obj);
 }
 
+//TODO least priority
 function pictBroadcast(){
     sendToAll(obj);
 }
 
 function modifyUserInfo(){
-//ユーザ情報の変更
+    //ユーザ情報の変更
+    //reg itemをもとにuser informationのJSONを変更してファイルに書き込む
+    //Listenerを叩いてフロントに変更を伝える
 }
 
 function initializeGroup(){
-//ストレージからとってきたデータを使ってグループを初期化する
+    //ストレージからとってきたデータを使ってグループを初期化する
 }
 
 function jsonizeMessages(){
-    JSON.stringify()
+    var ret = [];
+    for(var i = 0; i < group.messageArray.length; i++){
+        var buf = {
+            "u_id": group.messageArray[i].id,
+            "u_name": group.messageArray[i].member.regItem.name,
+            "date": group.messageArray[i].date,
+            "body": group.messageArray[i].body,
+            "pict_flag": group.messageArray[i].flag,
+            "pict_name": group.messageArray[i].image
+        };
+        ret.push(buf);
+    }
+    return ret;
 }
 
 function jsonizeMembers(){
-    JSON.stringify()
+    var ret = [];
+    for(var i = 0; i < group.memberArray.length; i++){
+        var buf = {
+            "u_id": group.memberArray[i].id,
+            "u_name": group.memberArray[i].regItem.name,
+            "e-mail": group.memberArray[i].regItem.email
+        };
+        ret.push(buf);
+    }
+    return ret;
 }
 
 function jsonizeGroupInfo(){
-    JSON.stringify()
+    var messages = jsonizeMessages();
+    var members = jsonizeMembers();
+    var g_info = JSON.stringify({
+        "g_id": group.id,
+        "owner_id": group.owner.id,
+        "user_list": members,
+        "msg_list": messages
+    }, null, "    ");
+   return g_info;
 }
 
 // BASE64 (RFC2045) Encode/Decode for string in JavaScript
