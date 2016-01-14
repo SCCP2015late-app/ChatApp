@@ -29,4 +29,7 @@ object AppEnvironment {
 
   @JSExport
   val onAddImageListener = new EventListener
+
+  @JSExport
+  val onErrorOccurredListener = new EventListener
 }

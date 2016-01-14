@@ -1074,7 +1074,10 @@ function $c_Lorg_sccp2015_burningchat_AppEnvironment$() {
   this.USER$undCOLORS$1 = null;
   this.onClickMessageListener$1 = null;
   this.onSendMessageListener$1 = null;
-  this.onUpdateMessageListener$1 = null
+  this.onUpdateMessageListener$1 = null;
+  this.onSetRegistrationItemListener$1 = null;
+  this.onAddImageListener$1 = null;
+  this.onErrorOccurredListener$1 = null
 }
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype = new $h_O();
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.constructor = $c_Lorg_sccp2015_burningchat_AppEnvironment$;
@@ -1083,16 +1086,25 @@ function $h_Lorg_sccp2015_burningchat_AppEnvironment$() {
   /*<skip>*/
 }
 $h_Lorg_sccp2015_burningchat_AppEnvironment$.prototype = $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype;
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onClickMessageListener__O = (function() {
+  return this.onClickMessageListener$1
+});
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onErrorOccurredListener__O = (function() {
+  return this.onErrorOccurredListener$1
+});
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.init___ = (function() {
   $n_Lorg_sccp2015_burningchat_AppEnvironment$ = this;
   this.USER$undCOLORS$1 = ["#f44336", "#2196F3", "#4CAF50", "#FF9800", "#3F51B5"];
   this.onClickMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onSendMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onUpdateMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onSetRegistrationItemListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onAddImageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onErrorOccurredListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   return this
 });
-$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onClickMessageListener__O = (function() {
-  return this.onClickMessageListener$1
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onSetRegistrationItemListener__O = (function() {
+  return this.onSetRegistrationItemListener$1
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onUpdateMessageListener__O = (function() {
   return this.onUpdateMessageListener$1
@@ -1102,6 +1114,9 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$USER$u
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onSendMessageListener__O = (function() {
   return this.onSendMessageListener$1
+});
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onAddImageListener__O = (function() {
+  return this.onAddImageListener$1
 });
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "USER_COLORS", {
   "get": (function() {
@@ -1124,6 +1139,24 @@ Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype,
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onUpdateMessageListener", {
   "get": (function() {
     return this.$$js$exported$prop$onUpdateMessageListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onSetRegistrationItemListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onSetRegistrationItemListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onAddImageListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onAddImageListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onErrorOccurredListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onErrorOccurredListener__O()
   }),
   "enumerable": true
 });
@@ -3341,6 +3374,9 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$memberArray_
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$owner__O = (function() {
+  return this.owner$1
+});
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burningchat_Member__sjs_js_Array__sjs_js_Array = (function(id, name, owner, memberArray, messageArray) {
   this.id$1 = id;
   this.name$1 = name;
@@ -3348,9 +3384,6 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burn
   this.memberArray$1 = memberArray;
   this.messageArray$1 = messageArray;
   return this
-});
-$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$owner__O = (function() {
-  return this.owner$1
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.addMessage__Lorg_sccp2015_burningchat_Message__V = (function(message) {
   var array = this.messageArray$1;
@@ -3473,7 +3506,8 @@ $e["ChatGroup"].prototype = $c_Lorg_sccp2015_burningchat_ChatGroup.prototype;
 /** @constructor */
 function $c_Lorg_sccp2015_burningchat_Member() {
   $c_O.call(this);
-  this.id$1 = 0;
+  this.id$1 = null;
+  this.number$1 = 0;
   this.regItem$1 = null;
   this.userColor$1 = null
 }
@@ -3484,18 +3518,21 @@ function $h_Lorg_sccp2015_burningchat_Member() {
   /*<skip>*/
 }
 $h_Lorg_sccp2015_burningchat_Member.prototype = $c_Lorg_sccp2015_burningchat_Member.prototype;
+$c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$prop$number__O = (function() {
+  return this.number$1
+});
 $c_Lorg_sccp2015_burningchat_Member.prototype.productPrefix__T = (function() {
   return "Member"
 });
 $c_Lorg_sccp2015_burningchat_Member.prototype.productArity__I = (function() {
-  return 2
+  return 3
 });
 $c_Lorg_sccp2015_burningchat_Member.prototype.equals__O__Z = (function(x$1) {
   if ((this === x$1)) {
     return true
   } else if ($is_Lorg_sccp2015_burningchat_Member(x$1)) {
     var Member$1 = $as_Lorg_sccp2015_burningchat_Member(x$1);
-    if ((this.id$1 === Member$1.id$1)) {
+    if (((this.id$1 === Member$1.id$1) && (this.number$1 === Member$1.number$1))) {
       var x = this.regItem$1;
       var x$2 = Member$1.regItem$1;
       return ((x === null) ? (x$2 === null) : x.equals__O__Z(x$2))
@@ -3513,6 +3550,10 @@ $c_Lorg_sccp2015_burningchat_Member.prototype.productElement__I__O = (function(x
       break
     }
     case 1: {
+      return this.number$1;
+      break
+    }
+    case 2: {
       return this.regItem$1;
       break
     }
@@ -3523,6 +3564,13 @@ $c_Lorg_sccp2015_burningchat_Member.prototype.productElement__I__O = (function(x
 });
 $c_Lorg_sccp2015_burningchat_Member.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
+});
+$c_Lorg_sccp2015_burningchat_Member.prototype.init___T__I__Lorg_sccp2015_burningchat_RegistrationItem = (function(id, number, regItem) {
+  this.id$1 = id;
+  this.number$1 = number;
+  this.regItem$1 = regItem;
+  this.userColor$1 = $as_T($m_Lorg_sccp2015_burningchat_AppEnvironment$().USER$undCOLORS$1[(number % $uI($m_Lorg_sccp2015_burningchat_AppEnvironment$().USER$undCOLORS$1["length"]))]);
+  return this
 });
 $c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$prop$userColor__O = (function() {
   return this.userColor$1
@@ -3535,15 +3583,10 @@ $c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$prop$id__O = (functi
 });
 $c_Lorg_sccp2015_burningchat_Member.prototype.hashCode__I = (function() {
   var acc = (-889275714);
-  acc = $m_sr_Statics$().mix__I__I__I(acc, this.id$1);
+  acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.id$1));
+  acc = $m_sr_Statics$().mix__I__I__I(acc, this.number$1);
   acc = $m_sr_Statics$().mix__I__I__I(acc, $m_sr_Statics$().anyHash__O__I(this.regItem$1));
-  return $m_sr_Statics$().finalizeHash__I__I__I(acc, 2)
-});
-$c_Lorg_sccp2015_burningchat_Member.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem = (function(id, regItem) {
-  this.id$1 = id;
-  this.regItem$1 = regItem;
-  this.userColor$1 = $as_T($m_Lorg_sccp2015_burningchat_AppEnvironment$().USER$undCOLORS$1[(id % $uI($m_Lorg_sccp2015_burningchat_AppEnvironment$().USER$undCOLORS$1["length"]))]);
-  return this
+  return $m_sr_Statics$().finalizeHash__I__I__I(acc, 3)
 });
 $c_Lorg_sccp2015_burningchat_Member.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
@@ -3557,6 +3600,12 @@ $c_Lorg_sccp2015_burningchat_Member.prototype.$$js$exported$prop$regItem__O = (f
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_Member.prototype, "id", {
   "get": (function() {
     return this.$$js$exported$prop$id__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_Member.prototype, "number", {
+  "get": (function() {
+    return this.$$js$exported$prop$number__O()
   }),
   "enumerable": true
 });
@@ -3600,11 +3649,12 @@ var $d_Lorg_sccp2015_burningchat_Member = new $TypeData().initClass({
 });
 $c_Lorg_sccp2015_burningchat_Member.prototype.$classData = $d_Lorg_sccp2015_burningchat_Member;
 /** @constructor */
-$e["Member"] = (function(arg$1, arg$2) {
+$e["Member"] = (function(arg$1, arg$2, arg$3) {
   var $thiz = new $c_Lorg_sccp2015_burningchat_Member();
-  var prep0 = $uI(arg$1);
-  var prep1 = $as_Lorg_sccp2015_burningchat_RegistrationItem(arg$2);
-  $c_Lorg_sccp2015_burningchat_Member.prototype.init___I__Lorg_sccp2015_burningchat_RegistrationItem.call($thiz, prep0, prep1);
+  var prep0 = $as_T(arg$1);
+  var prep1 = $uI(arg$2);
+  var prep2 = $as_Lorg_sccp2015_burningchat_RegistrationItem(arg$3);
+  $c_Lorg_sccp2015_burningchat_Member.prototype.init___T__I__Lorg_sccp2015_burningchat_RegistrationItem.call($thiz, prep0, prep1, prep2);
   return $thiz
 });
 $e["Member"].prototype = $c_Lorg_sccp2015_burningchat_Member.prototype;

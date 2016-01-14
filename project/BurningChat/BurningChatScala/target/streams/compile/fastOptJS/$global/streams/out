@@ -1,17 +1,17 @@
 [0m[[0minfo[0m] [0mFast optimizing /Users/misoton/work/sccp/SCCP2015/late/ChatApp/project/BurningChat/BurningChatScala/target/scala-2.11/burningchatscala-fastopt.js[0m
-[0m[[0mdebug[0m] [0mLinker: Read info: 12995 us[0m
-[0m[[0mdebug[0m] [0mLinker: Compute reachability: 266645 us[0m
-[0m[[0mdebug[0m] [0mLinker: Assemble LinkedClasses: 38311 us[0m
-[0m[[0mdebug[0m] [0mLinker: cache stats: reused: 3301 -- invalidated: 8 -- trees read: 4[0m
-[0m[[0mdebug[0m] [0mLinker: 321847 us[0m
+[0m[[0mdebug[0m] [0mLinker: Read info: 6083 us[0m
+[0m[[0mdebug[0m] [0mLinker: Compute reachability: 114255 us[0m
+[0m[[0mdebug[0m] [0mLinker: Assemble LinkedClasses: 23828 us[0m
+[0m[[0mdebug[0m] [0mLinker: cache stats: reused: 3308 -- invalidated: 1 -- trees read: 1[0m
+[0m[[0mdebug[0m] [0mLinker: 147229 us[0m
 [0m[[0mdebug[0m] [0mInc. optimizer: Batch mode: false[0m
-[0m[[0mdebug[0m] [0mInc. optimizer: Incremental part: 72463 us[0m
-[0m[[0mdebug[0m] [0mInc. optimizer: Optimizing 66 methods.[0m
-[0m[[0mdebug[0m] [0mInc. optimizer: Optimizer part: 42351 us[0m
-[0m[[0mdebug[0m] [0mInc. optimizer: 121726 us[0m
-[0m[[0mdebug[0m] [0mRefiner: Compute reachability: 54066 us[0m
-[0m[[0mdebug[0m] [0mRefiner: Assemble LinkedClasses: 4264 us[0m
-[0m[[0mdebug[0m] [0mRefiner: 58521 us[0m
-[0m[[0mdebug[0m] [0mEmitter: Class tree cache stats: reused: 73 -- invalidated: 4[0m
-[0m[[0mdebug[0m] [0mEmitter: Method tree cache stats: resued: 206 -- invalidated: 43[0m
-[0m[[0mdebug[0m] [0mEmitter (write output): 75853 us[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Incremental part: 55685 us[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Optimizing 3 methods.[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Optimizer part: 2677 us[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: 61909 us[0m
+[0m[[0mdebug[0m] [0mRefiner: Compute reachability: 36969 us[0m
+[0m[[0mdebug[0m] [0mRefiner: Assemble LinkedClasses: 3541 us[0m
+[0m[[0mdebug[0m] [0mRefiner: 40722 us[0m
+[0m[[0mdebug[0m] [0mEmitter: Class tree cache stats: reused: 76 -- invalidated: 1[0m
+[0m[[0mdebug[0m] [0mEmitter: Method tree cache stats: resued: 251 -- invalidated: 2[0m
+[0m[[0mdebug[0m] [0mEmitter (write output): 57498 us[0m
