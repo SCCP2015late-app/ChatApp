@@ -4,6 +4,8 @@ require 'sinatra'
 require 'json'
 
 class Group
+  attr_reader :id 
+
   def initialize(id, name, owner, member_num)
     @id = id
     @name = name
@@ -68,6 +70,20 @@ module GroupManager extend self
     json += ']'
     json
   end
+
+  def update(target_group)
+    result = '0'
+    tmp = @@groups.map {|group|
+      if group.id == target_group.id then
+        result = '1'
+        target_group
+      else
+        group
+      end
+    }
+    @@groups = tmp
+    result
+  end
 end
 
 GroupManager.initManager()
@@ -93,4 +109,10 @@ end
 
 get '/groupList' do
   GroupManager.getGroupListAsJson
+end
+
+post '/updateGroupInfo' do
+  group = Group.fromJson(request.body.read)
+  result = GroupManager.update(group)
+  result
 end
