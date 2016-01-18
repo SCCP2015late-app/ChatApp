@@ -23,18 +23,19 @@ class Group
 end
 
 class Member
-  def initialize(id, name, email)
+  def initialize(id, name, ip_addr, email)
     @id = id
     @name = name
+    @ip_addr = ip_addr
     @email = email
   end
 
   def toHash()
-    {:id => @id, :name => @name, :email => @email}
+    {:id => @id, :name => @name, :ip_addr => @ip_addr, :email => @email}
   end
 
   def self.fromHash(hash)
-    Member.new(hash['id'], hash['name'], hash['email'])
+    Member.new(hash['id'], hash['name'], hash['ip_addr'], hash['email'])
   end
 end
 
@@ -58,6 +59,15 @@ module GroupManager extend self
   def getGroupList()
     @@groups
   end
+
+  def getGroupListAsJson()
+    json = '['
+    json += @@groups.map {|group|
+      group.toJson
+    }.join(', ')
+    json += ']'
+    json
+  end
 end
 
 GroupManager.initManager()
@@ -79,4 +89,8 @@ post '/addNewGroup' do
   rescue
     '0'
   end
+end
+
+get '/groupList' do
+  GroupManager.getGroupListAsJson
 end
