@@ -6,7 +6,7 @@ require 'json'
 class Group
   attr_reader :id 
 
-  def initialize(id, name, owner, member_num)
+  def initialize(id = '', name = '', owner = Member.new(), member_num = 0)
     @id = id
     @name = name
     @owner = owner
@@ -19,13 +19,25 @@ class Group
 
   def self.fromJson(json_str)
     group_hash = JSON.parse(json_str)
-    owner = Member.fromHash(group_hash['owner'])
-    Group.new(group_hash['id'], group_hash['name'], owner, group_hash['member_num'])
+    id = group_hash['id']
+    name = group_hash['name']
+    owner_hash = group_hash['owner']
+    member_num = group_hash['member_num']
+
+    id = '' if id == nil
+    name = '' if name == nil
+    if owner_hash == nil then
+      owner = Member.new()
+    else
+      owner = Member.fromHash(owner_hash)
+    end
+    member_num = '' if member_num == nil
+    Group.new(id, name, owner, member_num)
   end
 end
 
 class Member
-  def initialize(id, name, ip_addr, email)
+  def initialize(id = '', name = '', ip_addr = '', email = '')
     @id = id
     @name = name
     @ip_addr = ip_addr
@@ -37,7 +49,17 @@ class Member
   end
 
   def self.fromHash(hash)
-    Member.new(hash['id'], hash['name'], hash['ip_addr'], hash['email'])
+    id = hash['id']
+    name = hash['name']
+    ip_addr = hash['ip_addr']
+    email = hash['email']
+
+    id = '' if id == nil
+    name = '' if name == nil
+    ip_addr = '' if ip_addr == nil
+    email = '' if email == nil
+
+    Member.new(id, name, ip_addr, email)
   end
 end
 
