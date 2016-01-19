@@ -78,6 +78,8 @@
     };
 
   });
+  
+  var empty_group = new ChatGroup(0, null, null, null, null);
 
   // 仮のgroup
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
@@ -88,7 +90,7 @@
     $scope.you = YOU; // アプリ利用者
     $scope.youOrNot = youOrNot; // 判定関数
     $scope.group = group; // group
-
+    
     // ユーザ登録情報
     $scope.set_name = "";
     $scope.set_email = "";

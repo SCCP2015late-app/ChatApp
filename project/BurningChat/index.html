@@ -27,7 +27,7 @@
   <h3 id="greeting"></h3>
   <div id="contents">
     <div id="navigation_panel" ng-controller="NavigationPanelController">
-      <div class="inout_animation" ng-if="!toolsOpened">
+      <div class="inout_animation" ng-if="!toolsOpened && group.id != 0">
       <div id="group_header">
         <h2>{{group.name.toUpperCase()[0]}}</h2>
         <p>{{group.name}}</p>
@@ -41,7 +41,7 @@
         </ul>
       </div>
       </div>
-      <div class="inout_animation" ng-if="toolsOpened">
+      <div class="inout_animation" ng-if="toolsOpened || group.id == 0">
         <div id="user_setting_header">
           <h3>User Setting</h3>
         </div>
