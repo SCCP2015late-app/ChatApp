@@ -104,17 +104,48 @@ module GroupManager extend self
   end
 
   def update(target_group)
-    result = '0'
+    changed = false
     tmp = @@groups.map {|group|
       if group.id == target_group.id then
-        result = '1'
+        changed = true
         target_group
       else
         group
       end
     }
+  
+    raise "GroupID: \"#{target_group.id}\" has not found" if !changed
+
     @@groups = tmp
-    result
+  end
+end
+
+class Result
+  attr_reader :OK, :FAULT
+
+  # Result Code
+  @@OK = '1'
+  @@FAULT = '0'
+
+  def initialize(code, message)
+    @code = code
+    @message = message
+  end
+
+  def self.MAKE(code, message)
+    Result.new(code, message).toJson
+  end
+
+  def self.OK(message)
+    Result.MAKE(@@OK, message)
+  end
+
+  def self.FAULT(message)
+    Result.MAKE(@@FAULT, message)
+  end
+
+  def toJson()
+    JSON.generate({:code => @code, :message => @message})
   end
 end
 
@@ -131,19 +162,27 @@ post '/addNewGroup' do
   begin
     new_group = Group.fromJson(request.body.read)
     GroupManager.addNewGroup(new_group)
-    '1' 
+    Result.OK('Success') 
   rescue => e
-    p e
-    '0'
+    Result.FAULT(e)
   end
 end
 
 get '/groupList' do
-  GroupManager.getGroupListAsJson
+  begin
+    result = GroupManager.getGroupListAsJson
+    Result.OK(result)
+  rescue
+    Result.FAULR('Server error has occured')
+  end
 end
 
 post '/updateGroupInfo' do
-  group = Group.fromJson(request.body.read)
-  result = GroupManager.update(group)
-  result
+  begin
+    group = Group.fromJson(request.body.read)
+    GroupManager.update(group)
+    Result.OK('1')
+  rescue => e
+    Result.FAULT(e)
+  end
 end
