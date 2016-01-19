@@ -69,11 +69,21 @@ module GroupManager extend self
   end
 
   def addNewGroup(group)
+    raise "GroupID: \"#{group.id}\" is already exists." if GroupManager.existGroupID?(group.id)
+
     if @@groups == nil then
       @@groups = Array[group]
     else
       @@groups << group 
     end
+  end
+
+  def existGroupID?(group_id)
+    return false if @@groups == nil
+
+    @@groups.select {|group|
+      group.id == group_id
+    }.length != 0
   end
 
   def getGroupNum()
@@ -108,7 +118,7 @@ module GroupManager extend self
   end
 end
 
-GroupManager.initManager()
+GroupManager.initManager
 
 set :bind, '0.0.0.0'
 set :port, 19810
@@ -121,10 +131,9 @@ post '/addNewGroup' do
   begin
     new_group = Group.fromJson(request.body.read)
     GroupManager.addNewGroup(new_group)
-    p GroupManager.getGroupNum
-    p GroupManager.getGroupList()
-    '1'
-  rescue
+    '1' 
+  rescue => e
+    p e
     '0'
   end
 end
