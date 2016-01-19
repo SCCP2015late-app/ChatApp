@@ -41,6 +41,6 @@ Body: 参加したいGroupのIDと自分がバインドしているIPアドレ�
 Result: メンバーID  
 グループに参加する。  
 
-/addNewGroupのResultでGroupIDを返すようにする。  
+結果を返すためのクラスの作成
 
 （グループからの脱退、グループの削除）  
