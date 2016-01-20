@@ -4,7 +4,7 @@ require 'sinatra'
 require 'json'
 
 class Group
-  attr_reader :id 
+  attr_reader :id, :name, :owner, :member_num 
 
   def initialize(id = '', name = '', owner = Member.new(), member_num = 0)
     @id = id
@@ -66,16 +66,32 @@ end
 module GroupManager extend self
   def initManager()
     @@groups = nil
+    @@nextId = 1
+  end
+
+  def getNextId()
+    @@nextId
+  end
+
+  def incNextId()
+    @@nextId += 1
   end
 
   def addNewGroup(group)
     raise "GroupID: \"#{group.id}\" is already exists." if GroupManager.existGroupID?(group.id)
 
+    new_id = GroupManager.getNextId
+    GroupManager.incNextId
+
+    new_group = Group.new(new_id, group.name, group.owner, group.member_num)
+
     if @@groups == nil then
-      @@groups = Array[group]
+      @@groups = Array[new_group]
     else
-      @@groups << group 
+      @@groups << new_group 
     end
+
+    new_id
   end
 
   def existGroupID?(group_id)
@@ -161,8 +177,8 @@ end
 post '/addNewGroup' do
   begin
     new_group = Group.fromJson(request.body.read)
-    GroupManager.addNewGroup(new_group)
-    Result.OK('Success') 
+    new_group_id = GroupManager.addNewGroup(new_group)
+    Result.OK(new_group_id)
   rescue => e
     Result.FAULT(e)
   end
