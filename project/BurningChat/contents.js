@@ -90,6 +90,10 @@
   app.controller('NavigationPanelController', function($scope, ngDialog) {
   
     $scope.you = null; // アプリ利用者
+    Env().onLoadUserListener.addCallback(function(user) {
+      $scope.you = user;
+    });
+    
     $scope.youOrNot = function(user){
       if($scope.you !== null && user.equals($scope.you)) {
         return 'you';
@@ -128,7 +132,11 @@
       console.log("emailclick");
     };
 
-      $scope.click_ch_name = function(name){
+    $scope.click_ch_name = function(name){
+      if($scope.you === null) {
+        return;
+      }
+      
       var new_name = name;
       if(new_name === ''){ new_name = $scope.you.regItem.name; }
       var regitem = new RegistrationItem(new_name, $scope.you.regItem.email);
@@ -138,6 +146,10 @@
     };
 
     $scope.click_ch_email = function(email){
+      if($scope.you === null) {
+        return;
+      }
+      
       var new_email = email;
       if(new_email === ''){ new_email = $scope.you.regItem.email; }
       var regitem = new RegistrationItem($scope.you.regItem.name, new_email);
@@ -147,9 +159,9 @@
     };
     
     Env().onSetRegistrationItemListener.addCallback(function(regitem){
-        $scope.you = new Member($scope.you.id, $scope.you.number, regitem);
+      $scope.you = new Member($scope.you.id, $scope.you.number, regitem);
         
-        console.log($scope.you.regItem);
+      console.log($scope.you.regItem);
     });
     
   });
@@ -228,6 +240,9 @@
     $scope.group = group;
     
     $scope.you = null;
+    Env().onLoadUserListener.addCallback(function(user) {
+      $scope.you = user;
+    });
 
     // 本文
     $scope.messageBody = '';
