@@ -66,15 +66,6 @@
 
   });
   
-  var empty_group = new ChatGroup(0, null, null, null, null);
-
-  // 仮のgroup
-  var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  
-  Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
-    group = updatedGroup;
-  });
-  
   var group1 = new ChatGroup(1, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   var group2 = new ChatGroup(2, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   var group3 = new ChatGroup(3, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
@@ -101,7 +92,11 @@
         return 'other';
       }
     }; // 判定関数
-    $scope.group = group; // group
+    
+    $scope.group = null; // group
+    Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
+      $scope.group = updatedGroup;
+    });
     
     // ユーザ登録情報
     $scope.set_name = "";
@@ -169,13 +164,17 @@
   // 右側の画面のController
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
-    $scope.MODES = {GROUP: 'group', MESSAGE: 'message', TOP: 'top', USER: 'user'};
+    $scope.MODES = {GROUP: 'group', MESSAGE: 'message', TOP: 'top', USER: 'user', LOAD_GROUP: 'load_group'};
     
     // 起動時のモード
-    $scope.mode = $scope.MODES.USER;
+    $scope.mode = $scope.MODES.TOP;
     
     // 表示するグループのリスト
-    $scope.groups = [group, group1, group2, group3, group4, group5, group6, group7, group8, group9, group10];
+    $scope.groups = [];
+
+    Env().onGetGroupListListener.addCallback(function(groups){
+      $scope.groups = groups;
+    });
 
     $scope.you = null;
     
@@ -209,7 +208,10 @@
   app.controller('TimeLineController', function($scope, ngDialog) {
 
     // group
-    $scope.group = group;
+    $scope.group = null;
+    Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
+      $scope.group = updatedGroup;
+    });
 
     // スタイル設定用のフォーマットにする
     $scope.toStyle = function(color) {
@@ -237,7 +239,10 @@
   // 画面したのメッセージ入力フォームController
   app.controller('MentionForm', function($scope, ngDialog) {
     // group
-    $scope.group = group;
+    $scope.group = null;
+    Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
+      $scope.group = updatedGroup;
+    });
     
     $scope.you = null;
     Env().onLoadUserListener.addCallback(function(user) {
