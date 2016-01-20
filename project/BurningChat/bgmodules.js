@@ -239,6 +239,16 @@ function getLocalIP(callback) {
     });
 }
 
+var string_to_buffer = function(src) {
+    return (new Uint16Array([].map.call(src, function(c) {
+        return c.charCodeAt(0);
+        }))).buffer;
+};
+
+var buffer_to_string = function(buf) {
+    return String.fromCharCode.apply("", new Uint16Array(buf));
+};
+
 /*
    MD5
    Copyright (C) 2007 MITSUNARI Shigeo at Cybozu Labs, Inc.
