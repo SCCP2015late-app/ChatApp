@@ -128,16 +128,19 @@
       console.log("emailclick");
     };
 
-    $scope.click_ch_name = function(name){
-      var regitem = new RegistrationItem(name, $scope.you.regItem.email);
+      $scope.click_ch_name = function(name){
+      var new_name = name;
+      if(new_name === ''){ new_name = $scope.you.regItem.name; }
+      var regitem = new RegistrationItem(new_name, $scope.you.regItem.email);
 
       $scope.onToolNameClick();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
 
     $scope.click_ch_email = function(email){
-      console.log(email);
-      var regitem = new RegistrationItem($scope.you.regItem.name, email);
+      var new_email = email;
+      if(new_email === ''){ new_email = $scope.you.regItem.email; }
+      var regitem = new RegistrationItem($scope.you.regItem.name, new_email);
 
       $scope.onToolEmailClick();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
