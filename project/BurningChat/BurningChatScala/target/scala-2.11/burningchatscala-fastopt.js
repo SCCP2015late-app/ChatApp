@@ -1076,6 +1076,7 @@ function $c_Lorg_sccp2015_burningchat_AppEnvironment$() {
   this.onSendMessageListener$1 = null;
   this.onUpdateMessageListener$1 = null;
   this.onSetRegistrationItemListener$1 = null;
+  this.onUpdateRegistrationItemListener$1 = null;
   this.onAddImageListener$1 = null;
   this.onCreateNewGroupListener$1 = null;
   this.onJoinGroupListener$1 = null;
@@ -1099,6 +1100,7 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.init___ = (function() {
   this.onSendMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onUpdateMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onSetRegistrationItemListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onUpdateRegistrationItemListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onAddImageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onCreateNewGroupListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onJoinGroupListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
@@ -1130,6 +1132,9 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onAddI
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onGroupUpdateListener__O = (function() {
   return this.onGroupUpdateListener$1
 });
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onUpdateRegistrationItemListener__O = (function() {
+  return this.onUpdateRegistrationItemListener$1
+});
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onCreateNewGroupListener__O = (function() {
   return this.onCreateNewGroupListener$1
 });
@@ -1160,6 +1165,12 @@ Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype,
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onSetRegistrationItemListener", {
   "get": (function() {
     return this.$$js$exported$prop$onSetRegistrationItemListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onUpdateRegistrationItemListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onUpdateRegistrationItemListener__O()
   }),
   "enumerable": true
 });
