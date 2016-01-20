@@ -65,20 +65,6 @@
     };
 
   });
-<<<<<<< HEAD
-
-  var empty_group = new ChatGroup(0, null, null, null, null);
-
-  // 仮のgroup
-  var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-
-  Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
-    group = updatedGroup;
-  });
-
-=======
-
->>>>>>> b2730938d759e5003e4a2a7f715d9ff830aeb241
   var group1 = new ChatGroup(1, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   var group2 = new ChatGroup(2, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   var group3 = new ChatGroup(3, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
@@ -92,13 +78,6 @@
 
   // 左側オレンジのグループ情報を表示するパネルのController
   app.controller('NavigationPanelController', function($scope, ngDialog) {
-<<<<<<< HEAD
-
-    $scope.you = YOU; // アプリ利用者
-    $scope.youOrNot = youOrNot; // 判定関数
-    $scope.group = group; // group
-
-=======
 
     $scope.you = null; // アプリ利用者
     Env().onLoadUserListener.addCallback(function(user) {
@@ -118,7 +97,6 @@
       $scope.group = updatedGroup;
     });
 
->>>>>>> b2730938d759e5003e4a2a7f715d9ff830aeb241
     // ユーザ登録情報
     $scope.set_name = "";
     $scope.set_email = "";
