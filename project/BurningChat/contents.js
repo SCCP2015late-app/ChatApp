@@ -152,12 +152,6 @@
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
 
-    Env().onSetRegistrationItemListener.addCallback(function(regitem){
-      $scope.you = new Member($scope.you.id, $scope.you.number, regitem);
-
-      console.log($scope.you.regItem);
-    });
-
   });
 
   // 右側の画面のController
@@ -288,7 +282,7 @@
 
     //本文
     $scope.FillorNotFill = function(name, email){
-      console.log("Fillfill")
+      console.log("Fillfill");
       if(name.length !== 0 && email.length !== 0)
         $scope.Reg_fill = true;
       else $scope.Reg_fill = false;

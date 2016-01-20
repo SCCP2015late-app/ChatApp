@@ -353,6 +353,7 @@ input:focus {
   color: #3E2723;
   background: #FFF8E1;
   text-align: center;
+  overflow-y: scroll;
 }
 
 #regist_icon_image {
