@@ -317,7 +317,7 @@ input:focus {
 }
 
 #top_window #group_joint #group_list {
-  
+
 }
 
 #top_window #group_joint #item {
@@ -337,4 +337,36 @@ input:focus {
 
 #group_detail_dialog h3 {
   width: 200px;
+}
+
+#user_regist_area {
+  color: #3E2723;
+  background: #FFF8E1;
+  height: 100%;
+  position: fixed;
+  width: calc(100% - 240px);
+  top: 0;
+  right: 0;
+  left: 240px;
+  float: right;
+  margin: 0 auto;
+  color: #3E2723;
+  background: #FFF8E1;
+  text-align: center;
+}
+
+#regist_icon_image {
+  height: 300px;
+  width: 300px;
+  margin: 50px;
+}
+
+#user_regist_area input[type="text"]{
+  height: 45px;
+  width: 240px;
+  border-radius: 4px;
+  font-size: 30px;
+}
+#new_user_icon {
+  left: 4px;
 }
