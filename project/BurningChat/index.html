@@ -28,7 +28,7 @@
   <h3 id="greeting"></h3>
   <div id="contents">
     <div id="navigation_panel" ng-controller="NavigationPanelController">
-      <div class="inout_animation" ng-if="!toolsOpened && group.id != 0">
+      <div class="inout_animation" ng-if="!toolsOpened && group.id != 0 && you !== null">
       <div id="group_header">
         <h2>{{group.name.toUpperCase()[0]}}</h2>
         <p>{{group.name}}</p>
@@ -42,7 +42,7 @@
         </ul>
       </div>
       </div>
-      <div class="inout_animation" ng-if="toolsOpened || group.id == 0">
+      <div class="inout_animation" ng-if="(toolsOpened || group.id == 0) && you !== null">
         <div id="user_setting_header">
           <h3>User Setting</h3>
         </div>
@@ -92,21 +92,26 @@
         </div>
         <h3>Join Group</h3>
         <div id="group_joint">
-          <div id="group_list" ng-repeat="group in groups">
-            <div id="item" ng-click="onClick(group)">
-              <h4>{{group.name}}@{{group.id}}</h4>
-              <h4>{{group.owner.name}}</h4>
-            </div>
-            <script type="text/ng-template" id="groupDetailDialog">
-             <div id="group_detail_dialog">
-                <h3 id="group_owner">Owner: {{group.owner.regItem.name}}</h3>
-                <div id="join_button_group">
-                  <form>
-                   <input type="image" ng-click="onJoinGroup(group)" id="join_button" src="./assets/join.png" height="40px" width="40px"/>
-                  </form>
-                </div>
+          <div ng-if="groups.length == 0">
+            <h4>No Group</h4>
+          </div>
+          <div ng-if="groups.length != 0">
+            <div id="group_list" ng-repeat="group in groups">
+              <div id="item" ng-click="onClick(group)">
+                <h4>{{group.name}}@{{group.id}}</h4>
+                <h4>{{group.owner.name}}</h4>
               </div>
-            </script>
+              <script type="text/ng-template" id="groupDetailDialog">
+               <div id="group_detail_dialog">
+                  <h3 id="group_owner">Owner: {{group.owner.regItem.name}}</h3>
+                  <div id="join_button_group">
+                    <form>
+                     <input type="image" ng-click="onJoinGroup(group)" id="join_button" src="./assets/join.png" height="40px" width="40px"/>
+                    </form>
+                  </div>
+                </div>
+              </script>
+            </div>
           </div>
         </div>
       </div>
