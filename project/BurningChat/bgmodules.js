@@ -1,5 +1,3 @@
-
-
 function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる
     var msg = {
         　"u_id": message.id.toString(),
