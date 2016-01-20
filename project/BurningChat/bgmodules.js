@@ -1,7 +1,8 @@
+/* global onUpdateMessageListener */
 function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる
     var msg = {
-        　"u_id": message.id.toString(),
-        　//"u_name": string,
+        　"u_id": message.member.id,
+        　"u_name": message.member.regItem.name,
         　"date": Date.now(),
         　"body": message.body,
         　"pict_flag": false, //画像が添付されているかどうか
@@ -15,7 +16,7 @@ function msgBroadcastRequest(message){//massageを受け取ってjsonにしてow
         msg["pict_flag"] = true;
         var extension = getExtension(message.image);//拡張子のみを取得
         extension.toLowerCase();//拡張子を小文字に変換
-        msg["pict_name"] = '' + Date.now() + "." + extension;
+        msg["pict_name"] = message.id.toString();
         var pict = {
             "name": msg["pict_name"],
             "data": message.image,
@@ -53,7 +54,7 @@ function msgObjectRecv(){
     if(obj.isMessage == true){
         storeMessage(obj);
         //TODO
-        onUpdateMessagesListner();
+        onUpdateMessageListener();
     }
 }
 
@@ -64,14 +65,15 @@ function pictObjectRecv(){
     }
 }
 
-function updateMsgList(){
-
+function updateMsgList(msg){
+    var message = msg["body"];
+    Env().onUpdateMessageListener.addCallback(message);
 }
-
 //TODO least priority
 function savePict(filename, encodedPict){
-    var binPict = base64decode(encodedPict);
-    var filepath = "./downloads/" + filename;
+    chrome.storage.sync.set({'filename':base64decode(encodedPict)},function(){
+        console.log("This is callback");
+    });
 }
 
 function sendGroupInfo(){
