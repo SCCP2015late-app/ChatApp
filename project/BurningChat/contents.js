@@ -78,16 +78,16 @@
     };
 
   });
-  
+
   var empty_group = new ChatGroup(0, null, null, null, null);
 
   // 仮のgroup
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  
+
   Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
     group = updatedGroup;
   });
-  
+
   var group1 = new ChatGroup(1, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   var group2 = new ChatGroup(2, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   var group3 = new ChatGroup(3, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
@@ -101,11 +101,11 @@
 
   // 左側オレンジのグループ情報を表示するパネルのController
   app.controller('NavigationPanelController', function($scope, ngDialog) {
-  
+
     $scope.you = YOU; // アプリ利用者
     $scope.youOrNot = youOrNot; // 判定関数
     $scope.group = group; // group
-    
+
     // ユーザ登録情報
     $scope.set_name = "";
     $scope.set_email = "";
@@ -148,23 +148,23 @@
       $scope.onToolEmailClick();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
-    
+
     Env().onSetRegistrationItemListener.addCallback(function(regitem){
         $scope.you = new Member($scope.you.id, $scope.you.number, regitem);
-        
+
         console.log($scope.you.regItem);
     });
-    
+
   });
 
   // 右側の画面のController
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
-    $scope.MODES = {GROUP: 'group', MESSAGE: 'message', TOP: 'top'};
-    
+    $scope.MODES = {GROUP: 'group', MESSAGE: 'message', TOP: 'top', USER:'user'};
+
     // 起動時のモード
-    $scope.mode = $scope.MODES.TOP;
-    
+    $scope.mode = $scope.MODES.USER;
+
     // 表示するグループのリスト
     $scope.groups = [group, group1, group2, group3, group4, group5, group6, group7, group8, group9, group10];
 
@@ -172,14 +172,14 @@
     $scope.onClick = function(selectedGroup) {
       ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
         $scope.group = selectedGroup;
-        
+
         $scope.onJoinGroup = function(group) {
           console.log("Join: " + group.name + "@" + group.id);
           Env().onJoinGroupListener.callAllCallback({'group': group, 'member': YOU});
         };
       }]});
     };
-    
+
     $scope.onCreateNewGroup = function(groupName) {
       console.log('onCreateNewGroup: ' + groupName);
       // TODO: generate group ID or replace after
@@ -242,7 +242,7 @@
       var message = new Message(0, YOU, "" + new Date(), $scope.messageBody, null, false);
       console.log(message);
       Env().onSendMessageListener.callAllCallback(message);
-      
+
       // 送信したメッセージはフォームから削除
       $scope.messageBody = '';
     };
@@ -250,6 +250,28 @@
     // 画像追加ボタンのリスナー
     $scope.addImage = function() {
       console.log("addImage");
+    };
+  });
+//初期登録画面フォームのcontoroller
+  app.controller('NewUserController',function($scope, ngDialog) {
+    //group
+    $scope.reg_name = "";
+    $scope.reg_email = "";
+
+    $scope.Reg_fill = false;
+
+    //本文
+    $scope.FillorNotFill = function(name, email){
+      console.log("Fillfill")
+      if(name.length !== 0 && email.length !== 0)
+        $scope.Reg_fill = true;
+      else $scope.Reg_fill = false;
+    };
+//コールバック
+    $scope.click_Reg_Icon = function(name, email){
+      var regitem = new RegistrationItem(name, email);
+
+      Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
   });
 })();
