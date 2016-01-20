@@ -32,7 +32,7 @@
       MEMBER_03
     ];
 
-  const YOU = new Member("two", 2, new RegistrationItem("magro", "test@u-aizu.ac.jp"));
+  var YOU = new Member("two", 2, new RegistrationItem("magro", "test@u-aizu.ac.jp"));
 
   const MESSAGES = [
       new Message(0, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
@@ -131,20 +131,27 @@
       console.log("emailclick");
     };
 
-    $scope.click_ch_name = function(){
-      var regitem = new RegistrationItem($scope.set_name, $scope.you.regItem.email);
+    $scope.click_ch_name = function(name){
+      var regitem = new RegistrationItem(name, $scope.you.regItem.email);
 
       $scope.onToolNameClick();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
 
-    $scope.click_ch_email = function(){
-      console.log("test");
-      var regitem = new RegistrationItem($scope.you.regItem.name, $scope.set_email);
+    $scope.click_ch_email = function(email){
+      console.log(email);
+      var regitem = new RegistrationItem($scope.you.regItem.name, email);
 
       $scope.onToolEmailClick();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
+    
+    Env().onSetRegistrationItemListener.addCallback(function(regitem){
+        $scope.you = new Member($scope.you.id, $scope.you.number, regitem);
+        
+        console.log($scope.you.regItem);
+    });
+    
   });
 
   // 右側の画面のController
