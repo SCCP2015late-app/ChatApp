@@ -120,7 +120,7 @@
       $scope.toolsOpened = !$scope.toolsOpened;
       console.log("click");
     };
-//　クリック時、変更入力欄表示
+    //　クリック時、変更入力欄表示
     $scope.onToolNameClick = function(){
       $scope.toolsNameOpened = !$scope.toolsNameOpened;
       console.log("nameclick");
@@ -216,7 +216,7 @@
     $scope.messageBody = '';
 
     // 仮で送信時にタイムラインを更新
-    Env().onSendMessageListener.addCallback(function(message) {
+    Env().onUpdateMessageListener.addCallback(function(message) {
       $scope.group.addMessage(message);
       console.log("Send message: " + message.body + " from " + message.member.regItem.name);
     });
