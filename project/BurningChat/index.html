@@ -28,7 +28,7 @@
   <h3 id="greeting"></h3>
   <div id="contents">
     <div id="navigation_panel" ng-controller="NavigationPanelController">
-      <div class="inout_animation" ng-if="!toolsOpened">
+      <div class="inout_animation" ng-if="!toolsOpened && group.id != 0">
       <div id="group_header">
         <h2>{{group.name.toUpperCase()[0]}}</h2>
         <p>{{group.name}}</p>
@@ -42,7 +42,7 @@
         </ul>
       </div>
       </div>
-      <div class="inout_animation" ng-if="toolsOpened">
+      <div class="inout_animation" ng-if="toolsOpened || group.id == 0">
         <div id="user_setting_header">
           <h3>User Setting</h3>
         </div>
@@ -74,6 +74,36 @@
       </div>
     </div>
     <div id="main_area" ng-controller="MainAreaController">
+      <div id="top_window" ng-if="mode == MODES.TOP">
+        <h2 id="title">Which do you want to do?</h2>
+        <h3>Create New Group</h3>
+        <div id="group_creation">
+          <h4>Group Name</h4>
+          <form>
+            <input type="text" placeholder="Put the name of new group." ng-model="newGroupName"/>
+            <input type="image" ng-click="onCreateNewGroup(newGroupName)" src="./assets/new_group.png" height="48px" width="48px"/>
+          </form>
+        </div>
+        <h3>Join Group</h3>
+        <div id="group_joint">
+          <div id="group_list" ng-repeat="group in groups">
+            <div id="item" ng-click="onClick(group)">
+              <h4>{{group.name}}@{{group.id}}</h4>
+              <h4>{{group.owner.name}}</h4>
+            </div>
+            <script type="text/ng-template" id="groupDetailDialog">
+             <div id="group_detail_dialog">
+                <h3 id="group_owner">Owner: {{group.owner.regItem.name}}</h3>
+                <div id="join_button_group">
+                  <form>
+                   <input type="image" ng-click="onJoinGroup(group)" id="join_button" src="./assets/join.png" height="40px" width="40px"/>
+                  </form>
+                </div>
+              </div>
+            </script>
+          </div>
+        </div>
+      </div>
       <div id="message_area" ng-if="mode == MODES.MESSAGE">
         <div id="time_line" ng-controller="TimeLineController">
           <div ng-repeat="message in group.messageArray">
@@ -108,14 +138,6 @@
             <h3>{{group.name}}</h3>
           </div>
         </div>
-        <script type="text/ng-template" id="groupDetailDialog">
-          <div id="group_detail_dialog">
-            <h3 id="group_owner">Owner: {{group.owner.regItem.name}}</h3>
-            <div id="join_button_group">
-              <img id="join_button" src="./assets/join.png" height="40px" width="40px"></img>
-            </div>
-          </div>
-          </script>
       </div>
     </div>
   </div>
