@@ -1082,6 +1082,7 @@ function $c_Lorg_sccp2015_burningchat_AppEnvironment$() {
   this.onCreateNewGroupListener$1 = null;
   this.onJoinGroupListener$1 = null;
   this.onGroupUpdateListener$1 = null;
+  this.onGetGroupListListener$1 = null;
   this.onErrorOccurredListener$1 = null
 }
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype = new $h_O();
@@ -1110,6 +1111,7 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.init___ = (function() {
   this.onCreateNewGroupListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onJoinGroupListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onGroupUpdateListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onGetGroupListListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onErrorOccurredListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   return this
 });
@@ -1139,6 +1141,9 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onUpda
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onGroupUpdateListener__O = (function() {
   return this.onGroupUpdateListener$1
+});
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onGetGroupListListener__O = (function() {
+  return this.onGetGroupListListener$1
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onCreateNewGroupListener__O = (function() {
   return this.onCreateNewGroupListener$1
@@ -1206,6 +1211,12 @@ Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype,
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onGroupUpdateListener", {
   "get": (function() {
     return this.$$js$exported$prop$onGroupUpdateListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onGetGroupListListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onGetGroupListListener__O()
   }),
   "enumerable": true
 });
