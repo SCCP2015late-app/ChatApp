@@ -84,6 +84,10 @@
   // 仮のgroup
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   
+  Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
+    group = updatedGroup;
+  });
+  
   var group1 = new ChatGroup(1, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   var group2 = new ChatGroup(2, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
   var group3 = new ChatGroup(3, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
@@ -147,7 +151,7 @@
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
     $scope.MODES = {GROUP: 'group', MESSAGE: 'message', TOP: 'top'};
-
+    
     // 起動時のモード
     $scope.mode = $scope.MODES.TOP;
     
@@ -161,16 +165,16 @@
         
         $scope.onJoinGroup = function(group) {
           console.log("Join: " + group.name + "@" + group.id);
+          Env().onJoinGroupListener.callAllCallback({'group': group, 'member': YOU});
         };
       }]});
     };
     
     $scope.onCreateNewGroup = function(groupName) {
-      console.log('onCreateNewGroup');
-    };
-    
-    $scope.onJoinGroup = function(groupId) {
-      console.log('onJoinGroup');
+      console.log('onCreateNewGroup: ' + groupName);
+      // TODO: generate group ID or replace after
+      newGroup = new ChatGroup(1919, groupName, YOU, [], []);
+      Env().onCreateNewGroupListener.callAllCallback(newGroup);
     };
   });
 

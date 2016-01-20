@@ -31,5 +31,14 @@ object AppEnvironment {
   val onAddImageListener = new EventListener
 
   @JSExport
+  val onCreateNewGroupListener = new EventListener
+
+  @JSExport
+  val onJoinGroupListener = new EventListener
+
+  @JSExport
+  val onGroupUpdateListener = new EventListener
+
+  @JSExport
   val onErrorOccurredListener = new EventListener
 }
