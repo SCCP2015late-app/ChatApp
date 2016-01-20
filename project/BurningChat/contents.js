@@ -145,12 +145,6 @@
       $scope.onToolEmailClick();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
-    
-    Env().onSetRegistrationItemListener.addCallback(function(regitem){
-        $scope.you.regItem.name = regitem.name;
-        $scope.you.regitem.email = regitem.email; 
-    });
-    
   });
 
   // 右側の画面のController
