@@ -78,9 +78,26 @@
     };
 
   });
+  
+  var empty_group = new ChatGroup(0, null, null, null, null);
 
   // 仮のgroup
   var group = new ChatGroup(GROUP_ID, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  
+  Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
+    group = updatedGroup;
+  });
+  
+  var group1 = new ChatGroup(1, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  var group2 = new ChatGroup(2, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  var group3 = new ChatGroup(3, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  var group4 = new ChatGroup(4, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  var group5 = new ChatGroup(5, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  var group6 = new ChatGroup(6, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  var group7 = new ChatGroup(7, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  var group8 = new ChatGroup(8, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  var group9 = new ChatGroup(9, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
+  var group10 = new ChatGroup(10, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
 
   // 左側オレンジのグループ情報を表示するパネルのController
   app.controller('NavigationPanelController', function($scope, ngDialog) {
@@ -88,7 +105,7 @@
     $scope.you = YOU; // アプリ利用者
     $scope.youOrNot = youOrNot; // 判定関数
     $scope.group = group; // group
-
+    
     // ユーザ登録情報
     $scope.set_name = "";
     $scope.set_email = "";
@@ -133,19 +150,31 @@
   // 右側の画面のController
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
-    $scope.MODES = {GROUP: 'group', MESSAGE: 'message'};
-
+    $scope.MODES = {GROUP: 'group', MESSAGE: 'message', TOP: 'top'};
+    
     // 起動時のモード
-    $scope.mode = $scope.MODES.MESSAGE;
+    $scope.mode = $scope.MODES.TOP;
     
     // 表示するグループのリスト
-    $scope.groups = [group];
+    $scope.groups = [group, group1, group2, group3, group4, group5, group6, group7, group8, group9, group10];
 
     // グループ選択時のリスナー
     $scope.onClick = function(selectedGroup) {
       ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
         $scope.group = selectedGroup;
+        
+        $scope.onJoinGroup = function(group) {
+          console.log("Join: " + group.name + "@" + group.id);
+          Env().onJoinGroupListener.callAllCallback({'group': group, 'member': YOU});
+        };
       }]});
+    };
+    
+    $scope.onCreateNewGroup = function(groupName) {
+      console.log('onCreateNewGroup: ' + groupName);
+      // TODO: generate group ID or replace after
+      newGroup = new ChatGroup(1919, groupName, YOU, [], []);
+      Env().onCreateNewGroupListener.callAllCallback(newGroup);
     };
   });
 
