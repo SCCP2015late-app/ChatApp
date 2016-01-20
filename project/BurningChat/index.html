@@ -64,8 +64,11 @@
           <div class="inout_animation" ng-if="toolsEmailOpened">
             <h3>E-mail:<br>{{you.regItem.email}}
             <img class="rotate_hover_animation" ng-click="onToolEmailClick()" src="./assets/settings.png" width="28px" height="28px" />
-            <input type="text" name="change_email" size="10" ng-model="set_email" style="color:#424242" ng-required="true" ng-minlength=1 ng-maxlength=4>
-            <img class="rotate_infhover_animation" ng-click="click_ch_email()" src="./assets/set_refresh.png" width="24px" height="24px" />
+            <form>
+              <input type="text" name="change_email" size="10" ng-model="set_email" style="color:#424242" ng-required="true" ng-minlength=1 />
+              <input type="image" ng-click="click_ch_email(set_email)" src="./assets/set_refresh.png"  width="24px" height="24px"/>
+            </form>
+            <!--<img class="rotate_infhover_animation" ng-click="click_ch_email()" src="./assets/set_refresh.png" width="24px" height="24px" />-->
           </div>
         </div>
       </div>
