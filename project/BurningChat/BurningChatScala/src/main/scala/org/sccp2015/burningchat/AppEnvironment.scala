@@ -28,6 +28,9 @@ object AppEnvironment {
   val onSetRegistrationItemListener = new EventListener
 
   @JSExport
+  val onUpdateRegistrationItemListener = new EventListener
+
+  @JSExport
   val onAddImageListener = new EventListener
 
   @JSExport
