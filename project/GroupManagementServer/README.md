@@ -20,7 +20,7 @@ message: String - 結果文字列
 ##API
 ###POST /addNewGroup
 Body: GroupのJSON文字列  
-Message: "1"  
+Message: GroupID 
 
 管理しているネットワーク上にグループを追加する。  
 新しくオーナーになるユーザがグループを新設した時に使用留守。  
