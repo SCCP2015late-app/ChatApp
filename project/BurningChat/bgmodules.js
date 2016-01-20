@@ -44,7 +44,7 @@ function getExtension(fileName) {
 }
 
 //TODO least priority
-function pictBroadcastRequest(name, pict){
+function pictBroadcastRequest(pict){
     pict["data"] = base64encode();//バイナリを読みこませる
     var json_pict = JSON.stringify(pict);
     pictBroadcast(json_pict);
