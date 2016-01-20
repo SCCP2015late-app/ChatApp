@@ -31,6 +31,9 @@ object AppEnvironment {
   val onUpdateRegistrationItemListener = new EventListener
 
   @JSExport
+  val onLoadUserListener = new EventListener
+
+  @JSExport
   val onAddImageListener = new EventListener
 
   @JSExport
@@ -41,6 +44,9 @@ object AppEnvironment {
 
   @JSExport
   val onGroupUpdateListener = new EventListener
+
+  @JSExport
+  val onGetGroupListListener = new EventListener
 
   @JSExport
   val onErrorOccurredListener = new EventListener

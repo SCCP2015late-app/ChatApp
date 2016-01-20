@@ -1,3 +1,70 @@
+//test code
+//getLocalIP (function(ips) {
+//    return ips[ips.length - 1];
+//});
+
+//get internal IP address
+function getLocalIP(callback) {
+    var ips = [];
+
+    var RTCPeerConnection = window.RTCPeerConnection ||
+        window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+
+    var pc = new RTCPeerConnection({
+        iceServers: []
+    });
+    pc.createDataChannel('');
+
+    pc.onicecandidate = function (e) {
+        if (!e.candidate) {
+            pc.close();
+            callback(ips);
+            return;
+        }
+        var ip = /^candidate:.+ (\S+) \d+ typ/.exec(e.candidate.candidate)[1];
+        if (ips.indexOf(ip) == -1) // avoid duplicate entries (tcp/udp)
+            ips.push(ip);
+    };
+    pc.createOffer(function (sdp) {
+        pc.setLocalDescription(sdp);
+    }, function onerror() {
+    });
+}
+
+//ArrayBuffer String converetr
+var string_to_buffer = function(src) {
+    return (new Uint16Array([].map.call(src, function(c) {
+        return c.charCodeAt(0);
+    }))).buffer;
+};
+
+var buffer_to_string = function(buf) {
+    return String.fromCharCode.apply("", new Uint16Array(buf));
+};
+
+
+//test code for udp packet sending and receiving
+var bind_address = '127.0.0.1';
+var add = '192.168.11.4';
+var bind_port = 22222;
+
+var receiveCallback = function(info){
+    console.log(info.socketId + " : " + buffer_to_string(info.data));
+};
+
+var data = string_to_buffer("hogehogehoge");
+chrome.sockets.udp.create({}, function(createInfo) {
+    chrome.sockets.udp.onReceive.addListener(receiveCallback);
+	chrome.sockets.udp.bind(createInfo.socketId, add, bind_port, function(result){
+		chrome.sockets.udp.send(createInfo.socketId, data, add/*bind_address*/, bind_port, function(sendInfo) {
+			console.log('poe: ' + sendInfo.resultCode);
+			chrome.sockets.udp.close(createInfo.socketId, function(){});
+		});
+	});
+});
+//end---
+
+
 /* global onUpdateMessageListener */
 function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる
     var msg = {
@@ -207,49 +274,6 @@ function base64decode(s) {
     }
     return t;
 }
-
-//test code
-//getLocalIP (function(ips) {
-//    return ips[ips.length - 1];
-//});
-
-//get internal IP address
-function getLocalIP(callback) {
-    var ips = [];
-
-    var RTCPeerConnection = window.RTCPeerConnection ||
-        window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
-
-    var pc = new RTCPeerConnection({
-        iceServers: []
-    });
-    pc.createDataChannel('');
-
-    pc.onicecandidate = function (e) {
-        if (!e.candidate) {
-            pc.close();
-            callback(ips);
-            return;
-        }
-        var ip = /^candidate:.+ (\S+) \d+ typ/.exec(e.candidate.candidate)[1];
-        if (ips.indexOf(ip) == -1) // avoid duplicate entries (tcp/udp)
-            ips.push(ip);
-    };
-    pc.createOffer(function (sdp) {
-        pc.setLocalDescription(sdp);
-    }, function onerror() {
-    });
-}
-
-var string_to_buffer = function(src) {
-    return (new Uint16Array([].map.call(src, function(c) {
-        return c.charCodeAt(0);
-        }))).buffer;
-};
-
-var buffer_to_string = function(buf) {
-    return String.fromCharCode.apply("", new Uint16Array(buf));
-};
 
 /*
    MD5

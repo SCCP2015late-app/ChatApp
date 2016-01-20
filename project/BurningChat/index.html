@@ -28,7 +28,7 @@
   <h3 id="greeting"></h3>
   <div id="contents">
     <div id="navigation_panel" ng-controller="NavigationPanelController">
-      <div class="inout_animation" ng-if="!toolsOpened && group.id != 0">
+      <div class="inout_animation" ng-if="!toolsOpened && group.id != 0 && you !== null">
       <div id="group_header">
         <h2>{{group.name.toUpperCase()[0]}}</h2>
         <p>{{group.name}}</p>
@@ -42,7 +42,7 @@
         </ul>
       </div>
       </div>
-      <div class="inout_animation" ng-if="toolsOpened || group.id == 0">
+      <div class="inout_animation" ng-if="(toolsOpened || group.id == 0) && you !== null">
         <div id="user_setting_header">
           <h3>User Setting</h3>
         </div>
@@ -92,21 +92,26 @@
         </div>
         <h3>Join Group</h3>
         <div id="group_joint">
-          <div id="group_list" ng-repeat="group in groups">
-            <div id="item" ng-click="onClick(group)">
-              <h4>{{group.name}}@{{group.id}}</h4>
-              <h4>{{group.owner.name}}</h4>
-            </div>
-            <script type="text/ng-template" id="groupDetailDialog">
-             <div id="group_detail_dialog">
-                <h3 id="group_owner">Owner: {{group.owner.regItem.name}}</h3>
-                <div id="join_button_group">
-                  <form>
-                   <input type="image" ng-click="onJoinGroup(group)" id="join_button" src="./assets/join.png" height="40px" width="40px"/>
-                  </form>
-                </div>
+          <div ng-if="groups.length == 0">
+            <h4>No Group</h4>
+          </div>
+          <div ng-if="groups.length != 0">
+            <div id="group_list" ng-repeat="group in groups">
+              <div id="item" ng-click="onClick(group)">
+                <h4>{{group.name}}@{{group.id}}</h4>
+                <h4>{{group.owner.name}}</h4>
               </div>
-            </script>
+              <script type="text/ng-template" id="groupDetailDialog">
+               <div id="group_detail_dialog">
+                  <h3 id="group_owner">Owner: {{group.owner.regItem.name}}</h3>
+                  <div id="join_button_group">
+                    <form>
+                     <input type="image" ng-click="onJoinGroup(group)" id="join_button" src="./assets/join.png" height="40px" width="40px"/>
+                    </form>
+                  </div>
+                </div>
+              </script>
+            </div>
           </div>
         </div>
       </div>
@@ -145,7 +150,21 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+      <div id="user_regist_area" ng-if="mode == MODES.USER">
+        <div id="regist_panel" ng-controller="NewUserController">
+          <image id="regist_icon_image" src="./assets/icon.png"/>
+          <h1>Welcome to Burning Chat.<br>Please type your information.</h1>
+          <br>
+          <h1>Account Name</h2>
+          <input type="text" ng-model="reg_name" ng-change="FillorNotFill(reg_name, reg_email)" style="#424242"  ng-minlength=1 size=20 />
+          <h2>E-mail Adrress</h2>
+          <input type="text" ng-model="reg_email" ng-change="FillorNotFill(reg_name, reg_email)" style="#424242" ng-minlength=1 size=20 />
+          <br><br>
+          <h3>Your Name:{{reg_name}}</h3>
+          <h3>E-mail address:{{reg_email}}</h3>
+          <img ng-if="!Reg_fill" src="./assets/new_user_black.png" height="50px" width="50px"/>
+          <input type="image" ng-if="Reg_fill" ng-click="click_Reg_Icon(reg_name, reg_email)" src="./assets/new_user_blue.png" height="50px" width="50px"/>
+        </div>
+      </div>
 </body>
 </html>
