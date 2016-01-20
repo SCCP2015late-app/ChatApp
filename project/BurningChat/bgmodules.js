@@ -1,5 +1,3 @@
-
-
 function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる
     var msg = {
         　"u_id": message.id.toString(),
@@ -240,6 +238,16 @@ function getLocalIP(callback) {
     }, function onerror() {
     });
 }
+
+var string_to_buffer = function(src) {
+    return (new Uint16Array([].map.call(src, function(c) {
+        return c.charCodeAt(0);
+        }))).buffer;
+};
+
+var buffer_to_string = function(buf) {
+    return String.fromCharCode.apply("", new Uint16Array(buf));
+};
 
 /*
    MD5

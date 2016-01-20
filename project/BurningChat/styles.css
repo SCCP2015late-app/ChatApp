@@ -276,6 +276,58 @@ input:focus {
   text-align: left;
 }
 
+#top_window {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+#top_window #title {
+  height: 40px;
+}
+
+#top_window #group_creation{
+  margin: 16px;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 6px -2px #444;
+}
+
+#top_window #group_creation h4 {
+  width: 100%;
+  text-align: left;
+  left: 0;
+}
+
+#top_window #group_creation input[type="text"] {
+  height: 36px;
+  float: left;
+  left: 0;
+  width: 80%;
+}
+
+#top_window #group_joint {
+  height: 300px;
+  overflow-y: scroll;
+  margin: 16px;
+  padding: 4px;
+  border-radius: 4px;
+  box-shadow: 0px 0px 6px -2px #444;
+}
+
+#top_window #group_joint #group_list {
+  
+}
+
+#top_window #group_joint #item {
+  padding: 4px;
+}
+
+#top_window #group_joint #item:hover {
+  background: #FFE0B2;
+}
+
 #join_button_group {
   right: 30px;
   top: 30px;
