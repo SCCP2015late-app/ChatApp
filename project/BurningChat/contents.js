@@ -154,6 +154,9 @@
 
   });
 
+  var modeChange;
+  var modes;
+
   // 右側の画面のController
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
@@ -161,6 +164,12 @@
 
     // 起動時のモード
     $scope.mode = $scope.MODES.USER;
+    
+    modes = $scope.MODES;
+
+    modeChange = function(mode) {
+      $scope.mode = mode;
+    };
 
     // 表示するグループのリスト
     $scope.groups = [];
@@ -196,7 +205,7 @@
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
     };
   });
-
+  
   // Messageモード時のタイムラインController
   app.controller('TimeLineController', function($scope, ngDialog) {
 
@@ -290,8 +299,10 @@
 //コールバック
     $scope.click_Reg_Icon = function(name, email){
       var regitem = new RegistrationItem(name, email);
-
+  
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
+      
+      modeChange(modes.TOP);
     };
   });
 })();
