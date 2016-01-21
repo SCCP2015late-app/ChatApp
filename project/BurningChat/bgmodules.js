@@ -83,54 +83,33 @@ chrome.sockets.udp.create({}, function(createInfo) {
 /* global onUpdateMessageListener */
 function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる
     var msg = {
-        　"u_id": message.member.id,
+        　"u_id": message.id,
         　"u_name": message.member.regItem.name,
         　"date": Date.now(),
         　"body": message.body,
-        　"pict_flag": false, //画像が添付されているかどうか
-        　"pict_name": null,
+        　"image": null, //画像が添付されているかどうか
+        　"flag": false,
     };
 
     if(message.image==null){
         json_text = JSON.stringify(msg);
-        msgBroadcast(json_text);
+        msgBroadcast(json_text); //オーナーに送信処理
     } else {
-        msg["pict_flag"] = true;
-        var extension = getExtension(message.image);//拡張子のみを取得
-        extension.toLowerCase();//拡張子を小文字に変換
-        msg["pict_name"] = message.id.toString();
-        var pict = {
-            "name": msg["pict_name"],
-            "data": message.image,
-        };
-
+        msg["flag"] = true;
+        msg["image"] = base64encode(message.image);
         var json_text = JSON.stringify(msg);
-        msgBroadcast(json_text);
-        pictBroadcastRequest(pict);
+        msgBroadcast(json_text); //オーナーに送信処理
+        //pictBroadcastRequest(pict);
     }
 
-}
-
-function getExtension(fileName) {
-    var ret;
-    if (!fileName) {
-        return ret;
-    }
-    var fileTypes = fileName.split(".");
-    var len = fileTypes.length;
-    if (len === 0) {
-        return ret;
-    }
-    ret = fileTypes[len - 1];
-    return ret;
 }
 
 //TODO least priority
-function pictBroadcastRequest(pict){
+/*function pictBroadcastRequest(pict){
     pict["data"] = base64encode();//バイナリを読みこませる
     var json_pict = JSON.stringify(pict);
     pictBroadcast(json_pict);
-}
+}*/
 
 function msgObjectRecv(){
     if(obj.isMessage == true){
@@ -141,22 +120,22 @@ function msgObjectRecv(){
 }
 
 //TODO least priority
-function pictObjectRecv(){
+/*function pictObjectRecv(){
     if(obj.isPicture == true){
         savePict(obj);
     }
-}
+}*/
 
 function updateMsgList(msg){
     var message = msg["body"];
     Env().onUpdateMessageListener.addCallback(message);
 }
 //TODO least priority
-function savePict(filename, encodedPict){
+/*function savePict(filename, encodedPict){
     chrome.storage.sync.set({'filename':base64decode(encodedPict)},function(){
         console.log("This is callback");
     });
-}
+}*/
 
 function sendGroupInfo(){
     var group_info = jsonizeGroupInfo();
