@@ -2,31 +2,33 @@
 <html ng-app="burning">
 <head>
   <title>BurningChat</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-16">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+
   <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog.css">
   <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog.css">
   <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog-theme-default.css">
   <link rel="stylesheet" href="./bower_components/ng-dialog/css/ngDialog-theme-plain.css">
-  
+
   <!-- Components -->
   <script type="text/javascript" src="./bower_components/angular/angular.js"></script>
   <script type="text/javascript" src="./bower_components/jquery/dist/jquery.js"></script>
   <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script type="text/javascript" src="./bower_components/angular-animate/angular-animate.min.js"></script>
   <script type="text/javascript" src="./bower_components/ng-dialog/js/ngDialog.js"></script>
-  
+
   <script type="text/javascript" src="./BurningChatScala/target/scala-2.11/burningchatscala-fastopt.js"></script>
-  <!--<script type="text/javascript" src="chatgroup.js"></script>-->
   <script type="text/javascript" src="main.js"></script>
   <script type="text/javascript" src="contents.js"></script>
+  <script type="text/javascript" src="bgmodules.js"></script>
 </head>
 
 <body>
   <h3 id="greeting"></h3>
   <div id="contents">
     <div id="navigation_panel" ng-controller="NavigationPanelController">
-      <div class="inout_animation" ng-if="!toolsOpened">
+      <div class="inout_animation" ng-if="!toolsOpened && group.id != 0 && you !== null">
       <div id="group_header">
         <h2>{{group.name.toUpperCase()[0]}}</h2>
         <p>{{group.name}}</p>
@@ -40,39 +42,129 @@
         </ul>
       </div>
       </div>
-      <div class="inout_animation" ng-if="toolsOpened">
-        <h3>Moge-</h3>
+      <div class="inout_animation" ng-if="(toolsOpened || group.id == 0) && you !== null">
+        <div id="user_setting_header">
+          <h3>User Setting</h3>
+        </div>
+        <div id="user_setting_list">
+          <div class="inout_animation" ng-if="!toolsNameOpened" >
+          <h3>Name:<br>{{you.regItem.name}}
+            <img class="rotate_hover_animation" ng-click="onToolNameClick()" src="./assets/settings.png" width="28px" height="28px" />
+          </div>
+          <div class="inout_animation" ng-if="toolsNameOpened">
+            <h3>Name:<br>{{you.regItem.name}}
+            <img class="rotate_hover_animation" ng-click="onToolNameClick()" src="./assets/settings.png" width="28px" height="28px" />
+            <form>
+              <input type="text" size="10" name="change_name" style="color:#424242" ng-model="set_name" ng-required="true" ng-minlength=1 />
+              <input type="image" class="rotate_infhover_animation" ng-click="click_ch_name(set_name)" src="./assets/set_refresh.png" width="24px" height="24px" />
+            </form>
+            <!--img class="rotate_infhover_animation" ng-click="click_ch_name(set_name)" src="./assets/set_refresh.png" width="24px" height="24px" /-->
+          </div>
+          <div class="inout_animation" ng-if="!toolsEmailOpened">
+          <h3>E-mail:<br>{{you.regItem.email}}
+            <img class="rotate_hover_animation" ng-click="onToolEmailClick()" src="./assets/settings.png" width="28px" height="28px" />
+          </div>
+          <div class="inout_animation" ng-if="toolsEmailOpened">
+            <h3>E-mail:<br>{{you.regItem.email}}
+            <img class="rotate_hover_animation" ng-click="onToolEmailClick()" src="./assets/settings.png" width="28px" height="28px" />
+            <form>
+              <input type="text" name="change_email" size="10" ng-model="set_email" style="color:#424242" ng-required="true" ng-minlength=1 />
+              <input type="image" class="rotate_infhover_animation" ng-click="click_ch_email(set_email)" src="./assets/set_refresh.png"  width="24px" height="24px"/>
+            </form>
+            <!--<img class="rotate_infhover_animation" ng-click="click_ch_email()" src="./assets/set_refresh.png" width="24px" height="24px" />-->
+          </div>
+        </div>
       </div>
       <div id="navigation_tool">
         <img class="rotate_hover_animation" ng-click="onToolClick()" src="./assets/settings.png" width="28px" height="28px" />
       </div>
     </div>
-    <div id="message_area">
-      <div id="time_line" ng-controller="TimeLineController">
-        <div ng-repeat="message in group.messageArray">
-          <div id="time_line_item" ng-click="onClickMessageListener.callAllCallback(message)">
-            <h2 id="initial" ng-style="toStyle(message.member.userColor)">{{message.member.regItem.name.toUpperCase()[0]}}</h2>
-            <p id="name">{{message.member.regItem.name}}</p>
-            <p id="text_message">{{message.body}}</p>
-            <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.image == null}}"/>
-            
-            <!--Dialog Script-->
-            <script type="text/ng-template" id="messageDetailDialog">
-		      	  <h3>[From] @{{message.member.id}}#{{group.id}}: {{message.member.regItem.name}}</h3>
-		      	  <p>ID: {{message.id}}</p>
-		      	  <p>Body: {{message.body}}</p>
-		      	  <p>Date: {{message.date}}</p>
-		        </script>
+    <div id="main_area" ng-controller="MainAreaController">
+      <div id="top_window" ng-if="mode == MODES.TOP">
+        <h2 id="title">Which do you want to do?</h2>
+        <h3>Create New Group</h3>
+        <div id="group_creation">
+          <h4>Group Name</h4>
+          <form>
+            <input type="text" placeholder="Put the name of new group." ng-model="newGroupName"/>
+            <input type="image" ng-click="onCreateNewGroup(newGroupName)" src="./assets/new_group.png" height="48px" width="48px"/>
+          </form>
+        </div>
+        <h3>Join Group</h3>
+        <div id="group_joint">
+          <div ng-if="groups.length == 0">
+            <h4>No Group</h4>
+          </div>
+          <div ng-if="groups.length != 0">
+            <div id="group_list" ng-repeat="group in groups">
+              <div id="item" ng-click="onClick(group)">
+                <h4>{{group.name}}@{{group.id}}</h4>
+                <h4>{{group.owner.name}}</h4>
+              </div>
+              <script type="text/ng-template" id="groupDetailDialog">
+               <div id="group_detail_dialog">
+                  <h3 id="group_owner">Owner: {{group.owner.regItem.name}}</h3>
+                  <div id="join_button_group">
+                    <form>
+                     <input type="image" ng-click="onJoinGroup(group)" id="join_button" src="./assets/join.png" height="40px" width="40px"/>
+                    </form>
+                  </div>
+                </div>
+              </script>
+            </div>
           </div>
         </div>
       </div>
-      <div id="mention_form" ng-controller="MentionForm">
-        <form>
-          <input type="image" ng-click="onSend()"  src="./assets/plus.png" height="44px" width="44px"/>
-          <input type="text" ng-model="messageBody"/>
-        </form>
+      <div id="message_area" ng-if="mode == MODES.MESSAGE">
+        <div id="time_line" ng-controller="TimeLineController">
+          <div ng-repeat="message in group.messageArray">
+            <div id="time_line_item" ng-click="onClickMessageListener.callAllCallback(message)">
+              <h2 id="initial" ng-style="toStyle(message.member.userColor)">{{message.member.regItem.name.toUpperCase()[0]}}</h2>
+              <p id="name">{{message.member.regItem.name}}</p>
+              <p id="text_message">{{message.body}}</p>
+              <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.image == null}}"/>
+
+              <!--Dialog Script-->
+              <script type="text/ng-template" id="messageDetailDialog">
+		        	  <h3>[From] @{{message.member.id}}#{{group.id}}: {{message.member.regItem.name}}</h3>
+		        	  <p>ID: {{message.id}}</p>
+		        	  <p>Body: {{message.body}}</p>
+		        	  <p>Date: {{message.date}}</p>
+		          </script>
+            </div>
+          </div>
+        </div>
+        <div id="mention_form" ng-controller="MentionForm">
+          <form>
+            <input type="image" id="message_sender" ng-click="onSend()" src="./assets/plus.png" height="0px" width="0px"/>
+            <input type="text" ng-model="messageBody" ng-click="onSend()"/>
+            <input type="image" ng-click="addImage()" src="./assets/plus.png" height="44px" width="44px" />
+          </form>
+        </div>
       </div>
-    </div>
-  </div>
+      <div id="group_selection" ng-if="mode == MODES.GROUP">
+        <h2>Group Selection</h2>
+        <div id="group_item" ng-repeat="group in groups">
+          <div ng-click="onClick(group)">
+            <h3>{{group.name}}</h3>
+          </div>
+        </div>
+      </div>
+      <div id="user_regist_area" ng-if="mode == MODES.USER">
+        <div id="regist_panel" ng-controller="NewUserController">
+          <image id="regist_icon_image" src="./assets/icon.png"/>
+          <h1>Welcome to Burning Chat.<br>Please type your information.</h1>
+          <br>
+          <h1>Account Name</h2>
+          <input type="text" ng-model="reg_name" ng-change="FillorNotFill(reg_name, reg_email)" style="#424242"  ng-minlength=1 size=20 />
+          <h2>E-mail Adrress</h2>
+          <input type="text" ng-model="reg_email" ng-change="FillorNotFill(reg_name, reg_email)" style="#424242" ng-minlength=1 size=20 />
+          <br><br>
+          <h3>Your Name:{{reg_name}}</h3>
+          <h3>E-mail address:{{reg_email}}</h3>
+          <img ng-if="!Reg_fill" src="./assets/new_user_black.png" height="50px" width="50px"/>
+          <input type="image" ng-if="Reg_fill" ng-click="click_Reg_Icon(reg_name, reg_email)" src="./assets/new_user_blue.png" height="50px" width="50px"/>
+        </div>
+      </div>
 </body>
 </html>
