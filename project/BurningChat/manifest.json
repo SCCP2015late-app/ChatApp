@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "BurningChat",
-  "short_name": "BurningChat",
+  "name": "UDPtest",
+  "short_name": "UDPtest",
   "description": "",
   "version": "0.0.1",
   "minimum_chrome_version": "38",
@@ -10,10 +10,20 @@
     "16": "assets/icon_16.png",
     "128": "assets/icon_128.png"
   },
+  
+  "permissions": [
+    "system.network"
+  ],
 
   "app": {
     "background": {
       "scripts": ["background.js"]
+    }
+  },
+  "sockets": {
+    "udp": {
+      "bind" : "",
+      "send" : ""
     }
   }
 }
