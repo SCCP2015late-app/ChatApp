@@ -4,7 +4,7 @@
 //});
 
 //get internal IP address
-function getLocalIP(callback) {
+var getLocalIP = function(callback) {
     var ips = [];
 
     var RTCPeerConnection = window.RTCPeerConnection ||
@@ -18,8 +18,9 @@ function getLocalIP(callback) {
     pc.onicecandidate = function (e) {
         if (!e.candidate) {
             pc.close();
-            callback(ips);
-            return;
+            return ips[ips.length -1];
+            //callback(ips);
+            //return;
         }
         var ip = /^candidate:.+ (\S+) \d+ typ/.exec(e.candidate.candidate)[1];
         if (ips.indexOf(ip) == -1) // avoid duplicate entries (tcp/udp)
@@ -29,7 +30,7 @@ function getLocalIP(callback) {
         pc.setLocalDescription(sdp);
     }, function onerror() {
     });
-}
+};
 
 //ArrayBuffer String converetr
 var string_to_buffer = function(src) {
@@ -45,14 +46,25 @@ var buffer_to_string = function(buf) {
 
 //test code for udp packet sending and receiving
 var bind_address = '127.0.0.1';
-var add = '192.168.11.4';
 var bind_port = 22222;
+var add = bind_address/* = getLocalIP (function(ips) { return ips[ips.length - 1]; })*/;
+var m = "This is a test message.";
+
+chrome.system.network.getNetworkInterfaces(function(ipinfo){
+    var add = [];
+    var name = [];
+    for(var i in ipinfo){
+//        name.push(ipinfo[ipinfo.length - 1].name);
+//        add.push(ipinfo[ipinfo.length - 1].address);
+        console.log(ipinfo[i].name + " " + ipinfo[i].address);
+    }
+});
 
 var receiveCallback = function(info){
     console.log(info.socketId + " : " + buffer_to_string(info.data));
 };
 
-var data = string_to_buffer("hogehogehoge");
+var data = string_to_buffer(m);
 chrome.sockets.udp.create({}, function(createInfo) {
     chrome.sockets.udp.onReceive.addListener(receiveCallback);
 	chrome.sockets.udp.bind(createInfo.socketId, add, bind_port, function(result){

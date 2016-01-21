@@ -10,6 +10,10 @@
     "16": "assets/icon_16.png",
     "128": "assets/icon_128.png"
   },
+  
+  "permissions": [
+    "system.network"
+  ],
 
   "app": {
     "background": {
