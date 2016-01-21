@@ -7,6 +7,11 @@ var hash = CryptoJS.MD5("Message");
 
 */
 //get internal IP address
+
+const msg_port = "22222";
+const pict_port = "33333";
+const req_port = "44444";
+
 var getLocalIP = function(callback) {
     var ips = [];
 

@@ -1,50 +1,4 @@
 (function(){
-
-  // Code for Debug[START]
-  const GROUP_NAME = "mogemoge group";
-  const GROUP_ID = 1919;
-
-  const NAME_00 = "owner";
-  const NAME_01 = "poe";
-  const NAME_02 = "maguro";
-  const NAME_03 = "fupiyon";
-
-  const EMAIL_00 = "";
-  const EMAIL_01 = "";
-  const EMAIL_02 = "";
-  const EMAIL_03 = "";
-
-  const PROP_00 = new RegistrationItem(NAME_00, EMAIL_00);
-  const PROP_01 = new RegistrationItem(NAME_01, EMAIL_01);
-  const PROP_02 = new RegistrationItem(NAME_02, EMAIL_02);
-  const PROP_03 = new RegistrationItem(NAME_03, EMAIL_03);
-
-  const OWNER = new Member("zero", 0, PROP_00);
-
-  const MEMBER_01 = new Member("one", 1, PROP_01);
-  const MEMBER_02 = new Member("two", 2, PROP_02);
-  const MEMBER_03 = new Member("three", 3, PROP_03);
-
-  const MEMBERS = [
-      OWNER,
-      MEMBER_01,
-      MEMBER_02,
-      MEMBER_03
-    ];
-
-  const MESSAGES = [
-      new Message(0, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(1, MEMBER_01, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(2, MEMBER_02, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(3, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(4, MEMBER_03, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(5, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(6, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(7, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false),
-      new Message(8, OWNER, "", "purieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", null, false)
-    ];
-  // Code for Debug[END]
-
   // BurningChatのModule
   var app = angular.module('burning', ['ngAnimate', 'ngDialog'], function($provide) {
     $provide.decorator('$window', function($delegate) {
@@ -65,16 +19,6 @@
     };
 
   });
-  var group1 = new ChatGroup(1, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  var group2 = new ChatGroup(2, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  var group3 = new ChatGroup(3, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  var group4 = new ChatGroup(4, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  var group5 = new ChatGroup(5, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  var group6 = new ChatGroup(6, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  var group7 = new ChatGroup(7, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  var group8 = new ChatGroup(8, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  var group9 = new ChatGroup(9, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
-  var group10 = new ChatGroup(10, GROUP_NAME, OWNER, MEMBERS, MESSAGES);
 
   // 左側オレンジのグループ情報を表示するパネルのController
   app.controller('NavigationPanelController', function($scope, ngDialog) {
@@ -154,6 +98,9 @@
 
   });
 
+  var modeChange;
+  var modes;
+
   // 右側の画面のController
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
@@ -161,6 +108,12 @@
 
     // 起動時のモード
     $scope.mode = $scope.MODES.USER;
+    
+    modes = $scope.MODES;
+
+    modeChange = function(mode) {
+      $scope.mode = mode;
+    };
 
     // 表示するグループのリスト
     $scope.groups = [];
@@ -196,7 +149,7 @@
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
     };
   });
-
+  
   // Messageモード時のタイムラインController
   app.controller('TimeLineController', function($scope, ngDialog) {
 
@@ -290,8 +243,10 @@
 //コールバック
     $scope.click_Reg_Icon = function(name, email){
       var regitem = new RegistrationItem(name, email);
-
+  
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
+      
+      modeChange(modes.TOP);
     };
   });
 })();
