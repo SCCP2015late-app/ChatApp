@@ -23,6 +23,7 @@
   <script type="text/javascript" src="contents.js"></script>
   <script type="text/javascript" src="bgmodules.js"></script>
   <script type="text/javascript" src="converters.js"></script>
+  <script type="text/javascript" src="test.js"></script>
 </head>
 
 <body>
@@ -154,18 +155,23 @@
       <div id="user_regist_area" ng-if="mode == MODES.USER">
         <div id="regist_panel" ng-controller="NewUserController">
           <image id="regist_icon_image" src="./assets/icon.png"/>
-          <h1>Welcome to Burning Chat.<br>Please type your information.</h1>
+          <br>
+          <image id="regist_logo_image" src="./assets/logo.png"/>
+          <h2>Welcome to Burning Chat.<br>Please register or login.</h2>
           <br>
           <h1>Account Name</h2>
           <input type="text" ng-model="reg_name" ng-change="FillorNotFill(reg_name, reg_email)" style="#424242"  ng-minlength=1 size=20 />
-          <h2>E-mail Adrress</h2>
+          <h2>E-mail Address</h2>
           <input type="text" ng-model="reg_email" ng-change="FillorNotFill(reg_name, reg_email)" style="#424242" ng-minlength=1 size=20 />
           <br><br>
           <h3>Your Name:{{reg_name}}</h3>
           <h3>E-mail address:{{reg_email}}</h3>
-          <img ng-if="!Reg_fill" src="./assets/new_user_black.png" height="50px" width="50px"/>
+          <input type="image" ng-if="!Reg_fill" src="./assets/new_user_black.png" height="50px" width="50px"/>
           <input type="image" ng-if="Reg_fill" ng-click="click_Reg_Icon(reg_name, reg_email)" src="./assets/new_user_blue.png" height="50px" width="50px"/>
+          <input type="image" ng-click="click_Reg_Icon(you.regItem.name, you.regItem.email)" src="./assets/login.png" height="50px" width="50px"/>
+
         </div>
       </div>
 </body>
+
 </html>

@@ -5,25 +5,28 @@
   "description": "",
   "version": "0.0.1",
   "minimum_chrome_version": "38",
-
+  
   "icons": {
     "16": "assets/icon_16.png",
     "128": "assets/icon_128.png"
   },
   
   "permissions": [
-    "system.network"
+      "system.network",
+      "storage"
   ],
-
+  
   "app": {
     "background": {
       "scripts": ["background.js"]
     }
   },
+  
   "sockets": {
     "udp": {
       "bind" : "",
       "send" : ""
     }
   }
+  
 }

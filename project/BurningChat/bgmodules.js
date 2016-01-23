@@ -1,67 +1,55 @@
-//test code
-/*
-getLocalIP (function(ips) {
-    return ips[ips.length - 1];
+//to delete all storage data
+//chrome.storage.local.clear();
+
+//get internal IP address, and calculate other info
+var your_ip;
+var your_id;
+var your_num;
+chrome.system.network.getNetworkInterfaces(function(ipinfo){
+    your_ip = ipinfo[1].address;
+    your_id = CryptoJS.MD5(your_ip) + (new Date).getTime();
+    your_num = parseInt(your_ip.split(".")[3]);
+    var you = new Member(your_id, your_num, new RegistrationItem("John Doe", "yahoo@gmail.com"));
 });
-var hash = CryptoJS.MD5("Message");
 
-*/
-//get internal IP address
-
-const LOCALHOST = '127.0.0.1';
 const msg_port = 22222;
 const req_port = 33333;
+const your_info = 'your_info';
+const group_info = 'g_info';
 const sample_message = "This is a test message.";
 
-var getLocalIP = function(callback) {
-    var ips = [];
+chrome.storage.local.get(your_info, function(obj){
 
-    var RTCPeerConnection = window.RTCPeerConnection ||
-        window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
-
-    var pc = new RTCPeerConnection({
-        iceServers: []
-    });
-    pc.createDataChannel('');
-
-    pc.onicecandidate = function (e) {
-        if (!e.candidate) {
-            pc.close();
-            return ips[ips.length -1];
-            //callback(ips);
-            //return;
-        }
-        var ip = /^candidate:.+ (\S+) \d+ typ/.exec(e.candidate.candidate)[1];
-        if (ips.indexOf(ip) == -1) // avoid duplicate entries (tcp/udp)
-            ips.push(ip);
-    };
-    pc.createOffer(function (sdp) {
-        pc.setLocalDescription(sdp);
-    }, function onerror() {
-    });
-};
-
-chrome.system.network.getNetworkInterfaces(function(ipinfo){
-    var add = [];
-    var name = [];
-    for(var i in ipinfo){
-        console.log(ipinfo[i].name + " " + ipinfo[i].address);
+    var stored_you = obj.your_info;
+    if(stored_you == undefined){
+        console.log("! You are not registered !");
+        return;
+    }else{
+        console.log("Loaded your Information:");
+        console.log(stored_you);
+        
+        const id = stored_you.id$1;
+        const num = stored_you.number$1;
+        const name = stored_you.regItem$1.name$1;
+        const email = stored_you.regItem$1.email$1;
+        you = new Member(id, num, new RegistrationItem(name, email));
+        Env().onLoadUserListener.callAllCallback(you);
     }
 });
 
-var receiveCallback = function(info){
-    console.log(info.socketId + " : " + buffer_to_string(info.data));
-};
-
-chrome.sockets.udp.create({}, function(createInfo) {
-    chrome.sockets.udp.onReceive.addListener(receiveCallback);
-	chrome.sockets.udp.bind(createInfo.socketId, LOCALHOST, msg_port, function(result){
-		chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(sample_message), LOCALHOST, msg_port, function(sendInfo) {
-			console.log('sent done: ' + sendInfo.resultCode);
-			chrome.sockets.udp.close(createInfo.socketId, function(){});
-		});
-	});
-});
+//
+Env().onSetRegistrationItemListener.addCallback(function(info){
+    console.log("your IPv4 address: " + your_ip);
+    you = new Member(your_id, your_num, info);
+    console.log("New your info: " + you);
+    chrome.storage.local.set({your_info: you}, function(){});
+    chrome.storage.local.get(your_info, function(obj){
+        console.log("Storing completed:");
+        console.log(obj.your_info);
+    });
+    Env().onLoadUserListener.callAllCallback(you);
+  }
+);
 
 
 /* global onUpdateMessageListener */
