@@ -70,6 +70,8 @@
       console.log("emailclick");
     };
 
+
+//user_name is changed on setting panel, except the case that name is blank
     $scope.click_ch_name = function(name){
       if($scope.you === null) {
         return;
@@ -82,7 +84,9 @@
       $scope.onToolNameClick();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
+//end----------------------------------------
 
+//user_email is changed on setting panel, except the case that email is blank
     $scope.click_ch_email = function(email){
       if($scope.you === null) {
         return;
@@ -97,6 +101,14 @@
     };
 
   });
+//end----------------------------------------
+
+//replace you by new_you
+Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
+    console.log("renewed : " + new_you.regItem.name + " " + new_you.regItem.email);
+    you = new_you;
+});
+//end----------------------------------------
 
   var modeChange;
   var modes;
@@ -126,6 +138,7 @@
 
     // ユーザのロードができれば（既に情報があれば）モード切り替え
     Env().onLoadUserListener.addCallback(function(user) {
+      
       $scope.you = user;
       $scope.mode = $scope.MODES.TOP;
     });
@@ -172,7 +185,7 @@
         $scope.group = group;
       }]});
     });
-
+    
     // メッセージが内部で追加された時にタイムラインを更新
     Env().onUpdateMessageListener.addCallback(function(message) {
       $scope.group.addMessage(message);
@@ -243,7 +256,9 @@
 //コールバック
     $scope.click_Reg_Icon = function(name, email){
       var regitem = new RegistrationItem(name, email);
-  
+      
+      console.log("Registration: " + regitem);
+      
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
       
       modeChange(modes.TOP);
