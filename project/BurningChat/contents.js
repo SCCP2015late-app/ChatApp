@@ -258,9 +258,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
       var regitem = new RegistrationItem(name, email);
       
       console.log("Registration: " + regitem);
-      
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
-      
       modeChange(modes.TOP);
     };
     
@@ -268,5 +266,6 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
        Env().onLoadUserListener.callAllCallback(you);
        console.log("Successfully logged in as: " + $scope.you.regItem.name);
     };
+   
   });
 })();

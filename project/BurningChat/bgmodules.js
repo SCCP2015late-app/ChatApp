@@ -1,23 +1,28 @@
-//to delete all storage data
+/*-- to delete all storage data --*/
 //chrome.storage.local.clear();
 
 //get internal IP address, and calculate other info
 var your_ip;
 var your_id;
 var your_num;
+var you;
 chrome.system.network.getNetworkInterfaces(function(ipinfo){
     your_ip = ipinfo[1].address;
     your_id = CryptoJS.MD5(your_ip) + (new Date).getTime();
     your_num = parseInt(your_ip.split(".")[3]);
-    var you = new Member(your_id, your_num, new RegistrationItem("John Doe", "yahoo@gmail.com"));
+    you = new Member(your_id, your_num, new RegistrationItem("John Doe", "yahoo@gmail.com"));
 });
+//end----------------------------------------
 
+//constatns for all_users
 const msg_port = 22222;
 const req_port = 33333;
 const your_info = 'your_info';
 const group_info = 'group_info';
 const sample_message = "This is a test message.";
+//end----------------------------------------
 
+//load stored user_information from storage
 chrome.storage.local.get(your_info, function(obj){
     var stored_you = obj.your_info;
     if(stored_you == undefined){
@@ -32,11 +37,11 @@ chrome.storage.local.get(your_info, function(obj){
         const name = stored_you.regItem$1.name$1;
         const email = stored_you.regItem$1.email$1;
         you = new Member(id, num, new RegistrationItem(name, email));
-        //Env().onLoadUserListener.callAllCallback(you);
     }
 });
+//end----------------------------------------
 
-//
+//callback method to create new_user and store it
 Env().onSetRegistrationItemListener.addCallback(function(info){
     console.log("your IPv4 address: " + your_ip);
     you = new Member(your_id, your_num, info);
@@ -49,7 +54,21 @@ Env().onSetRegistrationItemListener.addCallback(function(info){
     Env().onLoadUserListener.callAllCallback(you);
   }
 );
+//end----------------------------------------
 
+//anonymous function to get group_list from server
+/*
+(function(){
+    var groups = [
+        new ChatGroup(1, "qwerty", you, [you, you], []),
+        new ChatGroup(2, "dvorak", you, [you, you], []),
+        new ChatGroup(3, "aizu", you, [you, you], []),
+    ];
+    console.log(groups);
+    Env().onGetGroupListListener.callAllCallback(groups);
+}());
+*/
+//end----------------------------------------
 
 /* global onUpdateMessageListener */
 function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる
@@ -102,63 +121,10 @@ function requestRecv(){
 
 }
 
-
 function msgBroadcast(){
     sendToAll(obj);
 }
 
-//TODO least priority
-function pictBroadcast(){
-    sendToAll(obj);
-}
-
-function modifyUserInfo(){
-    //ユーザ情報の変更
-    //reg itemをもとにuser informationのJSONを変更してファイルに書き込む
-    //Listenerを叩いてフロントに変更を伝える
-}
-
 function initializeGroup(){
     //ストレージからとってきたデータを使ってグループを初期化する
-}
-
-function jsonizeMessages(){
-    var ret = [];
-    for(var i = 0; i < group.messageArray.length; i++){
-        var buf = {
-            "u_id": group.messageArray[i].id,
-            "u_name": group.messageArray[i].member.regItem.name,
-            "date": group.messageArray[i].date,
-            "body": group.messageArray[i].body,
-            "pict_flag": group.messageArray[i].flag,
-            "pict_name": group.messageArray[i].image
-        };
-        ret.push(buf);
-    }
-    return ret;
-}
-
-function jsonizeMembers(){
-    var ret = [];
-    for(var i = 0; i < group.memberArray.length; i++){
-        var buf = {
-            "u_id": group.memberArray[i].id,
-            "u_name": group.memberArray[i].regItem.name,
-            "e-mail": group.memberArray[i].regItem.email
-        };
-        ret.push(buf);
-    }
-    return ret;
-}
-
-function jsonizeGroupInfo(){
-    var messages = jsonizeMessages();
-    var members = jsonizeMembers();
-    var g_info = JSON.stringify({
-        "g_id": group.id,
-        "owner_id": group.owner.id,
-        "user_list": members,
-        "msg_list": messages
-    }, null, "    ");
-   return g_info;
 }
