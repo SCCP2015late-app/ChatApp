@@ -75,9 +75,14 @@ function msgBroadcastRequest(message){//massageを受け取ってjsonにしてow
         　"flag": false,
     };
 
-    if(message.image==null){
+    if(message.flag==false){
         json_text = JSON.stringify(msg);
-        msgBroadcast(json_text); //オーナーに送信処理
+        chrome.sockets.udp.create({}, function(createInfo) {
+         chrome.sockets.udp.bind(createInfo.socketId, YOUR_IP, YOUR_PORT, function(result){
+          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), LOCALHOST, req_port, 
+            chrome.sockets.udp.close(createInfo.socketId, function(){})
+         });
+    });
     } else {
         msg["flag"] = true;
         msg["image"] = base64encode(message.image);
@@ -87,7 +92,6 @@ function msgBroadcastRequest(message){//massageを受け取ってjsonにしてow
     }
 
 }
-
 function msgObjectRecv(){
     if(obj.isMessage == true){
         storeMessage(obj);
