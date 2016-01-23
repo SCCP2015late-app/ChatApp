@@ -66,17 +66,24 @@ function msgBroadcastRequest(message){//massageを受け取ってjsonにしてow
     if(message.flag==false){
         json_text = JSON.stringify(msg);
         chrome.sockets.udp.create({}, function(createInfo) {
-         chrome.sockets.udp.bind(createInfo.socketId, YOUR_IP, YOUR_PORT, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), LOCALHOST, req_port, 
+         chrome.sockets.udp.bind(createInfo.socketId, your_ip, req_port, function(result){
+          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), your_ip, req_port, 
             chrome.sockets.udp.close(createInfo.socketId, function(){})
+          )
          });
-    });
+        });
     } else {
         msg["flag"] = true;
         msg["image"] = base64encode(message.image);
         var json_text = JSON.stringify(msg);
-        msgBroadcast(json_text); //オーナーに送信処理
-        //pictBroadcastRequest(pict);
+        //オーナーに送信処理
+        chrome.sockets.udp.create({}, function(createInfo) {
+         chrome.sockets.udp.bind(createInfo.socketId, your_ip, req_port, function(result){
+          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), your_ip, req_port, 
+            chrome.sockets.udp.close(createInfo.socketId, function(){})
+          )
+         });
+        });
     }
 
 }
