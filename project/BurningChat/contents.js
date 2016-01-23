@@ -263,5 +263,10 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
       
       modeChange(modes.TOP);
     };
+    
+    $scope.logIn = function(){
+       Env().onLoadUserListener.callAllCallback(you);
+       console.log("Successfully logged in as: " + $scope.you.regItem.name);
+    };
   });
 })();

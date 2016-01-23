@@ -15,11 +15,10 @@ chrome.system.network.getNetworkInterfaces(function(ipinfo){
 const msg_port = 22222;
 const req_port = 33333;
 const your_info = 'your_info';
-const group_info = 'g_info';
+const group_info = 'group_info';
 const sample_message = "This is a test message.";
 
 chrome.storage.local.get(your_info, function(obj){
-
     var stored_you = obj.your_info;
     if(stored_you == undefined){
         console.log("! You are not registered !");
@@ -33,7 +32,7 @@ chrome.storage.local.get(your_info, function(obj){
         const name = stored_you.regItem$1.name$1;
         const email = stored_you.regItem$1.email$1;
         you = new Member(id, num, new RegistrationItem(name, email));
-        Env().onLoadUserListener.callAllCallback(you);
+        //Env().onLoadUserListener.callAllCallback(you);
     }
 });
 
