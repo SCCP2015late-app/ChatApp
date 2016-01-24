@@ -94,6 +94,16 @@ module GroupManager extend self
     new_id
   end
 
+  def deleteGroup(group_id)
+    raise "GroupID: \"#{group_id}\" is not exits." if !GroupManager.existGroupID?(group_id)
+
+    tmp = @@groups.select {|group|
+      group.id != group_id
+    }
+
+    @@groups = tmp
+  end
+
   def existGroupID?(group_id)
     return false if @@groups == nil
 
@@ -189,7 +199,7 @@ get '/groupList' do
     result = GroupManager.getGroupListAsJson
     Result.OK(result)
   rescue
-    Result.FAULR('Server error has occured')
+    Result.FAULT('Server error has occured')
   end
 end
 
@@ -197,6 +207,16 @@ post '/updateGroupInfo' do
   begin
     group = Group.fromJson(request.body.read)
     GroupManager.update(group)
+    Result.OK('1')
+  rescue => e
+    Result.FAULT(e)
+  end
+end
+
+post '/deleteGroup' do
+  begin
+    target_id = request.body.read.to_i
+    GroupManager.deleteGroup(target_id)
     Result.OK('1')
   rescue => e
     Result.FAULT(e)
