@@ -1,4 +1,8 @@
 (function(){
+  var modeChange;
+  var modes;
+  var app_mode;
+  
   // BurningChatのModule
   var app = angular.module('burning', ['ngAnimate', 'ngDialog'], function($provide) {
     $provide.decorator('$window', function($delegate) {
@@ -59,6 +63,16 @@
       $scope.toolsOpened = !$scope.toolsOpened;
       console.log("click");
     };
+    
+    $scope.shouldShowGroupExitButton = function() {
+      return app_mode == modes.MESSAGE;
+    };
+    
+    $scope.onClickGroupExitButton = function() {
+      // TODO: Add Action.
+      console.log("onClickGroupExitButton");
+    };
+    
 //　クリック時、変更入力欄表示
     $scope.onToolNameClick = function(){
       $scope.toolsNameOpened = !$scope.toolsNameOpened;
@@ -110,22 +124,20 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 });
 //end----------------------------------------
 
-  var modeChange;
-  var modes;
-
   // 右側の画面のController
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
     $scope.MODES = {GROUP: 'group', MESSAGE: 'message', TOP: 'top', USER: 'user', LOAD_GROUP: 'load_group'};
-
-    // 起動時のモード
-    $scope.mode = $scope.MODES.USER;
     
-    modes = $scope.MODES;
-
     modeChange = function(mode) {
       $scope.mode = mode;
+      app_mode = mode;
     };
+    
+    modes = $scope.MODES;
+    
+    // 起動時のモード
+    modeChange(modes.MESSAGE);
 
     // 表示するグループのリスト
     $scope.groups = [];

@@ -79,6 +79,7 @@
       </div>
       <div id="navigation_tool">
         <img class="rotate_hover_animation" ng-click="onToolClick()" src="./assets/settings.png" width="28px" height="28px" />
+        <img class="rotate_hover_animation" ng-if="shouldShowGroupExitButton()" ng-click="onClickGroupExitButton()" src="./assets/group_exit.png" width="28px" height="28px" />
       </div>
     </div>
     <div id="main_area" ng-controller="MainAreaController">
