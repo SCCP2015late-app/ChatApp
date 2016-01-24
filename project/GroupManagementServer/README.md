@@ -2,7 +2,7 @@
 
 ##クラス構成
 ###Group
-id: String - グループのID  
+id: Integer - グループのID  
 name: String - グループの表示名  
 owner: Member - グループのオーナー情報  
 member_num: Integer - オーナーを含めたグループ参加者数  
@@ -14,8 +14,8 @@ ip_addr: String - バインドしているIPアドレス
 email: String - メンバーのEメールアドレス  
 
 ###Result
-code: Integer - リザルトコード(成功...1,　失敗...0)
-message: String - 結果文字列
+code: Integer - リザルトコード(成功...1,　失敗...0) 
+message: String - 結果文字列 
 
 ##API
 ###POST /addNewGroup
