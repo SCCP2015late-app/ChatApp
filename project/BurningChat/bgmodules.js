@@ -1,25 +1,30 @@
 /*-- to delete all storage data --*/
 //chrome.storage.local.clear();
 
+//constants for all_users
+const server_ip = '';
+const msg_port = 22222;
+const msg_req_port = 29999;
+const join_port = 44444;
+const join_req_port = 49999;
+const ud_port = 55555;
+const your_info = 'your_info';
+const group_info = 'group_info';
+//end----------------------------------------
+
 //get internal IP address, and calculate other info
 var your_ip;
 var your_id;
 var your_num;
 var you;
+var current_group;
+var owner_ip;
 chrome.system.network.getNetworkInterfaces(function(ipinfo){
     your_ip = ipinfo[1].address;
     your_id = CryptoJS.MD5(your_ip) + (new Date).getTime();
     your_num = parseInt(your_ip.split(".")[3]);
     you = new Member(your_id, your_num, new RegistrationItem("John Doe", "yahoo@gmail.com"));
 });
-//end----------------------------------------
-
-//constatns for all_users
-const msg_port = 22222;
-const req_port = 33333;
-const your_info = 'your_info';
-const group_info = 'group_info';
-const sample_message = "This is a test message.";
 //end----------------------------------------
 
 //load stored user_information from storage
@@ -41,7 +46,7 @@ chrome.storage.local.get(your_info, function(obj){
 });
 //end----------------------------------------
 
-//callback method to create new_user and store it
+//callback - create new_user and store it
 Env().onSetRegistrationItemListener.addCallback(function(info){
     console.log("your IPv4 address: " + your_ip);
     you = new Member(your_id, your_num, info);
@@ -56,18 +61,50 @@ Env().onSetRegistrationItemListener.addCallback(function(info){
 );
 //end----------------------------------------
 
-//anonymous function to get group_list from server
-/*
-(function(){
-    var groups = [
-        new ChatGroup(1, "qwerty", you, [you, you], []),
-        new ChatGroup(2, "dvorak", you, [you, you], []),
-        new ChatGroup(3, "aizu", you, [you, you], []),
-    ];
-    console.log(groups);
+//TODO anonymous function to get group_list from server
+function getGroupList(){
+    //console.log(groups);
     Env().onGetGroupListListener.callAllCallback(groups);
-}());
-*/
+};
+//end----------------------------------------
+
+//TODO callback function - save received group info to variable
+var receiveGroupCallback = function(info){
+};
+//end----------------------------------------
+
+//callback - send join request and save group data to variables
+Env().onJoinGroupListener.addCallback(function(info){
+    owner_ip = info['group']['owner']['ip_addr'];
+    chrome.sockets.udp.create({}, function(createInfo) {
+        chrome.sockets.udp.onReceive.addListener(receiveGroupCallback);
+        chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_port,
+        function(result){
+            chrome.sockets.udp.send(createInfo.socketId,
+            string_to_buffer(JSON.stringify(info['member'])),
+            owner_ip, join_req_port, function(sendInfo) {
+                console.log('Join request was sent: ' + sendInfo.resultCode);
+                console.log('Owner\'s IP: ' + owner_ip);
+                chrome.sockets.udp.close(createInfo.socketId, function(){});
+            });
+        });
+    });
+});
+//end----------------------------------------
+
+//TODO callback function - process join request
+var receiveJoinRequestCallback = function(info){  
+    console.log("success");
+};
+//end----------------------------------------
+
+//FOR OWNER - join request receiver
+function activateJoinRequestReceiver(){
+    chrome.sockets.udp.create({}, function(createInfo) {
+        chrome.sockets.udp.onReceive.addListener(receiveJoinRequestCallback);
+        chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_req_port, function(){});
+    });
+};
 //end----------------------------------------
 
 /* global onUpdateMessageListener */

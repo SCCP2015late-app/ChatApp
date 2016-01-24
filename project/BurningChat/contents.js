@@ -148,6 +148,8 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     });
 
     $scope.you = null;
+    
+    var getYou = function(){ return $scope.you; };
 
     // ユーザのロードができれば（既に情報があれば）モード切り替え
     Env().onLoadUserListener.addCallback(function(user) {
@@ -160,7 +162,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     $scope.onClick = function(selectedGroup) {
       ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
         $scope.group = selectedGroup;
-
+        $scope.you = getYou();
         $scope.onJoinGroup = function(group) {
           console.log("Join: " + group.name + "@" + group.id);
           Env().onJoinGroupListener.callAllCallback({'group': group, 'member': $scope.you});
@@ -271,11 +273,15 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
       var regitem = new RegistrationItem(name, email);
       
       console.log("Registration: " + regitem);
+      getGroupList();
+      activateJoinRequestReceiver();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
       modeChange(modes.TOP);
     };
     
     $scope.logIn = function(){
+       getGroupList();
+       activateJoinRequestReceiver()
        Env().onLoadUserListener.callAllCallback(you);
        console.log("Successfully logged in as: " + $scope.you.regItem.name);
     };
