@@ -72,7 +72,7 @@ const u3 = new Member('id3', 2, new RegistrationItem('Michael', 'sample.com'));
 const g1 = new ChatGroup(0, 'group1', u1, [u1, u2, u3], []);
 const g2 = new ChatGroup(1, 'group2', u2, [u1, u2, u3], []);
 const g3 = new ChatGroup(2, 'group3', u3, [u1, u2, u3], []);
-const groups = [
+var groups = [
     {
         'id': (new Date).getTime() % Math.round((Math.random()*1000)),
         'name': 'Dog',
@@ -94,6 +94,61 @@ const groups = [
             email: 'hoge@gmail.com',
         },
         'member_num': 8,
+    },
+    {
+        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
+        'name': 'Rabbit',
+        'owner': {
+            id: 'owner_id3',
+            name: 'Владимир Путин',
+            ip_addr: '127.0.0.1',
+            email: 'hoge@gmail.com',
+        },
+        'member_num': 6,
+    },
+    {
+        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
+        'name': 'Rabbit',
+        'owner': {
+            id: 'owner_id3',
+            name: 'Владимир Путин',
+            ip_addr: '127.0.0.1',
+            email: 'hoge@gmail.com',
+        },
+        'member_num': 6,
+    },
+    {
+        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
+        'name': 'Rabbit',
+        'owner': {
+            id: 'owner_id3',
+            name: 'Владимир Путин',
+            ip_addr: '127.0.0.1',
+            email: 'hoge@gmail.com',
+        },
+        'member_num': 6,
+    },
+    {
+        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
+        'name': 'Rabbit',
+        'owner': {
+            id: 'owner_id3',
+            name: 'Владимир Путин',
+            ip_addr: '127.0.0.1',
+            email: 'hoge@gmail.com',
+        },
+        'member_num': 6,
+    },
+    {
+        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
+        'name': 'Rabbit',
+        'owner': {
+            id: 'owner_id3',
+            name: 'Владимир Путин',
+            ip_addr: '127.0.0.1',
+            email: 'hoge@gmail.com',
+        },
+        'member_num': 6,
     },
     {
         'id': (new Date).getTime() % Math.round((Math.random()*1000)),

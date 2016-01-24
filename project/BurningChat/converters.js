@@ -87,3 +87,8 @@ var string_to_buffer = function(src) {
 var buffer_to_string = function(buf) {
     return String.fromCharCode.apply("", new Uint16Array(buf));
 };
+
+//object converter
+var obj_scala2server = function(scalaObj){
+    
+};

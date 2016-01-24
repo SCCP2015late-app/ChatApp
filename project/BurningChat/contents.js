@@ -172,9 +172,11 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
     $scope.onCreateNewGroup = function(groupName) {
       console.log('onCreateNewGroup: ' + groupName);
-      // TODO: generate group ID or replace after
-      newGroup = new ChatGroup(1919, groupName, $scope.you, [], []);
+      var id = (new Date).getTime() % Math.round((Math.random()*1000));
+      $scope.you = getYou();
+      newGroup = new ChatGroup(id, groupName, $scope.you, [], []);
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
+      modeChange(modes.MESSAGE);
     };
   });
   

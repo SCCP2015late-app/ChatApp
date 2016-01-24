@@ -7,7 +7,7 @@ const msg_port = 22222;
 const msg_req_port = 29999;
 const join_port = 44444;
 const join_req_port = 49999;
-const ud_port = 55555;
+const ud_port = 55555; //to update message list
 const your_info = 'your_info';
 const group_info = 'group_info';
 //end----------------------------------------
@@ -105,6 +105,14 @@ function activateJoinRequestReceiver(){
         chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_req_port, function(){});
     });
 };
+//end----------------------------------------
+
+//FOR OWNER - callback - create new group
+Env().onCreateNewGroupListener.addCallback(function(newGroup){
+    current_group = newGroup;
+    groups.push(current_group);
+    console.log("created group");
+});
 //end----------------------------------------
 
 /* global onUpdateMessageListener */
