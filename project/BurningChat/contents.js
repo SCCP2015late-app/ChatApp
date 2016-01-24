@@ -71,6 +71,7 @@
     $scope.onClickGroupExitButton = function() {
       // TODO: Add Action.
       console.log("onClickGroupExitButton");
+      modeChange(modes.TOP);
     };
     
 //　クリック時、変更入力欄表示
@@ -127,7 +128,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
   // 右側の画面のController
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
-    $scope.MODES = {GROUP: 'group', MESSAGE: 'message', TOP: 'top', USER: 'user', LOAD_GROUP: 'load_group'};
+    $scope.MODES = {MESSAGE: 'message', TOP: 'top', USER: 'user', LOAD_GROUP: 'load_group'};
     
     modeChange = function(mode) {
       $scope.mode = mode;
@@ -137,7 +138,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     modes = $scope.MODES;
     
     // 起動時のモード
-    modeChange(modes.MESSAGE);
+    modeChange(modes.USER);
 
     // 表示するグループのリスト
     $scope.groups = [];
