@@ -18,6 +18,7 @@ var your_id;
 var your_num;
 var you;
 var current_group;
+var exist_groups;
 var owner_ip;
 chrome.system.network.getNetworkInterfaces(function(ipinfo){
     your_ip = ipinfo[1].address;
@@ -63,8 +64,14 @@ Env().onSetRegistrationItemListener.addCallback(function(info){
 
 //TODO anonymous function to get group_list from server
 function getGroupList(){
-    //console.log(groups);
-    Env().onGetGroupListListener.callAllCallback(groups);
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:19810/groupList');
+    xhr.addEventListener("load", function(obj){
+        exist_groups = JSON.parse(JSON.parse(obj["target"]["response"])["message"]);
+        console.log(exist_groups);
+        Env().onGetGroupListListener.callAllCallback(exist_groups);
+    });
+    xhr.send();
 };
 //end----------------------------------------
 
