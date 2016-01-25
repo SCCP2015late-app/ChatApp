@@ -76,6 +76,7 @@ var receiveGroupCallback = function(info){
 //callback - send join request and save group data to variables
 Env().onJoinGroupListener.addCallback(function(info){
     owner_ip = info['group']['owner']['ip_addr'];
+    Env().onGroupUpdateListener.callAllCallback(info['group']);
     chrome.sockets.udp.create({}, function(createInfo) {
         chrome.sockets.udp.onReceive.addListener(receiveGroupCallback);
         chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_port,
@@ -110,10 +111,20 @@ function activateJoinRequestReceiver(){
 //FOR OWNER - callback - create new group
 Env().onCreateNewGroupListener.addCallback(function(newGroup){
     current_group = newGroup;
-    groups.push(current_group);
-    console.log("created group");
+    console.log("Created new group: " + current_group.name + " by " + current_group.owner.regItem.name);
+    notifyGroupCreationToServer(current_group);
+    Env().onGroupUpdateListener.callAllCallback(newGroup);
+
+
 });
 //end----------------------------------------
+
+//FOR OWNER - function to notify new_group_createion to server
+function notifyGroupCreationToServer(newGroup){
+    
+};
+//end----------------------------------------
+
 
 /* global onUpdateMessageListener */
 function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる
