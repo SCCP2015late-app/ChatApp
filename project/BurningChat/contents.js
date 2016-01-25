@@ -138,7 +138,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     modes = $scope.MODES;
     
     // 起動時のモード
-    modeChange(modes.USER);
+    modeChange(modes.TOP);
 
     // 表示するグループのリスト
     $scope.groups = [];
@@ -169,12 +169,19 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
         };
       }]});
     };
+    
+    $scope.newGroupName = '';
 
     $scope.onCreateNewGroup = function(groupName) {
+      if(groupName.length < 1) {
+        console.log('Rejected: The length of new group is 0.');
+        return;
+      }
+      
       console.log('onCreateNewGroup: ' + groupName);
       var id = (new Date).getTime() % Math.round((Math.random()*1000));
       $scope.you = getYou();
-      var newGroup = new ChatGroup(id, groupName, $scope.you, [], []);
+      newGroup = new ChatGroup(id, groupName, $scope.you, [], []);
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
       modeChange(modes.MESSAGE);
     };
