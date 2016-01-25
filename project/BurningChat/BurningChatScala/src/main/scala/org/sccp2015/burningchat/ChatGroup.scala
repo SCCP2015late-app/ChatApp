@@ -12,6 +12,11 @@ case class ChatGroup(@(JSExport @field) id: Int, @(JSExport @field) name: String
   def addMessage(message: Message): Unit = {
     messageArray = messageArray :+ message
   }
+
+  @JSExport
+  def addMember(member: Member): Unit = {
+    memberArray = memberArray :+ member
+  }
 }
 
 @JSExport("RegistrationItem")
