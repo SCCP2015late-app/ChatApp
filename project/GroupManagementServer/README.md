@@ -2,7 +2,7 @@
 
 ##クラス構成
 ###Group
-id: String - グループのID  
+id: Integer - グループのID  
 name: String - グループの表示名  
 owner: Member - グループのオーナー情報  
 member_num: Integer - オーナーを含めたグループ参加者数  
@@ -14,13 +14,13 @@ ip_addr: String - バインドしているIPアドレス
 email: String - メンバーのEメールアドレス  
 
 ###Result
-code: Integer - リザルトコード(成功...1,　失敗...0)
-message: String - 結果文字列
+code: Integer - リザルトコード(成功...1,　失敗...0) 
+message: String - 結果文字列 
 
 ##API
 ###POST /addNewGroup
 Body: GroupのJSON文字列  
-Message: "1"  
+Message: GroupID 
 
 管理しているネットワーク上にグループを追加する。  
 新しくオーナーになるユーザがグループを新設した時に使用留守。  
@@ -38,6 +38,13 @@ Message: "1"
 
 追加済みのグループの情報を更新する。  
 参加者が増えたなど、グループの変化をグループ管理サーバに伝える時に使用する。  
+
+###POST /deleteGroup
+Body: 削除したいGroupのID
+Message: "1"
+
+追加済みのグループをグループのリストから破棄する。
+オーナーがグループを破棄する時に使用する。
 
 ##これから
 *POST /joinGroup*  
