@@ -84,7 +84,9 @@
       $scope.toolsEmailOpened = !$scope.toolsEmailOpened;
       console.log("emailclick");
     };
-
+    
+    Env().onAddMemberListener.addCallback(function(){      
+    });
 
 //user_name is changed on setting panel, except the case that name is blank
     $scope.click_ch_name = function(name){
@@ -138,13 +140,19 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     modes = $scope.MODES;
     
     // 起動時のモード
-    modeChange(modes.TOP);
+    modeChange(modes.USER);
 
     // 表示するグループのリスト
     $scope.groups = [];
 
     Env().onGetGroupListListener.addCallback(function(groups){
       $scope.groups = groups;
+    });
+    
+    Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
+        if($scope.mode != modes.MESSAGE){
+            modeChange(modes.MESSAGE);
+        }
     });
 
     $scope.you = null;
@@ -225,6 +233,8 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     $scope.group = null;
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
       $scope.group = updatedGroup;
+      console.log("group!!!!");
+      console.log($scope.group);
     });
 
     $scope.you = null;

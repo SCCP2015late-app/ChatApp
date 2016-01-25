@@ -2,7 +2,7 @@
 //chrome.storage.local.clear();
 
 //constants for all_users
-const server_ip = '';
+const server_url = 'http://127.0.0.1:19810';
 const msg_port = 22222;
 const msg_req_port = 29999;
 const join_port = 44444;
@@ -62,16 +62,17 @@ Env().onSetRegistrationItemListener.addCallback(function(info){
 );
 //end----------------------------------------
 
-//TODO anonymous function to get group_list from server
+//anonymous function to get group_list from server
 function getGroupList(){
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'http://127.0.0.1:19810/groupList');
-    xhr.addEventListener("load", function(obj){
+    var r = new XMLHttpRequest();
+    r.open('GET', server_url + '/groupList');
+    r.addEventListener("load", function(obj){
         exist_groups = JSON.parse(JSON.parse(obj["target"]["response"])["message"]);
+        console.log("Get groups from server:");
         console.log(exist_groups);
         Env().onGetGroupListListener.callAllCallback(exist_groups);
     });
-    xhr.send();
+    r.send();
 };
 //end----------------------------------------
 
@@ -89,7 +90,11 @@ var receiveGroupCallback = function(info){
 //callback - send join request and save group data to variables
 Env().onJoinGroupListener.addCallback(function(info){
     owner_ip = info['group']['owner']['ip_addr'];
-    Env().onGroupUpdateListener.callAllCallback(info['group']);
+
+    console.log("joining group");
+    console.log(group_JSON2scala(info['group']));
+    
+    Env().onGroupUpdateListener.callAllCallback(group_JSON2scala(info['group']));
     chrome.sockets.udp.create({}, function(createInfo) {
         chrome.sockets.udp.onReceive.addListener(receiveGroupCallback);
         chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_port,
@@ -127,17 +132,31 @@ Env().onCreateNewGroupListener.addCallback(function(newGroup){
     console.log("Created new group: " + current_group.name + " by " + current_group.owner.regItem.name);
     notifyGroupCreationToServer(current_group);
     Env().onGroupUpdateListener.callAllCallback(newGroup);
-
-
 });
 //end----------------------------------------
 
 //FOR OWNER - function to notify new_group_createion to server
 function notifyGroupCreationToServer(newGroup){
-    
+    var obj = {
+        'id': newGroup.id,
+        'name': newGroup.name,
+        'owner': {
+            id: newGroup.owner.id,
+            name: newGroup.owner.regItem.name,
+            ip_addr: your_ip,
+            email: newGroup.owner.regItem.email,
+        },
+        'member_num': 10,
+    };
+    var r = new XMLHttpRequest();
+    r.open('POST', server_url + '/addNewGroup');
+    r.addEventListener("load", function(){ console.log("New group_info was uploaded to server"); });
+    r.send(JSON.stringify(obj));
 };
 //end----------------------------------------
 
+//new member participation notification
+//Env().onGroupUpdateListener.callAllCallback(updatedGroup)
 
 /* global onUpdateMessageListener */
 function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる

@@ -6,7 +6,7 @@ const u3 = new Member('id3', 2, new RegistrationItem('Michael', 'sample.com'));
 const g1 = new ChatGroup(0, 'group1', u1, [u1, u2, u3], []);
 const g2 = new ChatGroup(1, 'group2', u2, [u1, u2, u3], []);
 const g3 = new ChatGroup(2, 'group3', u3, [u1, u2, u3], []);
-var groups = [
+const groups = [
     {
         'id': (new Date).getTime() % Math.round((Math.random()*1000)),
         'name': 'Dog',
@@ -42,56 +42,12 @@ var groups = [
     },
     {
         'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
+        'name': 'Beast',
         'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
+            id: 'owner_id4',
+            name: '田所 浩二',
+            ip_addr: '114.45.45.19',
+            email: 'hoge@hotgoo.com',
         },
         'member_num': 6,
     },
@@ -164,14 +120,12 @@ chrome.sockets.udp.create({}, function(createInfo) {
 */
 //end----------------------------------------
 
-//XML http request test
+//XML http request test - POST, GET
 /*
 var xhr = new XMLHttpRequest();
-xhr.open('POST', 'http://127.0.0.1:19810/addNewGroup');
-xhr.addEventListener("load", function(obj){ 
-    console.log(obj);
-});
-xhr.send(JSON.stringify(groups[2]));
+xhr.open('POST', server_url + '/addNewGroup');
+xhr.addEventListener("load", function(){ });
+xhr.send(JSON.stringify(groups[Math.round((Math.random()*1000))%4]));
 */
 
 /*
