@@ -64,6 +64,15 @@ chrome.sockets.udp.create({}, function(createInfo) {
 */
 //end----------------------------------------
 
+//XML http request test
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "http://0.0.0.0:19810/groupList");
+xhr.addEventListener("load", function(obj){ 
+    console.log(obj);
+});
+xhr.send();
+//end----------------------------------------
+
 //constants for test
 const sample_message = "This is a test message.";
 const u1 = new Member('id1', 0, new RegistrationItem('John', 'sample.com'));
