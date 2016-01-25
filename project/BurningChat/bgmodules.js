@@ -67,7 +67,7 @@ function msgBroadcastRequest(message){//massageを受け取ってjsonにしてow
         json_text = JSON.stringify(msg);
         chrome.sockets.udp.create({}, function(createInfo) {
          chrome.sockets.udp.bind(createInfo.socketId, your_ip, req_port, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), your_ip, req_port, 
+          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), owner_ip, req_port, 
             chrome.sockets.udp.close(createInfo.socketId, function(){})
           )
          });
@@ -79,7 +79,7 @@ function msgBroadcastRequest(message){//massageを受け取ってjsonにしてow
         //オーナーに送信処理
         chrome.sockets.udp.create({}, function(createInfo) {
          chrome.sockets.udp.bind(createInfo.socketId, your_ip, req_port, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), your_ip, req_port, 
+          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), owner_ip, req_port, 
             chrome.sockets.udp.close(createInfo.socketId, function(){})
           )
          });
@@ -88,11 +88,22 @@ function msgBroadcastRequest(message){//massageを受け取ってjsonにしてow
 
 }
 function msgObjectRecv(){
-    if(obj.isMessage == true){
-        storeMessage(obj);
-        //TODO
-        onUpdateMessageListener();
-    }
+    var msgObjectreceiveCallback = function(obj){
+        console.log(obj.socketId + " : " + buffer_to_string(obj.data));
+        var msgobj = JSON.parse(buffer_to_string(obj.data));
+        if(msgobj["flag"]==true){
+            //image processing
+        } else {
+            //message object processing
+        }
+    };
+
+    chrome.sockets.udp.create({}, function(createInfo) {
+        chrome.sockets.udp.onReceive.addListener(msgObjectreceiveCallback);
+	       chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(result){
+	       });
+    });
+    onUpdateMessageListener();
 }
 
 function updateMsgList(msg){
@@ -111,17 +122,28 @@ function sendMsgList(){
 }
 
 function requestRecv(){
-
-}
-
-
-function msgBroadcast(){
-    sendToAll(obj);
-}
-
-//TODO least priority
-function pictBroadcast(){
-    sendToAll(obj);
+    var requestRecvCallback = function(obj){
+        var msg = JSON.parse(buffer_to_string(obj.data));
+        //objはudp通信で受け取ったデータ(obj.dataで中身を取り出す)
+        console.log(obj.data);
+        for(var prop in ip_list){
+            chrome.sockets.udp.create({}, function(createInfo) {
+                chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(){
+                    chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(JSON.stringify(msg)), ip_list[prop], msg_port, function(sendInfo) {
+                        console.log('sent done: ' + sendInfo.resultCode);
+                        chrome.sockets.udp.close(createInfo.socketId, function(){});
+                    });
+                });
+            });
+        }           
+    };
+    chrome.sockets.udp.create({}, function(createInfo) {
+        //chrome.socketsに監視してもらうcallbackの追加
+        chrome.sockets.udp.onReceive.addListener(requestRecvCallback);
+            //socketのbind
+            chrome.sockets.udp.bind(createInfo.socketId, your_ip, req_port, function(){
+            });
+    });
 }
 
 function modifyUserInfo(){
