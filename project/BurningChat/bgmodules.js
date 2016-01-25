@@ -1,25 +1,34 @@
-//to delete all storage data
+/*-- to delete all storage data --*/
 //chrome.storage.local.clear();
+
+//constants for all_users
+const server_ip = '';
+const msg_port = 22222;
+const msg_req_port = 29999;
+const join_port = 44444;
+const join_req_port = 49999;
+const ud_port = 55555; //to update message list
+const your_info = 'your_info';
+const group_info = 'group_info';
+//end----------------------------------------
 
 //get internal IP address, and calculate other info
 var your_ip;
 var your_id;
 var your_num;
+var you;
+var current_group;
+var owner_ip;
 chrome.system.network.getNetworkInterfaces(function(ipinfo){
     your_ip = ipinfo[1].address;
     your_id = CryptoJS.MD5(your_ip) + (new Date).getTime();
     your_num = parseInt(your_ip.split(".")[3]);
-    var you = new Member(your_id, your_num, new RegistrationItem("John Doe", "yahoo@gmail.com"));
+    you = new Member(your_id, your_num, new RegistrationItem("John Doe", "yahoo@gmail.com"));
 });
+//end----------------------------------------
 
-const msg_port = 22222;
-const req_port = 33333;
-const your_info = 'your_info';
-const group_info = 'g_info';
-const sample_message = "This is a test message.";
-
+//load stored user_information from storage
 chrome.storage.local.get(your_info, function(obj){
-
     var stored_you = obj.your_info;
     if(stored_you == undefined){
         console.log("! You are not registered !");
@@ -33,11 +42,11 @@ chrome.storage.local.get(your_info, function(obj){
         const name = stored_you.regItem$1.name$1;
         const email = stored_you.regItem$1.email$1;
         you = new Member(id, num, new RegistrationItem(name, email));
-        Env().onLoadUserListener.callAllCallback(you);
     }
 });
+//end----------------------------------------
 
-//
+//callback - create new_user and store it
 Env().onSetRegistrationItemListener.addCallback(function(info){
     console.log("your IPv4 address: " + your_ip);
     you = new Member(your_id, your_num, info);
@@ -50,6 +59,71 @@ Env().onSetRegistrationItemListener.addCallback(function(info){
     Env().onLoadUserListener.callAllCallback(you);
   }
 );
+//end----------------------------------------
+
+//TODO anonymous function to get group_list from server
+function getGroupList(){
+    //console.log(groups);
+    Env().onGetGroupListListener.callAllCallback(groups);
+};
+//end----------------------------------------
+
+//TODO callback function - save received group info to variable
+var receiveGroupCallback = function(info){
+};
+//end----------------------------------------
+
+//callback - send join request and save group data to variables
+Env().onJoinGroupListener.addCallback(function(info){
+    owner_ip = info['group']['owner']['ip_addr'];
+    Env().onGroupUpdateListener.callAllCallback(info['group']);
+    chrome.sockets.udp.create({}, function(createInfo) {
+        chrome.sockets.udp.onReceive.addListener(receiveGroupCallback);
+        chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_port,
+        function(result){
+            chrome.sockets.udp.send(createInfo.socketId,
+            string_to_buffer(JSON.stringify(info['member'])),
+            owner_ip, join_req_port, function(sendInfo) {
+                console.log('Join request was sent: ' + sendInfo.resultCode);
+                console.log('Owner\'s IP: ' + owner_ip);
+                chrome.sockets.udp.close(createInfo.socketId, function(){});
+            });
+        });
+    });
+});
+//end----------------------------------------
+
+//TODO callback function - process join request
+var receiveJoinRequestCallback = function(info){  
+    console.log("success");
+};
+//end----------------------------------------
+
+//FOR OWNER - join request receiver
+function activateJoinRequestReceiver(){
+    chrome.sockets.udp.create({}, function(createInfo) {
+        chrome.sockets.udp.onReceive.addListener(receiveJoinRequestCallback);
+        chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_req_port, function(){});
+    });
+};
+//end----------------------------------------
+
+//FOR OWNER - callback - create new group
+Env().onCreateNewGroupListener.addCallback(function(newGroup){
+    current_group = newGroup;
+    console.log("Created new group: " + current_group.name + " by " + current_group.owner.regItem.name);
+    notifyGroupCreationToServer(current_group);
+    Env().onGroupUpdateListener.callAllCallback(newGroup);
+
+
+});
+//end----------------------------------------
+
+//FOR OWNER - function to notify new_group_createion to server
+function notifyGroupCreationToServer(newGroup){
+    
+};
+//end----------------------------------------
 
 
 /* global onUpdateMessageListener */
@@ -154,45 +228,4 @@ function modifyUserInfo(){
 
 function initializeGroup(){
     //ストレージからとってきたデータを使ってグループを初期化する
-}
-
-function jsonizeMessages(){
-    var ret = [];
-    for(var i = 0; i < group.messageArray.length; i++){
-        var buf = {
-            "u_id": group.messageArray[i].id,
-            "u_name": group.messageArray[i].member.regItem.name,
-            "date": group.messageArray[i].date,
-            "body": group.messageArray[i].body,
-            "pict_flag": group.messageArray[i].flag,
-            "pict_name": group.messageArray[i].image
-        };
-        ret.push(buf);
-    }
-    return ret;
-}
-
-function jsonizeMembers(){
-    var ret = [];
-    for(var i = 0; i < group.memberArray.length; i++){
-        var buf = {
-            "u_id": group.memberArray[i].id,
-            "u_name": group.memberArray[i].regItem.name,
-            "e-mail": group.memberArray[i].regItem.email
-        };
-        ret.push(buf);
-    }
-    return ret;
-}
-
-function jsonizeGroupInfo(){
-    var messages = jsonizeMessages();
-    var members = jsonizeMembers();
-    var g_info = JSON.stringify({
-        "g_id": group.id,
-        "owner_id": group.owner.id,
-        "user_list": members,
-        "msg_list": messages
-    }, null, "    ");
-   return g_info;
 }
