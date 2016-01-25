@@ -185,7 +185,9 @@ get '/groupSample' do
 end
 
 post '/addNewGroup' do
-  begin
+  headers \
+    "Access-Control-Allow-Origin" => "*" 
+  body  begin
     new_group = Group.fromJson(request.body.read)
     new_group_id = GroupManager.addNewGroup(new_group)
     Result.OK(new_group_id)
@@ -195,7 +197,9 @@ post '/addNewGroup' do
 end
 
 get '/groupList' do
-  begin
+  headers \
+    "Access-Control-Allow-Origin" => "*" 
+  body begin
     result = GroupManager.getGroupListAsJson
     Result.OK(result)
   rescue
@@ -204,7 +208,9 @@ get '/groupList' do
 end
 
 post '/updateGroupInfo' do
-  begin
+  headers \
+    "Access-Control-Allow-Origin" => "*" 
+  body  begin
     group = Group.fromJson(request.body.read)
     GroupManager.update(group)
     Result.OK('1')
@@ -214,7 +220,9 @@ post '/updateGroupInfo' do
 end
 
 post '/deleteGroup' do
-  begin
+  headers \
+    "Access-Control-Allow-Origin" => "*" 
+  body  begin
     target_id = request.body.read.to_i
     GroupManager.deleteGroup(target_id)
     Result.OK('1')
