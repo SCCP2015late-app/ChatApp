@@ -63,5 +63,8 @@ object AppEnvironment {
   val onGetGroupListListener = new EventListener
 
   @JSExport
+  val onAddMemberListener = new EventListener
+
+  @JSExport
   val onErrorOccurredListener = new EventListener
 }

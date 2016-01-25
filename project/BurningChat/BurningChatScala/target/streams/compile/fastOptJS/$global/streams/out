@@ -1,17 +1,17 @@
 [0m[[0minfo[0m] [0mFast optimizing /Users/misoton/work/sccp/SCCP2015/late/ChatApp/project/BurningChat/BurningChatScala/target/scala-2.11/burningchatscala-fastopt.js[0m
-[0m[[0mdebug[0m] [0mLinker: Read info: 183567 us[0m
-[0m[[0mdebug[0m] [0mLinker: Compute reachability: 243188 us[0m
-[0m[[0mdebug[0m] [0mLinker: Assemble LinkedClasses: 383333 us[0m
+[0m[[0mdebug[0m] [0mLinker: Read info: 182969 us[0m
+[0m[[0mdebug[0m] [0mLinker: Compute reachability: 238410 us[0m
+[0m[[0mdebug[0m] [0mLinker: Assemble LinkedClasses: 564653 us[0m
 [0m[[0mdebug[0m] [0mLinker: cache stats: reused: 0 -- invalidated: 3309 -- trees read: 409[0m
-[0m[[0mdebug[0m] [0mLinker: 835898 us[0m
+[0m[[0mdebug[0m] [0mLinker: 1010419 us[0m
 [0m[[0mdebug[0m] [0mInc. optimizer: Batch mode: true[0m
-[0m[[0mdebug[0m] [0mInc. optimizer: Incremental part: 195574 us[0m
-[0m[[0mdebug[0m] [0mInc. optimizer: Optimizing 2410 methods.[0m
-[0m[[0mdebug[0m] [0mInc. optimizer: Optimizer part: 795612 us[0m
-[0m[[0mdebug[0m] [0mInc. optimizer: 1010559 us[0m
-[0m[[0mdebug[0m] [0mRefiner: Compute reachability: 51899 us[0m
-[0m[[0mdebug[0m] [0mRefiner: Assemble LinkedClasses: 8877 us[0m
-[0m[[0mdebug[0m] [0mRefiner: 62381 us[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Incremental part: 227820 us[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Optimizing 2414 methods.[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: Optimizer part: 812973 us[0m
+[0m[[0mdebug[0m] [0mInc. optimizer: 1063159 us[0m
+[0m[[0mdebug[0m] [0mRefiner: Compute reachability: 55184 us[0m
+[0m[[0mdebug[0m] [0mRefiner: Assemble LinkedClasses: 9164 us[0m
+[0m[[0mdebug[0m] [0mRefiner: 74108 us[0m
 [0m[[0mdebug[0m] [0mEmitter: Class tree cache stats: reused: 0 -- invalidated: 77[0m
-[0m[[0mdebug[0m] [0mEmitter: Method tree cache stats: resued: 0 -- invalidated: 259[0m
-[0m[[0mdebug[0m] [0mEmitter (write output): 347993 us[0m
+[0m[[0mdebug[0m] [0mEmitter: Method tree cache stats: resued: 0 -- invalidated: 262[0m
+[0m[[0mdebug[0m] [0mEmitter (write output): 401080 us[0m
