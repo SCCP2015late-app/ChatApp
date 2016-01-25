@@ -68,6 +68,12 @@ function getGroupList(){
 };
 //end----------------------------------------
 
+//TODO load group information (including whether stored on storage or not)
+function loadGroupFromStorage(){
+    
+};
+//end----------------------------------------
+
 //TODO callback function - save received group info to variable
 var receiveGroupCallback = function(info){
 };
