@@ -127,13 +127,4 @@ xhr.open('POST', server_url + '/addNewGroup');
 xhr.addEventListener("load", function(){ });
 xhr.send(JSON.stringify(groups[Math.round((Math.random()*1000))%4]));
 */
-
-/*
-var xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://127.0.0.1:19810/groupList');
-xhr.addEventListener("load", function(obj){ 
-    console.log(JSON.parse(obj.target.response));
-});
-xhr.send();
-*/
 //end----------------------------------------

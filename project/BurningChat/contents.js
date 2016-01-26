@@ -147,6 +147,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
     Env().onGetGroupListListener.addCallback(function(groups){
       $scope.groups = groups;
+      console.log(groups);
     });
     
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
@@ -300,7 +301,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     
     $scope.logIn = function(){
        getGroupList();
-       activateJoinRequestReceiver()
+       activateJoinRequestReceiver();
        Env().onLoadUserListener.callAllCallback(you);
        console.log("Successfully logged in as: " + $scope.you.regItem.name);
     };
