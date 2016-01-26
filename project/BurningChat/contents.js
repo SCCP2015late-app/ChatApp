@@ -84,7 +84,9 @@
       $scope.toolsEmailOpened = !$scope.toolsEmailOpened;
       console.log("emailclick");
     };
-
+    
+    Env().onAddMemberListener.addCallback(function(){      
+    });
 
 //user_name is changed on setting panel, except the case that name is blank
     $scope.click_ch_name = function(name){
@@ -146,6 +148,12 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     Env().onGetGroupListListener.addCallback(function(groups){
       $scope.groups = groups;
     });
+    
+    Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
+        if($scope.mode != modes.MESSAGE){
+            modeChange(modes.MESSAGE);
+        }
+    });
 
     $scope.you = null;
     
@@ -169,12 +177,19 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
         };
       }]});
     };
+    
+    $scope.newGroupName = '';
 
     $scope.onCreateNewGroup = function(groupName) {
+      if(groupName.length < 1) {
+        console.log('Rejected: The length of new group is 0.');
+        return;
+      }
+      
       console.log('onCreateNewGroup: ' + groupName);
       var id = (new Date).getTime() % Math.round((Math.random()*1000));
       $scope.you = getYou();
-      var newGroup = new ChatGroup(id, groupName, $scope.you, [], []);
+      newGroup = new ChatGroup(id, groupName, $scope.you, [], []);
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
       modeChange(modes.MESSAGE);
     };
@@ -218,6 +233,8 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     $scope.group = null;
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
       $scope.group = updatedGroup;
+      console.log("group!!!!");
+      console.log($scope.group);
     });
 
     $scope.you = null;

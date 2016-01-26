@@ -1,3 +1,59 @@
+//constants for test
+const sample_message = "This is a test message.";
+const u1 = new Member('id1', 0, new RegistrationItem('John', 'sample.com'));
+const u2 = new Member('id2', 1, new RegistrationItem('Bob', 'sample.com'));
+const u3 = new Member('id3', 2, new RegistrationItem('Michael', 'sample.com'));
+const g1 = new ChatGroup(0, 'group1', u1, [u1, u2, u3], []);
+const g2 = new ChatGroup(1, 'group2', u2, [u1, u2, u3], []);
+const g3 = new ChatGroup(2, 'group3', u3, [u1, u2, u3], []);
+const groups = [
+    {
+        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
+        'name': 'Dog',
+        'owner': {
+            id: 'owner_id1',
+            name: 'John Doe',
+            ip_addr: '192.168.11.4',
+            email: 'hoge@gmail.com',
+        },
+        'member_num': 10,
+    },
+    {
+        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
+        'name': 'Cat',
+        'owner': {
+            id: 'owner_id2',
+            name: 'Michael Jackson',
+            ip_addr: '127.0.0.1',
+            email: 'hoge@gmail.com',
+        },
+        'member_num': 8,
+    },
+    {
+        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
+        'name': 'Rabbit',
+        'owner': {
+            id: 'owner_id3',
+            name: 'Владимир Путин',
+            ip_addr: '127.0.0.1',
+            email: 'hoge@gmail.com',
+        },
+        'member_num': 6,
+    },
+    {
+        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
+        'name': 'Beast',
+        'owner': {
+            id: 'owner_id4',
+            name: '田所 浩二',
+            ip_addr: '114.45.45.19',
+            email: 'hoge@hotgoo.com',
+        },
+        'member_num': 6,
+    },
+];
+//end----------------------------------------
+
 //storing
 /*
 const hoge = {
@@ -64,102 +120,20 @@ chrome.sockets.udp.create({}, function(createInfo) {
 */
 //end----------------------------------------
 
-//constants for test
-const sample_message = "This is a test message.";
-const u1 = new Member('id1', 0, new RegistrationItem('John', 'sample.com'));
-const u2 = new Member('id2', 1, new RegistrationItem('Bob', 'sample.com'));
-const u3 = new Member('id3', 2, new RegistrationItem('Michael', 'sample.com'));
-const g1 = new ChatGroup(0, 'group1', u1, [u1, u2, u3], []);
-const g2 = new ChatGroup(1, 'group2', u2, [u1, u2, u3], []);
-const g3 = new ChatGroup(2, 'group3', u3, [u1, u2, u3], []);
-var groups = [
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Dog',
-        'owner': {
-            id: 'owner_id1',
-            name: 'John Doe',
-            ip_addr: '192.168.11.4',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 10,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Cat',
-        'owner': {
-            id: 'owner_id2',
-            name: 'Michael Jackson',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 8,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-    {
-        'id': (new Date).getTime() % Math.round((Math.random()*1000)),
-        'name': 'Rabbit',
-        'owner': {
-            id: 'owner_id3',
-            name: 'Владимир Путин',
-            ip_addr: '127.0.0.1',
-            email: 'hoge@gmail.com',
-        },
-        'member_num': 6,
-    },
-];
+//XML http request test - POST, GET
+/*
+var xhr = new XMLHttpRequest();
+xhr.open('POST', server_url + '/addNewGroup');
+xhr.addEventListener("load", function(){ });
+xhr.send(JSON.stringify(groups[Math.round((Math.random()*1000))%4]));
+*/
+
+/*
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://127.0.0.1:19810/groupList');
+xhr.addEventListener("load", function(obj){ 
+    console.log(JSON.parse(obj.target.response));
+});
+xhr.send();
+*/
 //end----------------------------------------

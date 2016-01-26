@@ -88,7 +88,8 @@ var buffer_to_string = function(buf) {
     return String.fromCharCode.apply("", new Uint16Array(buf));
 };
 
-//object converter
-var obj_scala2server = function(scalaObj){
-    
-};
+//TODO
+var group_JSON2scala = function(jsonGroup){
+    var ret = new ChatGroup(jsonGroup.id, jsonGroup.name, new Member(jsonGroup.owner.id, parseInt(jsonGroup.owner.ip_addr.toString().split(".")[3]), new RegistrationItem(jsonGroup.owner.name, jsonGroup.owner.email)), [], []);
+    return ret;
+}
