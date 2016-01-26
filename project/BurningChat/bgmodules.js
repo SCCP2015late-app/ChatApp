@@ -2,7 +2,7 @@
 //chrome.storage.local.clear();
 
 //constants for all_users
-const server_url = 'http://127.0.0.1:19810';
+const server_url = 'http://192.168.222.19:19810';
 const msg_port = 22222;
 const msg_req_port = 29999;
 const join_port = 44444;
