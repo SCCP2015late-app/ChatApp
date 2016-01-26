@@ -188,9 +188,9 @@ Env().onSendMessageListener.addCallback(function(message){
         //オーナーに送信処理
         chrome.sockets.udp.create({}, function(createInfo) {
          chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), owner_ip, msg_req_port, 
+          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), owner_ip, msg_req_port,function(){
             chrome.sockets.udp.close(createInfo.socketId, function(){})
-          )
+          })
          });
         });
     }
