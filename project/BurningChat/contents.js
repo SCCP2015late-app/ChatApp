@@ -56,8 +56,8 @@
     };
 
     $scope.onClickGroupExitButton = function() {
-      // TODO: Add Action.
-      console.log("onClickGroupExitButton");
+      console.log('onClickGroupExitButton(' + $scope.group.name + ');');
+      Env().onExitGroupListener.callAllCallback($scope.group);
       modeChange(modes.TOP);
     };
 
@@ -235,7 +235,6 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     // 本文
     $scope.messageBody = '';
     $scope.imageBinaryString = '';
-    
     $scope.buttonStyle = {};
     
     Env().onAddImageListener.addCallback(function(imageBinaryString) {
@@ -244,7 +243,6 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
     // 仮で送信時にタイムラインを更新
     Env().onUpdateMessageListener.addCallback(function(message) {
-      //$scope.group.addMessage(message);
       console.log("Send message: " + message.body + " from " + message.member.regItem.name);
     });
 
@@ -294,12 +292,15 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
           
           reader.onloadend = function(e){
             var binary = reader.result;
-            // $scope.imageBinaryString = binary;
+            
             $scope.imageBinaryString = binary;
-            $scope.buttonStyle = {
-              'background-image': 'url(data:image/*;base64,' + base64encode($scope.imageBinaryString) + ')',
-              'background-size': 'cover'
-            };
+            $scope.$apply(function() {
+              $scope.buttonStyle = {
+               'background-image': 'url(data:image/*;base64,' + base64encode($scope.imageBinaryString) + ')',
+                'background-size': 'cover'
+              };
+            });
+            
           };
           
           reader.readAsBinaryString(file);
