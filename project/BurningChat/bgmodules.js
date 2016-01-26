@@ -74,6 +74,9 @@ function getGroupList(){
         Env().onGetGroupListListener.callAllCallback(exist_groups);
     });
     r.send();
+    var i = Date.now();
+    const dest_t = i + 1000; //time to wait
+    while(i < dest_t){ i = Date.now(); }
 };
 //end----------------------------------------
 
@@ -160,28 +163,30 @@ function notifyGroupCreationToServer(newGroup){
 //Env().onGroupUpdateListener.callAllCallback(updatedGroup)
 
 /* global onUpdateMessageListener */
-function msgBroadcastRequest(message){//massageを受け取ってjsonにしてownerになげる
+//massageを受け取ってjsonにしてownerになげる
+Env().onSendMessageListener.addCallback(function(message){
     var msg = {
         　"u_id": message.id,
         　"u_name": message.member.regItem.name,
         　"date": Date.now(),
         　"body": message.body,
-        　"image": null, //画像が添付されているかどうか
-        　"flag": false,
+        　"image": null, 
+        　"flag": false,//画像添付の判別
     };
 
     if(message.flag==false){
         json_text = JSON.stringify(msg);
         chrome.sockets.udp.create({}, function(createInfo) {
-         chrome.sockets.udp.bind(createInfo.socketId, your_ip, req_port, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), owner_ip, req_port, 
+         chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(result){
+          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), your_ip, msg_req_port, function(){
             chrome.sockets.udp.close(createInfo.socketId, function(){})
-          )
-         });
+          })
+         })
         });
+        
     } else {
         msg["flag"] = true;
-        msg["image"] = base64encode(message.image);
+        msg["image"] = "data:image/*;base64," + base64encode(message.image);
         var json_text = JSON.stringify(msg);
         //オーナーに送信処理
         chrome.sockets.udp.create({}, function(createInfo) {
@@ -192,7 +197,8 @@ function msgBroadcastRequest(message){//massageを受け取ってjsonにしてow
          });
         });
     }
-}
+});
+
 
 function msgObjectRecv(){
     var msgObjectreceiveCallback = function(obj){

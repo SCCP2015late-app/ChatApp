@@ -2,7 +2,7 @@
   var modeChange;
   var modes;
   var app_mode;
-  
+
   // BurningChatのModule
   var app = angular.module('burning', ['ngAnimate', 'ngDialog'], function($provide) {
     $provide.decorator('$window', function($delegate) {
@@ -63,17 +63,17 @@
       $scope.toolsOpened = !$scope.toolsOpened;
       console.log("click");
     };
-    
+
     $scope.shouldShowGroupExitButton = function() {
       return app_mode == modes.MESSAGE;
     };
-    
+
     $scope.onClickGroupExitButton = function() {
       // TODO: Add Action.
       console.log("onClickGroupExitButton");
       modeChange(modes.TOP);
     };
-    
+
 //　クリック時、変更入力欄表示
     $scope.onToolNameClick = function(){
       $scope.toolsNameOpened = !$scope.toolsNameOpened;
@@ -84,8 +84,8 @@
       $scope.toolsEmailOpened = !$scope.toolsEmailOpened;
       console.log("emailclick");
     };
-    
-    Env().onAddMemberListener.addCallback(function(){      
+
+    Env().onAddMemberListener.addCallback(function(){
     });
 
 //user_name is changed on setting panel, except the case that name is blank
@@ -131,14 +131,14 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
     $scope.MODES = {MESSAGE: 'message', TOP: 'top', USER: 'user', LOAD_GROUP: 'load_group'};
-    
+
     modeChange = function(mode) {
       $scope.mode = mode;
       app_mode = mode;
     };
-    
+
     modes = $scope.MODES;
-    
+
     // 起動時のモード
     modeChange(modes.USER);
 
@@ -147,8 +147,9 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
     Env().onGetGroupListListener.addCallback(function(groups){
       $scope.groups = groups;
+      console.log(groups);
     });
-    
+
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
         if($scope.mode != modes.MESSAGE){
             modeChange(modes.MESSAGE);
@@ -156,12 +157,12 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     });
 
     $scope.you = null;
-    
+
     var getYou = function(){ return $scope.you; };
 
     // ユーザのロードができれば（既に情報があれば）モード切り替え
     Env().onLoadUserListener.addCallback(function(user) {
-      
+
       $scope.you = user;
       $scope.mode = $scope.MODES.TOP;
     });
@@ -174,10 +175,12 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
         $scope.onJoinGroup = function(group) {
           console.log("Join: " + group.name + "@" + group.id);
           Env().onJoinGroupListener.callAllCallback({'group': group, 'member': $scope.you});
+//close Group Dialog
+          ngDialog.close($scope.groupDetailDialog);
         };
       }]});
     };
-    
+
     $scope.newGroupName = '';
 
     $scope.onCreateNewGroup = function(groupName) {
@@ -185,7 +188,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
         console.log('Rejected: The length of new group is 0.');
         return;
       }
-      
+
       console.log('onCreateNewGroup: ' + groupName);
       var id = (new Date).getTime() % Math.round((Math.random()*1000));
       $scope.you = getYou();
@@ -194,7 +197,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
       modeChange(modes.MESSAGE);
     };
   });
-  
+
   // Messageモード時のタイムラインController
   app.controller('TimeLineController', function($scope, ngDialog) {
 
@@ -217,7 +220,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
         $scope.group = group;
       }]});
     });
-    
+
     // メッセージが内部で追加された時にタイムラインを更新
     Env().onUpdateMessageListener.addCallback(function(message) {
       $scope.group.addMessage(message);
@@ -331,20 +334,20 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 //コールバック
     $scope.click_Reg_Icon = function(name, email){
       var regitem = new RegistrationItem(name, email);
-      
+
       console.log("Registration: " + regitem);
       getGroupList();
       activateJoinRequestReceiver();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
       modeChange(modes.TOP);
     };
-    
+
     $scope.logIn = function(){
        getGroupList();
-       activateJoinRequestReceiver()
+       activateJoinRequestReceiver();
        Env().onLoadUserListener.callAllCallback(you);
        console.log("Successfully logged in as: " + $scope.you.regItem.name);
     };
-   
+
   });
 })();
