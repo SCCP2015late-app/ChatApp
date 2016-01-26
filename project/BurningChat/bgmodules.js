@@ -74,6 +74,9 @@ function getGroupList(){
         Env().onGetGroupListListener.callAllCallback(exist_groups);
     });
     r.send();
+    var i = Date.now();
+    const dest_t = i + 1000; //time to wait
+    while(i < dest_t){ i = Date.now(); }
 };
 //end----------------------------------------
 
