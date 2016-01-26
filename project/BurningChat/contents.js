@@ -1,4 +1,8 @@
 (function(){
+  var modeChange;
+  var modes;
+  var app_mode;
+  
   // BurningChatのModule
   var app = angular.module('burning', ['ngAnimate', 'ngDialog'], function($provide) {
     $provide.decorator('$window', function($delegate) {
@@ -59,6 +63,17 @@
       $scope.toolsOpened = !$scope.toolsOpened;
       console.log("click");
     };
+    
+    $scope.shouldShowGroupExitButton = function() {
+      return app_mode == modes.MESSAGE;
+    };
+    
+    $scope.onClickGroupExitButton = function() {
+      // TODO: Add Action.
+      console.log("onClickGroupExitButton");
+      modeChange(modes.TOP);
+    };
+    
 //　クリック時、変更入力欄表示
     $scope.onToolNameClick = function(){
       $scope.toolsNameOpened = !$scope.toolsNameOpened;
@@ -69,7 +84,11 @@
       $scope.toolsEmailOpened = !$scope.toolsEmailOpened;
       console.log("emailclick");
     };
+    
+    Env().onAddMemberListener.addCallback(function(){      
+    });
 
+//user_name is changed on setting panel, except the case that name is blank
     $scope.click_ch_name = function(name){
       if($scope.you === null) {
         return;
@@ -82,7 +101,9 @@
       $scope.onToolNameClick();
       Env().onSetRegistrationItemListener.callAllCallback(regitem);
     };
+//end----------------------------------------
 
+//user_email is changed on setting panel, except the case that email is blank
     $scope.click_ch_email = function(email){
       if($scope.you === null) {
         return;
@@ -97,23 +118,29 @@
     };
 
   });
+//end----------------------------------------
 
-  var modeChange;
-  var modes;
+//replace you by new_you
+Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
+    console.log("renewed : " + new_you.regItem.name + " " + new_you.regItem.email);
+    you = new_you;
+});
+//end----------------------------------------
 
   // 右側の画面のController
   app.controller('MainAreaController', function($scope, ngDialog) {
     // モード（グループ選択、メッセージリスト）
-    $scope.MODES = {GROUP: 'group', MESSAGE: 'message', TOP: 'top', USER: 'user', LOAD_GROUP: 'load_group'};
-
-    // 起動時のモード
-    $scope.mode = $scope.MODES.USER;
+    $scope.MODES = {MESSAGE: 'message', TOP: 'top', USER: 'user', LOAD_GROUP: 'load_group'};
     
-    modes = $scope.MODES;
-
     modeChange = function(mode) {
       $scope.mode = mode;
+      app_mode = mode;
     };
+    
+    modes = $scope.MODES;
+    
+    // 起動時のモード
+    modeChange(modes.USER);
 
     // 表示するグループのリスト
     $scope.groups = [];
@@ -121,11 +148,20 @@
     Env().onGetGroupListListener.addCallback(function(groups){
       $scope.groups = groups;
     });
+    
+    Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
+        if($scope.mode != modes.MESSAGE){
+            modeChange(modes.MESSAGE);
+        }
+    });
 
     $scope.you = null;
+    
+    var getYou = function(){ return $scope.you; };
 
     // ユーザのロードができれば（既に情報があれば）モード切り替え
     Env().onLoadUserListener.addCallback(function(user) {
+      
       $scope.you = user;
       $scope.mode = $scope.MODES.TOP;
     });
@@ -134,19 +170,28 @@
     $scope.onClick = function(selectedGroup) {
       ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
         $scope.group = selectedGroup;
-
+        $scope.you = getYou();
         $scope.onJoinGroup = function(group) {
           console.log("Join: " + group.name + "@" + group.id);
           Env().onJoinGroupListener.callAllCallback({'group': group, 'member': $scope.you});
         };
       }]});
     };
+    
+    $scope.newGroupName = '';
 
     $scope.onCreateNewGroup = function(groupName) {
+      if(groupName.length < 1) {
+        console.log('Rejected: The length of new group is 0.');
+        return;
+      }
+      
       console.log('onCreateNewGroup: ' + groupName);
-      // TODO: generate group ID or replace after
-      newGroup = new ChatGroup(1919, groupName, $scope.you, [], []);
+      var id = (new Date).getTime() % Math.round((Math.random()*1000));
+      $scope.you = getYou();
+      newGroup = new ChatGroup(id, groupName, $scope.you, [], []);
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
+      modeChange(modes.MESSAGE);
     };
   });
   
@@ -172,7 +217,7 @@
         $scope.group = group;
       }]});
     });
-
+    
     // メッセージが内部で追加された時にタイムラインを更新
     Env().onUpdateMessageListener.addCallback(function(message) {
       $scope.group.addMessage(message);
@@ -188,6 +233,8 @@
     $scope.group = null;
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
       $scope.group = updatedGroup;
+      console.log("group!!!!");
+      console.log($scope.group);
     });
 
     $scope.you = null;
@@ -243,10 +290,20 @@
 //コールバック
     $scope.click_Reg_Icon = function(name, email){
       var regitem = new RegistrationItem(name, email);
-  
-      Env().onSetRegistrationItemListener.callAllCallback(regitem);
       
+      console.log("Registration: " + regitem);
+      getGroupList();
+      activateJoinRequestReceiver();
+      Env().onSetRegistrationItemListener.callAllCallback(regitem);
       modeChange(modes.TOP);
     };
+    
+    $scope.logIn = function(){
+       getGroupList();
+       activateJoinRequestReceiver()
+       Env().onLoadUserListener.callAllCallback(you);
+       console.log("Successfully logged in as: " + $scope.you.regItem.name);
+    };
+   
   });
 })();

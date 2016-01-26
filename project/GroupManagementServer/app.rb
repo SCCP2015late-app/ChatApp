@@ -4,7 +4,7 @@ require 'sinatra'
 require 'json'
 
 class Group
-  attr_reader :id 
+  attr_reader :id, :name, :owner, :member_num 
 
   def initialize(id = '', name = '', owner = Member.new(), member_num = 0)
     @id = id
@@ -66,16 +66,42 @@ end
 module GroupManager extend self
   def initManager()
     @@groups = nil
+    @@nextId = 1
+  end
+
+  def getNextId()
+    @@nextId
+  end
+
+  def incNextId()
+    @@nextId += 1
   end
 
   def addNewGroup(group)
     raise "GroupID: \"#{group.id}\" is already exists." if GroupManager.existGroupID?(group.id)
 
+    new_id = GroupManager.getNextId
+    GroupManager.incNextId
+
+    new_group = Group.new(new_id, group.name, group.owner, group.member_num)
+
     if @@groups == nil then
-      @@groups = Array[group]
+      @@groups = Array[new_group]
     else
-      @@groups << group 
+      @@groups << new_group 
     end
+
+    new_id
+  end
+
+  def deleteGroup(group_id)
+    raise "GroupID: \"#{group_id}\" is not exits." if !GroupManager.existGroupID?(group_id)
+
+    tmp = @@groups.select {|group|
+      group.id != group_id
+    }
+
+    @@groups = tmp
   end
 
   def existGroupID?(group_id)
@@ -159,28 +185,46 @@ get '/groupSample' do
 end
 
 post '/addNewGroup' do
-  begin
+  headers \
+    "Access-Control-Allow-Origin" => "*" 
+  body  begin
     new_group = Group.fromJson(request.body.read)
-    GroupManager.addNewGroup(new_group)
-    Result.OK('Success') 
+    new_group_id = GroupManager.addNewGroup(new_group)
+    Result.OK(new_group_id)
   rescue => e
     Result.FAULT(e)
   end
 end
 
 get '/groupList' do
-  begin
+  headers \
+    "Access-Control-Allow-Origin" => "*" 
+  body begin
     result = GroupManager.getGroupListAsJson
     Result.OK(result)
   rescue
-    Result.FAULR('Server error has occured')
+    Result.FAULT('Server error has occured')
   end
 end
 
 post '/updateGroupInfo' do
-  begin
+  headers \
+    "Access-Control-Allow-Origin" => "*" 
+  body  begin
     group = Group.fromJson(request.body.read)
     GroupManager.update(group)
+    Result.OK('1')
+  rescue => e
+    Result.FAULT(e)
+  end
+end
+
+post '/deleteGroup' do
+  headers \
+    "Access-Control-Allow-Origin" => "*" 
+  body  begin
+    target_id = request.body.read.to_i
+    GroupManager.deleteGroup(target_id)
     Result.OK('1')
   rescue => e
     Result.FAULT(e)

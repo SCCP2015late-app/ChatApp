@@ -9,10 +9,24 @@ object AppEnvironment {
   @JSExport
   val USER_COLORS = js.Array(
     "#f44336", // RED
+    "#8BC34A", // LIGHT_GREEN
     "#2196F3", // BLUE
+    "#FF5722", // DEEP_ORANGE
     "#4CAF50", // GREEN
+    "#607D8B", // BLUE_GRAY
     "#FF9800", // ORANGE
-    "#3F51B5"  // INDIGO
+    "#3F51B5", // INDIGO
+    "#CDDC39", // LIME
+    "#795548", // BROWN
+    "#E91E63", // PINK
+    "#03A9F4", // LIGHT_BLUE
+    "#00BCD4", // CYAN
+    "#9C27B0", // PURPLE
+    "#009688", // TEAL
+    "#FFEB3B", // YELLOW
+    "#673AB7", // DEEP_PURPLE
+    "#FFC107", // AMBER
+    "#9E9E9E"  // GRAY
   )
 
   @JSExport
@@ -47,6 +61,9 @@ object AppEnvironment {
 
   @JSExport
   val onGetGroupListListener = new EventListener
+
+  @JSExport
+  val onAddMemberListener = new EventListener
 
   @JSExport
   val onErrorOccurredListener = new EventListener

@@ -1083,6 +1083,7 @@ function $c_Lorg_sccp2015_burningchat_AppEnvironment$() {
   this.onJoinGroupListener$1 = null;
   this.onGroupUpdateListener$1 = null;
   this.onGetGroupListListener$1 = null;
+  this.onAddMemberListener$1 = null;
   this.onErrorOccurredListener$1 = null
 }
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype = new $h_O();
@@ -1100,7 +1101,7 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onErro
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.init___ = (function() {
   $n_Lorg_sccp2015_burningchat_AppEnvironment$ = this;
-  this.USER$undCOLORS$1 = ["#f44336", "#2196F3", "#4CAF50", "#FF9800", "#3F51B5"];
+  this.USER$undCOLORS$1 = ["#f44336", "#8BC34A", "#2196F3", "#FF5722", "#4CAF50", "#607D8B", "#FF9800", "#3F51B5", "#CDDC39", "#795548", "#E91E63", "#03A9F4", "#00BCD4", "#9C27B0", "#009688", "#FFEB3B", "#673AB7", "#FFC107", "#9E9E9E"];
   this.onClickMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onSendMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onUpdateMessageListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
@@ -1112,8 +1113,12 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.init___ = (function() {
   this.onJoinGroupListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onGroupUpdateListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onGetGroupListListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onAddMemberListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onErrorOccurredListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   return this
+});
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onAddMemberListener__O = (function() {
+  return this.onAddMemberListener$1
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onSetRegistrationItemListener__O = (function() {
   return this.onSetRegistrationItemListener$1
@@ -1217,6 +1222,12 @@ Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype,
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onGetGroupListListener", {
   "get": (function() {
     return this.$$js$exported$prop$onGetGroupListListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onAddMemberListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onAddMemberListener__O()
   }),
   "enumerable": true
 });
@@ -3380,6 +3391,9 @@ $h_Lorg_sccp2015_burningchat_ChatGroup.prototype = $c_Lorg_sccp2015_burningchat_
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.productPrefix__T = (function() {
   return "ChatGroup"
 });
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$meth$addMember__Lorg_sccp2015_burningchat_Member__O = (function(member) {
+  this.addMember__Lorg_sccp2015_burningchat_Member__V(member)
+});
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.productArity__I = (function() {
   return 5
 });
@@ -3440,9 +3454,6 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$memberArray_
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.toString__T = (function() {
   return $m_sr_ScalaRunTime$().$$undtoString__s_Product__T(this)
 });
-$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$owner__O = (function() {
-  return this.owner$1
-});
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burningchat_Member__sjs_js_Array__sjs_js_Array = (function(id, name, owner, memberArray, messageArray) {
   this.id$1 = id;
   this.name$1 = name;
@@ -3450,6 +3461,9 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.init___I__T__Lorg_sccp2015_burn
   this.memberArray$1 = memberArray;
   this.messageArray$1 = messageArray;
   return this
+});
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$owner__O = (function() {
+  return this.owner$1
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.addMessage__Lorg_sccp2015_burningchat_Message__V = (function(message) {
   var array = this.messageArray$1;
@@ -3485,6 +3499,20 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.hashCode__I = (function() {
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
+});
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.addMember__Lorg_sccp2015_burningchat_Member__V = (function(member) {
+  var array = this.memberArray$1;
+  var array$1 = [];
+  var i = 0;
+  var len = $uI(array["length"]);
+  while ((i < len)) {
+    var index = i;
+    var arg1 = array[index];
+    array$1["push"](arg1);
+    i = ((1 + i) | 0)
+  };
+  array$1["push"](member);
+  this.memberArray$1 = array$1
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$meth$addMessage__Lorg_sccp2015_burningchat_Message__O = (function(message) {
   this.addMessage__Lorg_sccp2015_burningchat_Message__V(message)
@@ -3533,6 +3561,10 @@ Object["defineProperty"]($c_Lorg_sccp2015_burningchat_ChatGroup.prototype, "mess
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype["addMessage"] = (function(arg$1) {
   var prep0 = $as_Lorg_sccp2015_burningchat_Message(arg$1);
   return this.$$js$exported$meth$addMessage__Lorg_sccp2015_burningchat_Message__O(prep0)
+});
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype["addMember"] = (function(arg$1) {
+  var prep0 = $as_Lorg_sccp2015_burningchat_Member(arg$1);
+  return this.$$js$exported$meth$addMember__Lorg_sccp2015_burningchat_Member__O(prep0)
 });
 function $is_Lorg_sccp2015_burningchat_ChatGroup(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lorg_sccp2015_burningchat_ChatGroup)))

@@ -22,7 +22,8 @@
   <script type="text/javascript" src="main.js"></script>
   <script type="text/javascript" src="contents.js"></script>
   <script type="text/javascript" src="bgmodules.js"></script>
-  <script type="text/javascript" src="md5.js"></script>
+  <script type="text/javascript" src="converters.js"></script>
+  <script type="text/javascript" src="test.js"></script>
 </head>
 
 <body>
@@ -78,6 +79,7 @@
       </div>
       <div id="navigation_tool">
         <img class="rotate_hover_animation" ng-click="onToolClick()" src="./assets/settings.png" width="28px" height="28px" />
+        <img class="rotate_hover_animation" ng-if="shouldShowGroupExitButton()" ng-click="onClickGroupExitButton()" src="./assets/group_exit.png" width="28px" height="28px" />
       </div>
     </div>
     <div id="main_area" ng-controller="MainAreaController">
@@ -92,7 +94,7 @@
           </form>
         </div>
         <h3>Join Group</h3>
-        <div id="group_joint">
+        <div id="group_joint" style="height:550px">
           <div ng-if="groups.length == 0">
             <h4>No Group</h4>
           </div>
@@ -104,7 +106,7 @@
               </div>
               <script type="text/ng-template" id="groupDetailDialog">
                <div id="group_detail_dialog">
-                  <h3 id="group_owner">Owner: {{group.owner.regItem.name}}</h3>
+                  <h3 id="group_owner">Owner: {{group.owner.name}}</h3>
                   <div id="join_button_group">
                     <form>
                      <input type="image" ng-click="onJoinGroup(group)" id="join_button" src="./assets/join.png" height="40px" width="40px"/>
@@ -154,18 +156,24 @@
       <div id="user_regist_area" ng-if="mode == MODES.USER">
         <div id="regist_panel" ng-controller="NewUserController">
           <image id="regist_icon_image" src="./assets/icon.png"/>
-          <h1>Welcome to Burning Chat.<br>Please type your information.</h1>
+          <br>
+          <image id="regist_logo_image" src="./assets/logo.png" style="width:600px" />
+          <br>
+          <h2>Welcome to Burning Chat.<br>Please register or login.</h2>
           <br>
           <h1>Account Name</h2>
           <input type="text" ng-model="reg_name" ng-change="FillorNotFill(reg_name, reg_email)" style="#424242"  ng-minlength=1 size=20 />
-          <h2>E-mail Adrress</h2>
+          <h2>E-mail Address</h2>
           <input type="text" ng-model="reg_email" ng-change="FillorNotFill(reg_name, reg_email)" style="#424242" ng-minlength=1 size=20 />
           <br><br>
           <h3>Your Name:{{reg_name}}</h3>
           <h3>E-mail address:{{reg_email}}</h3>
-          <img ng-if="!Reg_fill" src="./assets/new_user_black.png" height="50px" width="50px"/>
+          <input type="image" ng-if="!Reg_fill" src="./assets/new_user_black.png" height="50px" width="50px"/>
           <input type="image" ng-if="Reg_fill" ng-click="click_Reg_Icon(reg_name, reg_email)" src="./assets/new_user_blue.png" height="50px" width="50px"/>
+          <input type="image" ng-click="logIn()" src="./assets/login.png" height="50px" width="50px"/>
+
         </div>
       </div>
 </body>
+
 </html>
