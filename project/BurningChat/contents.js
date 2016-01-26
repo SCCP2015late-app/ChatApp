@@ -4,24 +4,11 @@
   var app_mode;
 
   // BurningChatのModule
-  var app = angular.module('burning', ['ngAnimate', 'ngDialog'], function($provide) {
+  var app = angular.module('burning', ['ngAnimate', 'ngDialog', 'luegg.directives'], function($provide) {
     $provide.decorator('$window', function($delegate) {
       $delegate.history = null;
       return $delegate;
     });
-  });
-
-  // メッセージリストが更新されたときにスクロール位置を先頭に移動させない
-  app.directive('keepScrollPosition', function() {
-    return function(scope, el, attrs) {
-      scope.$watch(
-        function() { return el[0].clientHeight; },
-        function(newHeight, oldHeight) {
-          console.debug('Height was changed', oldHeight, newHeight);
-          el[0].scrollTop = newHeight - oldHeight;
-        });
-    };
-
   });
 
   // 左側オレンジのグループ情報を表示するパネルのController
