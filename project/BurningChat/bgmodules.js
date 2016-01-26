@@ -152,25 +152,23 @@ function msgBroadcastRequest(message){//massageを受け取ってjsonにしてow
         var json_text = JSON.stringify(msg);
         //オーナーに送信処理
         chrome.sockets.udp.create({}, function(createInfo) {
-         chrome.sockets.udp.bind(createInfo.socketId, your_ip, req_port, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), owner_ip, req_port, 
+         chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(result){
+          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), owner_ip, msg_req_port, 
             chrome.sockets.udp.close(createInfo.socketId, function(){})
           )
          });
         });
     }
-
 }
+
 function msgObjectRecv(){
     var msgObjectreceiveCallback = function(obj){
         console.log(obj.socketId + " : " + buffer_to_string(obj.data));
         var msgobj = JSON.parse(buffer_to_string(obj.data));
-        if(msgobj["flag"]==true){
-            //image processing
-        } else {
-            //message object processing
+           var message = msgobj["body"];
+           Env().onUpdateMessageListener.addCallback(message);
+           current_group.addMessage(message);
         }
-    };
 
     chrome.sockets.udp.create({}, function(createInfo) {
         chrome.sockets.udp.onReceive.addListener(msgObjectreceiveCallback);
@@ -180,10 +178,10 @@ function msgObjectRecv(){
     onUpdateMessageListener();
 }
 
-function updateMsgList(msg){
+/*function updateMsgList(msg){
     var message = msg["body"];
     Env().onUpdateMessageListener.addCallback(message);
-}
+}*/
 
 function sendGroupInfo(){
     var group_info = jsonizeGroupInfo();
@@ -215,7 +213,7 @@ function requestRecv(){
         //chrome.socketsに監視してもらうcallbackの追加
         chrome.sockets.udp.onReceive.addListener(requestRecvCallback);
             //socketのbind
-            chrome.sockets.udp.bind(createInfo.socketId, your_ip, req_port, function(){
+            chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(){
             });
     });
 }
