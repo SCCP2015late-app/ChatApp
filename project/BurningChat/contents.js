@@ -58,6 +58,7 @@
     $scope.onClickGroupExitButton = function() {
       console.log('onClickGroupExitButton(' + $scope.group.name + ');');
       Env().onExitGroupListener.callAllCallback($scope.group);
+      getGroupList();
       modeChange(modes.TOP);
     };
 
@@ -209,7 +210,8 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
     // メッセージが内部で追加された時にタイムラインを更新
     Env().onUpdateMessageListener.addCallback(function(message) {
-      $scope.group.addMessage(message);
+        console.log("ALL: internal message_list updated")
+        $scope.group.addMessage(message);
     });
 
     // メッセージのクリックリスナーをそのまま環境のクリックリスナーに設定
@@ -239,9 +241,11 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     });
 
     // 仮で送信時にタイムラインを更新
+    /*
     Env().onUpdateMessageListener.addCallback(function(message) {
       console.log("Send message: " + message.body + " from " + message.member.regItem.name);
     });
+    */
 
     // 送信ボタンのクリックリスナーをそのまま環境のメッセージ送信リスナーに設定
     $scope.onSend = function() {
@@ -260,11 +264,11 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
   
       // メッセージを生成してコールバックを呼ぶ
       var message = new Message(0, $scope.you, "" + new Date(), $scope.messageBody, image, image !== null);
-      console.log(message);
-      //Env().onSendMessageListener.callAllCallback(message);
+      console.log("ALL: New message was created: " + $scope.messageBody);
+      Env().onSendMessageListener.callAllCallback(message);
       
       // image
-      Env().onUpdateMessageListener.callAllCallback(message);
+      //Env().onUpdateMessageListener.callAllCallback(message);
 
       // 送信したメッセージはフォームから削除
       $scope.messageBody = '';
@@ -338,7 +342,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
        getGroupList();
        activateJoinRequestReceiver();
        Env().onLoadUserListener.callAllCallback(you);
-       console.log("Successfully logged in as: " + $scope.you.regItem.name);
+       console.log("ALL: Successfully logged in as: " + $scope.you.regItem.name);
     };
 
   });
