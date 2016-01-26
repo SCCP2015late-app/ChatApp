@@ -3,6 +3,7 @@
 
 //constants for all_users
 const server_url = 'http://192.168.222.19:19810';
+//const server_url = 'http://127.0.0.1:19810';
 const msg_port = 22222;
 const msg_req_port = 29999;
 const join_port = 44444;
@@ -94,9 +95,6 @@ var receiveGroupCallback = function(info){
 //callback - send join request and save group data to variables
 Env().onJoinGroupListener.addCallback(function(info){
     owner_ip = info['group']['owner']['ip_addr'];
-
-    console.log("joining group");
-    console.log(group_JSON2scala(info['group']));
     
     Env().onGroupUpdateListener.callAllCallback(group_JSON2scala(info['group']));
     chrome.sockets.udp.create({}, function(createInfo) {
@@ -150,7 +148,7 @@ function notifyGroupCreationToServer(newGroup){
             ip_addr: your_ip,
             email: newGroup.owner.regItem.email,
         },
-        'member_num': 10,
+        'member_num': 1,
     };
     var r = new XMLHttpRequest();
     r.open('POST', server_url + '/addNewGroup');

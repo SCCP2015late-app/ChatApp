@@ -147,7 +147,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
     Env().onGetGroupListListener.addCallback(function(groups){
       $scope.groups = groups;
-      console.log(groups);
+
     });
 
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
@@ -190,9 +190,8 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
       }
 
       console.log('onCreateNewGroup: ' + groupName);
-      var id = (new Date).getTime() % Math.round((Math.random()*1000));
       $scope.you = getYou();
-      newGroup = new ChatGroup(id, groupName, $scope.you, [], []);
+      newGroup = new ChatGroup(0, groupName, $scope.you, [], []);
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
       modeChange(modes.MESSAGE);
     };
@@ -236,8 +235,6 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     $scope.group = null;
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
       $scope.group = updatedGroup;
-      console.log("group!!!!");
-      console.log($scope.group);
     });
 
     $scope.you = null;
