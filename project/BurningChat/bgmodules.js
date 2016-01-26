@@ -20,6 +20,7 @@ var you;
 var current_group;
 var exist_groups;
 var owner_ip;
+var ips
 chrome.system.network.getNetworkInterfaces(function(ipinfo){
     your_ip = ipinfo[1].address;
     your_id = CryptoJS.MD5(your_ip) + (new Date).getTime();
@@ -230,10 +231,10 @@ function requestRecv(){
         var msg = JSON.parse(buffer_to_string(obj.data));
         //objはudp通信で受け取ったデータ(obj.dataで中身を取り出す)
         console.log(obj.data);
-        for(var prop in ip_list){
+        for(var prop in ips){
             chrome.sockets.udp.create({}, function(createInfo) {
                 chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(){
-                    chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(JSON.stringify(msg)), ip_list[prop], msg_port, function(sendInfo) {
+                    chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(JSON.stringify(msg)), ips[prop], msg_port, function(sendInfo) {
                         console.log('sent done: ' + sendInfo.resultCode);
                         chrome.sockets.udp.close(createInfo.socketId, function(){});
                     });
