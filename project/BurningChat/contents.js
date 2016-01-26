@@ -244,10 +244,15 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
     // 本文
     $scope.messageBody = '';
+    $scope.imageBinaryString = '';
+    
+    Env().onAddImageListener.addCallback(function(imageBinaryString) {
+      $scope.imageBinaryString = imageBinaryString;
+    });
 
     // 仮で送信時にタイムラインを更新
-    Env().onSendMessageListener.addCallback(function(message) {
-      $scope.group.addMessage(message);
+    Env().onUpdateMessageListener.addCallback(function(message) {
+      //$scope.group.addMessage(message);
       console.log("Send message: " + message.body + " from " + message.member.regItem.name);
     });
 
@@ -258,10 +263,21 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
         return;
       }
 
+      var image = null;
+      
+      if($scope.imageBinaryString !== '') {
+        image = "data:image/*;base64," + base64encode($scope.imageBinaryString);
+      }
+      
+      $scope.imageBinaryString = '';
+  
       // メッセージを生成してコールバックを呼ぶ
-      var message = new Message(0, $scope.you, "" + new Date(), $scope.messageBody, null, false);
+      var message = new Message(0, $scope.you, "" + new Date(), $scope.messageBody, image, image !== null);
       console.log(message);
-      Env().onSendMessageListener.callAllCallback(message);
+      //Env().onSendMessageListener.callAllCallback(message);
+      
+      // image
+      Env().onUpdateMessageListener.callAllCallback(message);
 
       // 送信したメッセージはフォームから削除
       $scope.messageBody = '';
@@ -270,9 +286,34 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     // 画像追加ボタンのリスナー
     $scope.addImage = function() {
       console.log("addImage");
+      var accepts = [{
+        mimeTypes: ['image/*']
+      }];
+      chrome.fileSystem.chooseEntry({type: 'openFile', accepts: accepts}, function(theEntry) {
+        if (!theEntry) {
+          output.textContent = 'No file selected.';
+          return;
+        }
+        // use local storage to retain access to this file
+        console.log(theEntry);
+        theEntry.file(function(file){
+          var reader = new FileReader();
+          
+          reader.onloadend = function(e){
+            var binary = reader.result;
+            // $scope.imageBinaryString = binary;
+            $scope.imageBinaryString = binary;
+          };
+          
+          reader.readAsBinaryString(file);
+        }, function(e){
+          console.log(e);
+        });
+      });
     };
   });
-//初期登録画面フォームのcontoroller
+  
+  //初期登録画面フォームのcontoroller
   app.controller('NewUserController',function($scope, ngDialog) {
     //group
     $scope.reg_name = "";
