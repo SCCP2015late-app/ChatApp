@@ -175,11 +175,12 @@ Env().onSendMessageListener.addCallback(function(message){
         json_text = JSON.stringify(msg);
         chrome.sockets.udp.create({}, function(createInfo) {
          chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), owner_ip, msg_req_port, 
+          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), your_ip, msg_req_port, function(){
             chrome.sockets.udp.close(createInfo.socketId, function(){})
-          )
-         });
+          })
+         })
         });
+        
     } else {
         msg["flag"] = true;
         msg["image"] = "data:image/*;base64," + base64encode(message.image);
