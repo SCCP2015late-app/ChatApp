@@ -118,7 +118,7 @@
           </div>
         </div>
       </div>
-      <div id="message_area" ng-if="mode == MODES.MESSAGE">
+      <div id="message_area" ng-show="mode == MODES.MESSAGE">
         <div id="time_line" ng-controller="TimeLineController">
           <div ng-repeat="message in group.messageArray">
             <div id="time_line_item" ng-click="onClickMessageListener.callAllCallback(message)">
