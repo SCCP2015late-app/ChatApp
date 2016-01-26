@@ -130,10 +130,11 @@
 
               <!--Dialog Script-->
               <script type="text/ng-template" id="messageDetailDialog">
-		        	  <h3>[From] @{{message.member.id}}#{{group.id}}: {{message.member.regItem.name}}</h3>
+		        	  <h3>@{{message.member.regItem.name}}</h3>
 		        	  <p>ID: {{message.id}}</p>
 		        	  <p>Body: {{message.body}}</p>
 		        	  <p>Date: {{message.date}}</p>
+		        	  <p>Email: {{message.member.regItem.email}}</p>
 		          </script>
             </div>
           </div>

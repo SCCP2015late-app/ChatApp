@@ -204,7 +204,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
       $scope.lastClickMessage = message;
       ngDialog.open({template: 'messageDetailDialog',controller: ['$scope', function($scope) {
         $scope.message = message;
-        $scope.group = group;
+        $scope.group = $scope.group;
       }]});
     });
 
