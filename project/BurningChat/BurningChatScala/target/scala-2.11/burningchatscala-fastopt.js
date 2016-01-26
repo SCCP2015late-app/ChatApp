@@ -1084,6 +1084,7 @@ function $c_Lorg_sccp2015_burningchat_AppEnvironment$() {
   this.onGroupUpdateListener$1 = null;
   this.onGetGroupListListener$1 = null;
   this.onAddMemberListener$1 = null;
+  this.onExitGroupListener$1 = null;
   this.onErrorOccurredListener$1 = null
 }
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype = new $h_O();
@@ -1114,11 +1115,15 @@ $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.init___ = (function() {
   this.onGroupUpdateListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onGetGroupListListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onAddMemberListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
+  this.onExitGroupListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   this.onErrorOccurredListener$1 = new $c_Lorg_sccp2015_burningchat_EventListener().init___();
   return this
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onAddMemberListener__O = (function() {
   return this.onAddMemberListener$1
+});
+$c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onExitGroupListener__O = (function() {
+  return this.onExitGroupListener$1
 });
 $c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype.$$js$exported$prop$onSetRegistrationItemListener__O = (function() {
   return this.onSetRegistrationItemListener$1
@@ -1228,6 +1233,12 @@ Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype,
 Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onAddMemberListener", {
   "get": (function() {
     return this.$$js$exported$prop$onAddMemberListener__O()
+  }),
+  "enumerable": true
+});
+Object["defineProperty"]($c_Lorg_sccp2015_burningchat_AppEnvironment$.prototype, "onExitGroupListener", {
+  "get": (function() {
+    return this.$$js$exported$prop$onExitGroupListener__O()
   }),
   "enumerable": true
 });

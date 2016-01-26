@@ -17,6 +17,7 @@
   <script type="text/javascript" src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script type="text/javascript" src="./bower_components/angular-animate/angular-animate.min.js"></script>
   <script type="text/javascript" src="./bower_components/ng-dialog/js/ngDialog.js"></script>
+  <script type="text/javascript" src="./bower_components/angular-scroll-glue/src/scrollglue.js"></script>
 
   <script type="text/javascript" src="./BurningChatScala/target/scala-2.11/burningchatscala-fastopt.js"></script>
   <script type="text/javascript" src="main.js"></script>
@@ -119,7 +120,7 @@
         </div>
       </div>
       <div id="message_area" ng-show="mode == MODES.MESSAGE">
-        <div id="time_line" ng-controller="TimeLineController">
+        <div id="time_line" ng-controller="TimeLineController" scroll-glue>
           <div ng-repeat="message in group.messageArray">
             <div id="time_line_item" ng-click="onClickMessageListener.callAllCallback(message)">
               <h2 id="initial" ng-style="toStyle(message.member.userColor)">{{message.member.regItem.name.toUpperCase()[0]}}</h2>
