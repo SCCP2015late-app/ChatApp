@@ -249,6 +249,8 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     $scope.messageBody = '';
     $scope.imageBinaryString = '';
     
+    $scope.buttonStyle = {};
+    
     Env().onAddImageListener.addCallback(function(imageBinaryString) {
       $scope.imageBinaryString = imageBinaryString;
     });
@@ -284,6 +286,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
       // 送信したメッセージはフォームから削除
       $scope.messageBody = '';
+      $scope.buttonStyle = {};
     };
 
     // 画像追加ボタンのリスナー
@@ -306,6 +309,10 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
             var binary = reader.result;
             // $scope.imageBinaryString = binary;
             $scope.imageBinaryString = binary;
+            $scope.buttonStyle = {
+              'background-image': 'url(data:image/*;base64,' + base64encode($scope.imageBinaryString) + ')',
+              'background-size': 'cover'
+            };
           };
           
           reader.readAsBinaryString(file);
