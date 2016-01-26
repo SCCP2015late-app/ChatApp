@@ -12,6 +12,7 @@
   },
   
   "permissions": [
+      {"fileSystem": ["write", "retainEntries", "directory"]},
       "system.network",
       "storage"
   ],
@@ -26,6 +27,14 @@
     "udp": {
       "bind" : "",
       "send" : ""
+    }
+  },
+  
+  "file_handlers": {
+    "text": {
+      "types": [
+          "text/*"
+      ]
     }
   }
   

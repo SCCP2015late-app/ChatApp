@@ -21,7 +21,9 @@ var you;
 var current_group;
 var exist_groups;
 var owner_ip;
-var ips
+var ips;
+var reqSocket;
+var msgSocket;
 chrome.system.network.getNetworkInterfaces(function(ipinfo){
     your_ip = ipinfo[1].address;
     your_id = CryptoJS.MD5(your_ip) + (new Date).getTime();
@@ -174,47 +176,33 @@ Env().onSendMessageListener.addCallback(function(message){
 
     if(message.flag==false){
         json_text = JSON.stringify(msg);
-        chrome.sockets.udp.create({}, function(createInfo) {
-         chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), your_ip, msg_req_port, function(){
-            chrome.sockets.udp.close(createInfo.socketId, function(){})
-          })
-         })
-        });
+         //chrome.sockets.udp.bind(msgSocket, your_ip, msg_port, function(result){
+          chrome.sockets.udp.send(msgSocket, string_to_buffer(json_text), owner_ip, msg_req_port, function(){});
+         //});
         
     } else {
         msg["flag"] = true;
         msg["image"] = "data:image/*;base64," + base64encode(message.image);
         var json_text = JSON.stringify(msg);
         //オーナーに送信処理
-        chrome.sockets.udp.create({}, function(createInfo) {
-         chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(result){
-          chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(json_text), owner_ip, msg_req_port, 
-            chrome.sockets.udp.close(createInfo.socketId, function(){})
-          )
-         });
-        });
+         //chrome.sockets.udp.bind(msgSocket, your_ip, msg_req_port, function(result){
+          chrome.sockets.udp.send(msgSocket, string_to_buffer(json_text), owner_ip, msg_req_port,function(){});
+         //});
     }
 });
 
-
-function msgObjectRecv(){
-    var msgObjectreceiveCallback = function(obj){
+var msgObjectreceiveCallback = function(obj){
         console.log(obj.socketId + " : " + buffer_to_string(obj.data));
         var msgobj = JSON.parse(buffer_to_string(obj.data));
            var message = msgobj["body"];
            Env().onUpdateMessageListener.addCallback(message);
            current_group.addMessage(message);
-        }
-
-    chrome.sockets.udp.create({}, function(createInfo) {
+};    
+chrome.sockets.udp.create({}, function(createInfo) {
+        msgSocket = createInfo.socketId;
         chrome.sockets.udp.onReceive.addListener(msgObjectreceiveCallback);
-	       chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(result){
-	       });
-    });
-    onUpdateMessageListener();
-}
-
+	    chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(result){})
+});
 /*function updateMsgList(msg){
     var message = msg["body"];
     Env().onUpdateMessageListener.addCallback(message);
@@ -230,37 +218,31 @@ function sendMsgList(){
     sendTo(dest_IP, msg_list);
 }
 
-function requestRecv(){
-    var requestRecvCallback = function(obj){
-        var msg = JSON.parse(buffer_to_string(obj.data));
-        //objはudp通信で受け取ったデータ(obj.dataで中身を取り出す)
-        console.log(obj.data);
-        for(var prop in ips){
-            chrome.sockets.udp.create({}, function(createInfo) {
-                chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(){
-                    chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(JSON.stringify(msg)), ips[prop], msg_port, function(sendInfo) {
-                        console.log('sent done: ' + sendInfo.resultCode);
-                        chrome.sockets.udp.close(createInfo.socketId, function(){});
-                    });
-                });
+var requestRecvCallback = function(obj){
+    var msg = JSON.parse(buffer_to_string(obj.data));
+    //objはudp通信で受け取ったデータ(obj.dataで中身を取り出す)
+    console.log(obj.data);
+    for(var prop in ips){
+            chrome.sockets.udp.bind(reqSocket, your_ip, msg_port, function(){
+                 chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(JSON.stringify(msg)), ips[prop], msg_port, function(sendInfo) {
+                     console.log('sent done: ' + sendInfo.resultCode);
+                     chrome.sockets.udp.close(createInfo.socketId, function(){});
+                 });
             });
-        }           
-    };
-    chrome.sockets.udp.create({}, function(createInfo) {
+    }           
+};
+chrome.sockets.udp.create({}, function(createInfo) {
         //chrome.socketsに監視してもらうcallbackの追加
-        chrome.sockets.udp.onReceive.addListener(requestRecvCallback);
+        reqSocket = createInfo.socketId;
+    chrome.sockets.udp.onReceive.addListener(requestRecvCallback);
             //socketのbind
-            chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(){
-            });
-    });
-}
+         chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(){
+         });
+});
+
 
 function modifyUserInfo(){
     //ユーザ情報の変更
     //reg itemをもとにuser informationのJSONを変更してファイルに書き込む
     //Listenerを叩いてフロントに変更を伝える
-}
-
-function initializeGroup(){
-    //ストレージからとってきたデータを使ってグループを初期化する
 }

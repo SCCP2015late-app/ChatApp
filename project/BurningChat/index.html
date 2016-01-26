@@ -125,7 +125,7 @@
               <h2 id="initial" ng-style="toStyle(message.member.userColor)">{{message.member.regItem.name.toUpperCase()[0]}}</h2>
               <p id="name">{{message.member.regItem.name}}</p>
               <p id="text_message">{{message.body}}</p>
-              <img id="image_message" src="./assets/misoton.png" height="100px" ng-hide="{{message.image == null}}"/>
+              <img id="image_message" ng-src="{{message.image}}" height="100px" ng-hide="{{message.image == null}}"/>
 
               <!--Dialog Script-->
               <script type="text/ng-template" id="messageDetailDialog">
@@ -141,7 +141,7 @@
           <form>
             <input type="image" id="message_sender" ng-click="onSend()" src="./assets/plus.png" height="0px" width="0px"/>
             <input type="text" ng-model="messageBody" ng-click="onSend()"/>
-            <input type="image" ng-click="addImage()" src="./assets/plus.png" height="44px" width="44px" />
+            <input type="image" ng-click="addImage()"  ng-style="buttonStyle" src="./assets/plus.png" height="44px" width="44px" />
           </form>
         </div>
       </div>
