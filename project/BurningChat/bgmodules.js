@@ -2,7 +2,8 @@
 //chrome.storage.local.clear();
 
 //constants for all_users
-const server_url = 'http://192.168.222.19:19810';
+//const server_url = 'http://192.168.222.19:19810';
+const server_url = 'http://127.0.0.1:19810';
 const msg_port = 22222;
 const msg_req_port = 29999;
 const join_port = 44444;
@@ -80,7 +81,7 @@ function getGroupList(){
     const dest_t = i + 1000; //time to wait
     while(i < dest_t){ i = Date.now(); }
 };
-//end----------------------------------------
+//end----------------------------------------d
 
 //TODO load group information (including whether stored on storage or not)
 function loadGroupFromStorage(){
@@ -96,10 +97,6 @@ var receiveGroupCallback = function(info){
 //callback - send join request and save group data to variables
 Env().onJoinGroupListener.addCallback(function(info){
     owner_ip = info['group']['owner']['ip_addr'];
-
-    console.log("joining group");
-    console.log(group_JSON2scala(info['group']));
-    
     Env().onGroupUpdateListener.callAllCallback(group_JSON2scala(info['group']));
     chrome.sockets.udp.create({}, function(createInfo) {
         chrome.sockets.udp.onReceive.addListener(receiveGroupCallback);
@@ -119,7 +116,6 @@ Env().onJoinGroupListener.addCallback(function(info){
 
 //TODO callback function - process join request
 var receiveJoinRequestCallback = function(info){  
-    console.log("success");
 };
 //end----------------------------------------
 
@@ -152,11 +148,16 @@ function notifyGroupCreationToServer(newGroup){
             ip_addr: your_ip,
             email: newGroup.owner.regItem.email,
         },
-        'member_num': 10,
+        'member_num': 1,
     };
     var r = new XMLHttpRequest();
     r.open('POST', server_url + '/addNewGroup');
-    r.addEventListener("load", function(){ console.log("New group_info was uploaded to server"); });
+    r.addEventListener("load", function(info){ 
+        obj['id'] = JSON.parse(info["target"]["response"])["message"];
+        current_group = group_JSON2scala(obj);
+        console.log("New Group:");
+        console.log(current_group);
+    });
     r.send(JSON.stringify(obj));
 };
 //end----------------------------------------
@@ -199,12 +200,13 @@ var msgObjectreceiveCallback = function(obj){
            var message = msgobj["body"];
            Env().onUpdateMessageListener.addCallback(message);
            current_group.addMessage(message);
-};    
+};    /*
 chrome.sockets.udp.create({}, function(createInfo) {
         msgSocket = createInfo.socketId;
         chrome.sockets.udp.onReceive.addListener(msgObjectreceiveCallback);
 	    chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(result){})
 });
+*/
 /*function updateMsgList(msg){
     var message = msg["body"];
     Env().onUpdateMessageListener.addCallback(message);
@@ -233,6 +235,7 @@ var requestRecvCallback = function(obj){
             });
     }           
 };
+/*
 chrome.sockets.udp.create({}, function(createInfo) {
         //chrome.socketsに監視してもらうcallbackの追加
         reqSocket = createInfo.socketId;
@@ -241,7 +244,7 @@ chrome.sockets.udp.create({}, function(createInfo) {
          chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(){
          });
 });
-
+*/
 
 function modifyUserInfo(){
     //ユーザ情報の変更
