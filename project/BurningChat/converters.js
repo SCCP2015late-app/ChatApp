@@ -88,9 +88,15 @@ var buffer_to_string = function(buf) {
     return String.fromCharCode.apply("", new Uint16Array(buf));
 };
 
-//TODO
+
 var group_JSON2scala = function(jsonGroup){
     var owner = new Member(jsonGroup.owner.id, parseInt(jsonGroup.owner.ip_addr.toString().split(".")[3]), new RegistrationItem(jsonGroup.owner.name, jsonGroup.owner.email));
     var ret = new ChatGroup(jsonGroup.id, jsonGroup.name, owner, [owner], []);
     return ret;
+}
+
+function sleep(time){
+    var i = Date.now();
+    const dest_t = i + time*1000; //time to wait
+    while(i < dest_t){ i = Date.now(); }
 }
