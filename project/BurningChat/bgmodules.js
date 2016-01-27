@@ -97,18 +97,22 @@ function loadGroupFromStorage(){
 };
 //end----------------------------------------
 
-//TODO
 //callback function - save received group info to variable
-var receiveGroupCallback = function(g){
-    if(g.socketId != join_group_socket){ return; }
+var receiveGroupCallback = function(info){
+    if(info.socketId != join_group_socket){ return; }
+    console.log("ALL: received new group data");
+    console.log(JSON.parse(buffer_to_string(info.data)));
+    g = JSON.parse(buffer_to_string(info.data));
     var _usr = [];
-    for(var i in g.memberArray$1){
-        var _id = g.memberArray$1[i].id$1
-        var _number = g.memberArra$1[i].number$1;
-        var _reg = new RegistrationItem(g.memberArray$1[i].regItem$1.name$1, g.memberArray$1[i].regItem$1.email$1);
-        _usr.push(new Member(_id, _number, _reg));
+    for(var i = 0; i < g.length; i++){
+        var n_usr;
+        var _id = g[i].id$1
+        var _number = g[i].number$1;
+        var _reg = new RegistrationItem(g[i].regItem$1.name$1, g[i].regItem$1.email$1);
+        n_usr = new Member(_id, _number, _reg);
+        _usr.push(n_usr);
     }
-    current_group = new (current_group.id, current_group.name, current_group.owner, _usr, current_group.messageArray);
+    current_group = new ChatGroup(current_group.id, current_group.name, current_group.owner, _usr, current_group.messageArray);
     Env().onGroupUpdateListener.callAllCallback(current_group);
 };
 //end----------------------------------------
@@ -159,7 +163,7 @@ var receiveJoinRequestCallback = function(info){
         var notify_msg = new Message(0, new Member('admin', 15, new RegistrationItem('☆ system message', 'email')), ""+ new Date(), new_usr.regItem.name + " has joined!", null, false)
         Env().onSendMessageListener.callAllCallback(notify_msg);
     } else {
-        if(owner_ip == your_ip){ return; }
+        if(owner_ip == info.remoteAddress){ return; }
         console.log("OWN: " + info.remoteAddress + " has left!");
         ips.splice(ips.indexOf(info.remoteAddress), 1);
         var group_member = JSON.parse(buffer_to_string(info.data));
@@ -168,10 +172,9 @@ var receiveJoinRequestCallback = function(info){
         var exit_msg = new Message(0, new Member('admin', 18, new RegistrationItem('☆ system message', 'email')), ""+ new Date(), _member.regItem.name + " has left!", null, false);
         Env().onSendMessageListener.callAllCallback(exit_msg);
     }
-    //TODO
-    //send new group info to all users (use info.socketId)
+    //send new group info to all users
     for(var i = 0; i < ips.length; i++){
-        chrome.sockets.udp.send(info.socketId, string_to_buffer(JSON.stringify(current_group.memberArray)), ips[i], ud_port, function(res){});
+        chrome.sockets.udp.send(info.socketId, string_to_buffer(JSON.stringify(current_group.memberArray$1)), ips[i], ud_port, function(){});
         console.log("OWN: new group info was sent to: " + ips[i]);
     }
 };
@@ -295,7 +298,8 @@ Env().onExitGroupListener.addCallback(function(info){
             owner_ip, join_req_port, function(sendInfo) {
                 console.log('USR: Exit request was sent: ' + sendInfo.resultCode);
                 console.log("USR: You exit group, " + current_group.name);
-                current_group = null;
+                current_group = new ChatGroup(0, "", you, [], []);
+                Env().onGroupUpdateListener.callAllCallback(current_group);
                 chrome.sockets.udp.close(createInfo.socketId, function(){});
             });
         });

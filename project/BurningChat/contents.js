@@ -141,7 +141,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
         if($scope.mode != modes.MESSAGE){
-            modeChange(modes.MESSAGE);
+            if(updatedGroup.name !== ""){ modeChange(modes.MESSAGE); }
         }
     });
 
@@ -167,7 +167,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
           console.log("Join: " + group.name + "@" + group.id);
           console.log(group);
           Env().onJoinGroupListener.callAllCallback({'group': group, 'member': you});
-//close Group Dialog
+          //close Group Dialog
           ngDialog.close($scope.groupDetailDialog);
         };
       }]});
@@ -183,7 +183,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
       console.log('onCreateNewGroup: ' + groupName);
       $scope.you = getYou();
-      newGroup = new ChatGroup(0, groupName, $scope.you, [], []);
+      newGroup = new ChatGroup(0, groupName, $scope.you, [$scope.you], []);
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
     };
   });
