@@ -20,7 +20,7 @@ case class ChatGroup(@(JSExport @field) id: Int, @(JSExport @field) name: String
 
   @JSExport
   def removeMember(member: Member): Unit = {
-    memberArray = memberArray.filter(_.equals(member))
+    memberArray = memberArray.filter(!_.equals(member))
   }
 }
 

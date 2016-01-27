@@ -3502,7 +3502,7 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.removeMember__Lorg_sccp2015_bur
     var index = i;
     var arg1 = array[index];
     var x$1 = $as_Lorg_sccp2015_burningchat_Member(arg1);
-    if (x$1.equals__Lorg_sccp2015_burningchat_Member__Z(member)) {
+    if ((!x$1.equals__Lorg_sccp2015_burningchat_Member__Z(member))) {
       array$1["push"](arg1)
     };
     i = ((1 + i) | 0)
