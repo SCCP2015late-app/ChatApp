@@ -100,7 +100,17 @@ function loadGroupFromStorage(){
 
 //TODO
 //callback function - save received group info to variable
-var receiveGroupCallback = function(info){
+var receiveGroupCallback = function(g){
+    if(g.socketId != join_group_socket){ reutrn; }
+    var _usr = [];
+    for(var i in g.memberArray$1){
+        var _id = g.memberArray$1[i].id$1
+        var _number = g.memberArra$1[i].number$1;
+        var _reg = new RegistrationItem(g.memberArray$1[i].regItem$1.name$1, g.memberArray$1[i].regItem$1.email$1);
+        _usr.push(new Member(_id, _number, _reg));
+    }
+    current_group = new (current_group.id, current_group.name, current_group.owner, _usr, current_group.messageArray);
+    Env().onGroupUpdateListener.callAllCallback(current_group);
 };
 //end----------------------------------------
 
@@ -135,14 +145,14 @@ Env().onJoinGroupListener.addCallback(function(info){
 var receiveJoinRequestCallback = function(info){
     if(info.socketId !== joinSocketId){ return;}
     if(ips.indexOf(info.remoteAddress) == -1){
-    ips.push(info.remoteAddress);
-    var recv_usr = JSON.parse(buffer_to_string(info.data));
-    console.log("OWN: " + recv_usr.regItem$1.name$1 + "("+ info.remoteAddress + ") has joined");
-    var new_usr = new Member(recv_usr.id$1, recv_usr.number$1, new RegistrationItem(recv_usr.regItem$1.name$1, recv_usr.regItem$1.email$1));
-    current_group.addMember(new_usr);
-    Env().onGroupUpdateListener.callAllCallback(current_group);
-    var notify_msg = new Message(0, new Member('admin', 15, new RegistrationItem('☆ system message', 'email')), ""+ new Date(), new_usr.regItem.name + " has joined!", null, false)
-    Env().onSendMessageListener.callAllCallback(notify_msg);
+        ips.push(info.remoteAddress);
+        var recv_usr = JSON.parse(buffer_to_string(info.data));
+        console.log("OWN: " + recv_usr.regItem$1.name$1 + "("+ info.remoteAddress + ") has joined");
+        var new_usr = new Member(recv_usr.id$1, recv_usr.number$1, new RegistrationItem(recv_usr.regItem$1.name$1, recv_usr.regItem$1.email$1));
+        current_group.addMember(new_usr);
+        Env().onGroupUpdateListener.callAllCallback(current_group);
+        var notify_msg = new Message(0, new Member('admin', 15, new RegistrationItem('☆ system message', 'email')), ""+ new Date(), new_usr.regItem.name + " has joined!", null, false)
+        Env().onSendMessageListener.callAllCallback(notify_msg);
     } else {
         console.log("OWN: " + info.remoteAddress + " has left!");
         ips.splice(ips.indexOf(info.remoteAddress), 1);
