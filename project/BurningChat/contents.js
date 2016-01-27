@@ -29,7 +29,9 @@
 
     $scope.group = null; // group
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
-      $scope.group = updatedGroup;
+         // $scope.$apply(function(){
+              $scope.group = updatedGroup;
+        //});
     });
 
     // ユーザ登録情報
@@ -183,7 +185,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
       $scope.you = getYou();
       newGroup = new ChatGroup(0, groupName, $scope.you, [], []);
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
-      modeChange(modes.MESSAGE);
+      //modeChange(modes.MESSAGE);
     };
   });
 
@@ -193,7 +195,9 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     // group
     $scope.group = null;
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
-      $scope.group = updatedGroup;
+     //   $scope.$apply(function(){
+              $scope.group = updatedGroup;
+       // });
     });
 
     // スタイル設定用のフォーマットにする
@@ -213,9 +217,9 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     // メッセージが内部で追加された時にタイムラインを更新
     Env().onUpdateMessageListener.addCallback(function(message) {
         console.log("ALL: internal message_list updated");
-        $scope.$apply(function(){
+     //   $scope.$apply(function(){
           $scope.group.addMessage(message);
-        });
+       // });
     });
 
     // メッセージのクリックリスナーをそのまま環境のクリックリスナーに設定
