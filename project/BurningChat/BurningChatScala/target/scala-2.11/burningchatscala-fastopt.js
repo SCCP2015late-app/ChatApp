@@ -3493,6 +3493,22 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.addMessage__Lorg_sccp2015_burni
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$messageArray__O = (function() {
   return this.messageArray$1
 });
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.removeMember__Lorg_sccp2015_burningchat_Member__V = (function(member) {
+  var array = this.memberArray$1;
+  var array$1 = [];
+  var i = 0;
+  var len = $uI(array["length"]);
+  while ((i < len)) {
+    var index = i;
+    var arg1 = array[index];
+    var x$1 = $as_Lorg_sccp2015_burningchat_Member(arg1);
+    if (x$1.equals__Lorg_sccp2015_burningchat_Member__Z(member)) {
+      array$1["push"](arg1)
+    };
+    i = ((1 + i) | 0)
+  };
+  this.memberArray$1 = array$1
+});
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$messageArray__sjs_js_Array__O = (function(x$1) {
   this.messageArray$1 = x$1
 });
@@ -3511,6 +3527,9 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.hashCode__I = (function() {
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.productIterator__sc_Iterator = (function() {
   return new $c_sr_ScalaRunTime$$anon$1().init___s_Product(this)
 });
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$meth$addMessage__Lorg_sccp2015_burningchat_Message__O = (function(message) {
+  this.addMessage__Lorg_sccp2015_burningchat_Message__V(message)
+});
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.addMember__Lorg_sccp2015_burningchat_Member__V = (function(member) {
   var array = this.memberArray$1;
   var array$1 = [];
@@ -3525,8 +3544,8 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.addMember__Lorg_sccp2015_burnin
   array$1["push"](member);
   this.memberArray$1 = array$1
 });
-$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$meth$addMessage__Lorg_sccp2015_burningchat_Message__O = (function(message) {
-  this.addMessage__Lorg_sccp2015_burningchat_Message__V(message)
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$meth$removeMember__Lorg_sccp2015_burningchat_Member__O = (function(member) {
+  this.removeMember__Lorg_sccp2015_burningchat_Member__V(member)
 });
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype.$$js$exported$prop$memberArray__O = (function() {
   return this.memberArray$1
@@ -3576,6 +3595,10 @@ $c_Lorg_sccp2015_burningchat_ChatGroup.prototype["addMessage"] = (function(arg$1
 $c_Lorg_sccp2015_burningchat_ChatGroup.prototype["addMember"] = (function(arg$1) {
   var prep0 = $as_Lorg_sccp2015_burningchat_Member(arg$1);
   return this.$$js$exported$meth$addMember__Lorg_sccp2015_burningchat_Member__O(prep0)
+});
+$c_Lorg_sccp2015_burningchat_ChatGroup.prototype["removeMember"] = (function(arg$1) {
+  var prep0 = $as_Lorg_sccp2015_burningchat_Member(arg$1);
+  return this.$$js$exported$meth$removeMember__Lorg_sccp2015_burningchat_Member__O(prep0)
 });
 function $is_Lorg_sccp2015_burningchat_ChatGroup(obj) {
   return (!(!((obj && obj.$classData) && obj.$classData.ancestors.Lorg_sccp2015_burningchat_ChatGroup)))

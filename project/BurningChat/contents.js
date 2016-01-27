@@ -44,11 +44,12 @@
     // ツール開閉ボタンのクリック
     $scope.onToolClick = function() {
       if($scope.you === null) {
+        console.log('scope.you === null');
         return;
       }
 
       $scope.toolsOpened = !$scope.toolsOpened;
-      console.log("click");
+      console.log("click: " + $scope.toolsOpened);
     };
 
     $scope.shouldShowGroupExitButton = function() {

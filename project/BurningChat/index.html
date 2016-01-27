@@ -124,7 +124,7 @@
           <div ng-repeat="message in group.messageArray">
             <div id="time_line_item" ng-click="onClickMessageListener.callAllCallback(message)">
               <h2 id="initial" ng-style="toStyle(message.member.userColor)">{{message.member.regItem.name.toUpperCase()[0]}}</h2>
-              <p id="name">{{message.member.regItem.name}}</p>
+              <p id="name"><b>{{message.member.regItem.name}}</b> <font color="#9E9E9E">@{{message.member.id}}</font></p>
               <p id="text_message">{{message.body}}</p>
               <img id="image_message" ng-src="{{message.image}}" height="100px" ng-hide="{{message.image == null}}"/>
 

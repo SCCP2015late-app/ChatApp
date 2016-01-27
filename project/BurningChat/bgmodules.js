@@ -26,6 +26,7 @@ var ips = [];
 var reqSocketId;
 var msgSocketId;
 var joinSocketId;
+var join_group_socket;
 chrome.system.network.getNetworkInterfaces(function(ipinfo){
     your_ip = ipinfo[1].address;
     console.log("ALL: your IP: " + your_ip);
@@ -112,6 +113,7 @@ Env().onJoinGroupListener.addCallback(function(info){
     Env().onGroupUpdateListener.callAllCallback(group_JSON2scala(info['group']));
     //end----------
     chrome.sockets.udp.create({}, function(createInfo) {
+        join_group_socket = createInfo.socketId;
         chrome.sockets.udp.onReceive.addListener(receiveGroupCallback);
         chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_port,
         function(result){
@@ -131,7 +133,8 @@ Env().onJoinGroupListener.addCallback(function(info){
 //TODO
 //callback function - process join request
 var receiveJoinRequestCallback = function(info){
-    if(info.socketId !== joinSocketId){ return; }
+    if(info.socketId !== joinSocketId){ return;}
+    if(ips[info.remoteAddress] == -1){
     ips.push(info.remoteAddress);
     var recv_usr = JSON.parse(buffer_to_string(info.data));
     console.log("OWN: " + recv_usr.regItem$1.name$1 + "("+ info.remoteAddress + ") has joined");
@@ -140,6 +143,14 @@ var receiveJoinRequestCallback = function(info){
     Env().onGroupUpdateListener.callAllCallback(current_group);
     var notify_msg = new Message(0, new Member('admin', 15, new RegistrationItem('☆ system message', 'email')), ""+ new Date(), new_usr.regItem.name + " has joined!", null, false)
     Env().onSendMessageListener.callAllCallback(notify_msg);
+    } else {
+        ips.splice(ips[info.remoteAddress], 1);
+        var group_member = JSON.parse(buffer_to_string(info.data));
+        var _member = new Member(group_member.id$1, group_member.number$1,new RegistrationItem(group_member.regItem$1.name$1, group_member.regItem$1.email$1));
+        current_group.removeMember(_member);
+        var notify_msg = new Message(0, new Member('admin', 18, new RegistrationItem('☆ system message', 'email')), ""+ new Date(), _member.regItem.name + " has left!", null, false);
+        Env().onSendMessageListener.callAllCallback(notify_msg);
+    }
     //TODO
     //send new group info to all users (use info.socketId)
 };
@@ -242,3 +253,15 @@ chrome.sockets.udp.create({}, function(createInfo) {
     chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(){});
 });
 //end----------------------------------------
+
+//FOR ALL USER - exit to group
+Env().onExitGroupListener.addCallback(function(info){
+    chrome.sockets.udp.send(join_group_socket,
+            string_to_buffer(JSON.stringify(you)),
+            owner_ip, join_req_port, function(sendInfo) {
+                console.log('USR: Exit request was sent: ' + sendInfo.resultCode);
+                console.log("USR: You exit group, " + current_group.name);
+            });
+    current_group = null;
+});
+//end-----------
