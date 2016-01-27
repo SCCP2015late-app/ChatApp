@@ -29,9 +29,7 @@
 
     $scope.group = null; // group
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
-         // $scope.$apply(function(){
-              $scope.group = updatedGroup;
-        //});
+         $scope.group = updatedGroup;
     });
 
     // ユーザ登録情報
@@ -155,7 +153,9 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     Env().onLoadUserListener.addCallback(function(user) {
 
       $scope.you = user;
-      $scope.mode = $scope.MODES.TOP;
+      if(app_mode === modes.USER) {
+        modeChange(modes.TOP);
+      }
     });
 
     // グループ選択時のリスナー
@@ -185,7 +185,6 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
       $scope.you = getYou();
       newGroup = new ChatGroup(0, groupName, $scope.you, [], []);
       Env().onCreateNewGroupListener.callAllCallback(newGroup);
-      //modeChange(modes.MESSAGE);
     };
   });
 
@@ -195,9 +194,7 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     // group
     $scope.group = null;
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
-     //   $scope.$apply(function(){
-              $scope.group = updatedGroup;
-       // });
+            $scope.group = updatedGroup;
     });
 
     // スタイル設定用のフォーマットにする
@@ -215,11 +212,11 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     });
 
     // メッセージが内部で追加された時にタイムラインを更新
-    Env().onUpdateMessageListener.addCallback(function(message) {
+    Env().onUpdateMessageListener.addCallback(function(group) {
         console.log("ALL: internal message_list updated");
-     //   $scope.$apply(function(){
-          $scope.group.addMessage(message);
-       // });
+        $scope.$apply(function(){
+            $scope.group = group
+        });
     });
 
     // メッセージのクリックリスナーをそのまま環境のクリックリスナーに設定
@@ -247,13 +244,6 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     Env().onAddImageListener.addCallback(function(imageBinaryString) {
       $scope.imageBinaryString = imageBinaryString;
     });
-
-    // 仮で送信時にタイムラインを更新
-    /*
-    Env().onUpdateMessageListener.addCallback(function(message) {
-      console.log("Send message: " + message.body + " from " + message.member.regItem.name);
-    });
-    */
 
     // 送信ボタンのクリックリスナーをそのまま環境のメッセージ送信リスナーに設定
     $scope.onSend = function() {

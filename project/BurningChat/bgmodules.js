@@ -198,8 +198,8 @@ var msgObjectreceiveCallback = function(obj){
     var _msg = new Message(msg_count++/*msg.id$1*/, new Member(msg.member$1.id$1, msg.member$1.number$1, new RegistrationItem(msg.member$1.regItem$1.name$1, msg.member$1.regItem$1.email$1)), msg.date$1, msg.body$1, msg.image$1, msg.flag$1);
     console.log(_msg);
     current_group.addMessage(_msg);
-    Env().onGroupUpdateListener.callAllCallback(current_group);
-    //Env().onUpdateMessageListener.callAllCallback(_msg);
+    //Env().onGroupUpdateListener.callAllCallback(current_group);
+    Env().onUpdateMessageListener.callAllCallback(current_group);
 };
 //end----------------------------------------
 
@@ -216,7 +216,6 @@ chrome.sockets.udp.create({}, function(createInfo){
         });
     });
     //end---------- 
-       
     chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(){});
 });
 //end----------------------------------------
@@ -225,6 +224,7 @@ chrome.sockets.udp.create({}, function(createInfo){
 var requestRecvCallback = function(obj){
     if(obj.socketId !== reqSocketId){ return; }
     console.log("OWN: Message broadcast request received");
+    console.log(ips);
     for(var i in ips){
         chrome.sockets.udp.send(obj.socketId, obj.data, ips[i], msg_port, function(sendInfo) {
             console.log('OWN: sent done to ' + ips[i] + ": " + sendInfo.resultCode);
