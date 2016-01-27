@@ -89,7 +89,7 @@ function getGroupList(){
     const dest_t = i + 1000; //time to wait
     while(i < dest_t){ i = Date.now(); }
 };
-//end----------------------------------------d
+//end----------------------------------------
 
 //TODO
 //load group information (including whether stored on storage or not)
@@ -138,6 +138,8 @@ var receiveJoinRequestCallback = function(info){
     var new_usr = new Member(recv_usr.id$1, recv_usr.number$1, new RegistrationItem(recv_usr.regItem$1.name$1, recv_usr.regItem$1.email$1));
     current_group.addMember(new_usr);
     Env().onGroupUpdateListener.callAllCallback(current_group);
+    var notify_msg = new Message(0, new Member('admin', 15, new RegistrationItem('☆ system message', 'email')), ""+ new Date(), new_usr.regItem.name + " has joined!", null, false)
+    Env().onSendMessageListener.callAllCallback(notify_msg);
     //TODO
     //send new group info to all users (use info.socketId)
 };
