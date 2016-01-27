@@ -218,6 +218,11 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
             $scope.group = group
         });
     });
+    
+    Env().onErrorOccurredListener.addCallback(function(e){
+      if(e.code !== 'byte-size-null'){ return; }
+      ngDialog.open({template: 'nullMessageDialog'});
+    });
 
     // メッセージのクリックリスナーをそのまま環境のクリックリスナーに設定
     $scope.onClickMessageListener = Env().onClickMessageListener;
