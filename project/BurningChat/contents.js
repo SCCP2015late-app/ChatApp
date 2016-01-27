@@ -29,7 +29,7 @@
 
     $scope.group = null; // group
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
-         $scope.group = updatedGroup;
+      $scope.group = updatedGroup;
     });
 
     // ユーザ登録情報
@@ -44,7 +44,6 @@
     // ツール開閉ボタンのクリック
     $scope.onToolClick = function() {
       if($scope.you === null) {
-        console.log('scope.you === null');
         return;
       }
 
