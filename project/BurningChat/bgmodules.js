@@ -153,9 +153,6 @@ var receiveJoinRequestCallback = function(info){
         current_group.addMember(new_usr);
         Env().onGroupUpdateListener.callAllCallback(current_group);
         var notify_msg = new Message(0, new Member('admin', 15, new RegistrationItem('☆ system message', 'email')), ""+ new Date(), new_usr.regItem.name + " has joined!", null, false)
-        var i = Date.now();
-    const dest_t = i + 1000; //time to wait
-    while(i < dest_t){ i = Date.now(); }
         Env().onSendMessageListener.callAllCallback(notify_msg);
     } else {
         console.log("OWN: " + info.remoteAddress + " has left!");
@@ -256,10 +253,10 @@ chrome.sockets.udp.create({}, function(createInfo){
 var requestRecvCallback = function(obj){
     if(obj.socketId !== reqSocketId){ return; }
     console.log("OWN: Message broadcast request received");
-    for(var i in ips){
-        chrome.sockets.udp.send(obj.socketId, obj.data, ips[i], msg_port, function(sendInfo) {
-            console.log('OWN: sent done to ' + ips[i] + ": " + sendInfo.resultCode);
-        });
+    console.log(ips);
+    for(var i = 0; i < ips.length; i++){
+        chrome.sockets.udp.send(obj.socketId, obj.data, ips[i], msg_port, function(){});
+        console.log('OWN: sent done to ' + ips[i]);
     }           
 };
 //end----------------------------------------
@@ -282,10 +279,10 @@ Env().onExitGroupListener.addCallback(function(info){
             owner_ip, join_req_port, function(sendInfo) {
                 console.log('USR: Exit request was sent: ' + sendInfo.resultCode);
                 console.log("USR: You exit group, " + current_group.name);
+                current_group = null;
                 chrome.sockets.udp.close(createInfo.socketId, function(){});
             });
         });
     });
-    current_group = null;
 });
 //end-----------
