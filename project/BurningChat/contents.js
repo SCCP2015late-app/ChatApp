@@ -153,7 +153,9 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     Env().onLoadUserListener.addCallback(function(user) {
 
       $scope.you = user;
-      $scope.mode = $scope.MODES.TOP;
+      if(app_mode === modes.USER) {
+        modeChange(modes.TOP);
+      }
     });
 
     // グループ選択時のリスナー
