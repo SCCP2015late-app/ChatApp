@@ -134,8 +134,9 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
     $scope.groups = [];
 
     Env().onGetGroupListListener.addCallback(function(groups){
-      $scope.groups = groups;
-
+      $scope.$apply(function(){
+        $scope.groups = groups;
+      });
     });
 
     Env().onGroupUpdateListener.addCallback(function(updatedGroup) {
@@ -160,9 +161,10 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
       ngDialog.open({template: 'groupDetailDialog',controller: ['$scope', function($scope) {
         $scope.group = selectedGroup;
         $scope.you = getYou();
-        $scope.onJoinGroup = function(group) {
+        $scope.onJoinGroup = function(group, you) {
           console.log("Join: " + group.name + "@" + group.id);
-          Env().onJoinGroupListener.callAllCallback({'group': group, 'member': $scope.you});
+          console.log(group);
+          Env().onJoinGroupListener.callAllCallback({'group': group, 'member': you});
 //close Group Dialog
           ngDialog.close($scope.groupDetailDialog);
         };
@@ -210,8 +212,10 @@ Env().onUpdateRegistrationItemListener.addCallback(function(new_you){
 
     // メッセージが内部で追加された時にタイムラインを更新
     Env().onUpdateMessageListener.addCallback(function(message) {
-        console.log("ALL: internal message_list updated")
-        $scope.group.addMessage(message);
+        console.log("ALL: internal message_list updated");
+        $scope.$apply(function(){
+          $scope.group.addMessage(message);
+        });
     });
 
     // メッセージのクリックリスナーをそのまま環境のクリックリスナーに設定

@@ -14,22 +14,18 @@ const group_info = 'group_info';
 //end----------------------------------------
 
 //get internal IP address, and calculate other info
-var msg_count = 0;
-var your_ip = '0.0.0.0';
+var your_ip;
 var your_id;
 var your_num;
 var you;
 var current_group;
 var exist_groups;
-var owner_ip = '0.0.0.0';
-var ips = [];
-var reqSocketId;
-var msgSocketId;
-var joinSocketId;
+var owner_ip;
+var ips;
+var reqSocket;
+var msgSocket;
 chrome.system.network.getNetworkInterfaces(function(ipinfo){
     your_ip = ipinfo[1].address;
-    console.log("ALL: your IP: " + your_ip);
-    ips.push(your_ip);
     your_id = CryptoJS.MD5(your_ip) + (new Date).getTime();
     your_num = parseInt(your_ip.split(".")[3]);
     you = new Member(your_id, your_num, new RegistrationItem("John Doe", "yahoo@gmail.com"));
@@ -40,10 +36,10 @@ chrome.system.network.getNetworkInterfaces(function(ipinfo){
 chrome.storage.local.get(your_info, function(obj){
     var stored_you = obj.your_info;
     if(stored_you == undefined){
-        console.log("!!!: You are not registered !");
+        console.log("! You are not registered !");
         return;
     }else{
-        console.log("ALL: Loaded your Information:");
+        console.log("Loaded your Information:");
         console.log(stored_you);
         
         const id = stored_you.id$1;
@@ -57,12 +53,12 @@ chrome.storage.local.get(your_info, function(obj){
 
 //callback - create new_user and store it
 Env().onSetRegistrationItemListener.addCallback(function(info){
-    console.log("ALL: your IPv4 address: " + your_ip);
+    console.log("your IPv4 address: " + your_ip);
     you = new Member(your_id, your_num, info);
-    console.log("ALL: New your info: " + you);
+    console.log("New your info: " + you);
     chrome.storage.local.set({your_info: you}, function(){});
     chrome.storage.local.get(your_info, function(obj){
-        console.log("ALL: Storing completed:");
+        console.log("Storing completed:");
         console.log(obj.your_info);
     });
     Env().onLoadUserListener.callAllCallback(you);
@@ -75,12 +71,8 @@ function getGroupList(){
     var r = new XMLHttpRequest();
     r.open('GET', server_url + '/groupList');
     r.addEventListener("load", function(obj){
-        if(JSON.parse(obj["target"]["response"])["message"][0] == 'S'){
-            console.log("ALL: Empty group list on server");
-            return;
-        };
         exist_groups = JSON.parse(JSON.parse(obj["target"]["response"])["message"]);
-        console.log("ALL: Get groups from server:");
+        console.log("Get groups from server:");
         console.log(exist_groups);
         Env().onGetGroupListListener.callAllCallback(exist_groups);
     });
@@ -91,14 +83,13 @@ function getGroupList(){
 };
 //end----------------------------------------d
 
-//TODO
-//load group information (including whether stored on storage or not)
+//TODO load group information (including whether stored on storage or not)
 function loadGroupFromStorage(){
+    
 };
 //end----------------------------------------
 
-//TODO
-//callback function - save received group info to variable
+//TODO callback function - save received group info to variable
 var receiveGroupCallback = function(info){
 };
 //end----------------------------------------
@@ -106,11 +97,7 @@ var receiveGroupCallback = function(info){
 //callback - send join request and save group data to variables
 Env().onJoinGroupListener.addCallback(function(info){
     owner_ip = info['group']['owner']['ip_addr'];
-    current_group = group_JSON2scala(info['group']);
-    //TODO
-    //receiveGroupCallbackの実装が終わり次第削除, json2scalaはownerがおかしくなるので変更
     Env().onGroupUpdateListener.callAllCallback(group_JSON2scala(info['group']));
-    //end----------
     chrome.sockets.udp.create({}, function(createInfo) {
         chrome.sockets.udp.onReceive.addListener(receiveGroupCallback);
         chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_port,
@@ -118,9 +105,8 @@ Env().onJoinGroupListener.addCallback(function(info){
             chrome.sockets.udp.send(createInfo.socketId,
             string_to_buffer(JSON.stringify(info['member'])),
             owner_ip, join_req_port, function(sendInfo) {
-                console.log('USR: Join request was sent: ' + sendInfo.resultCode);
-                console.log("USR: You joined group, " + current_group.name);
-                console.log('USR: Owner\'s IP: ' + owner_ip);
+                console.log('Join request was sent: ' + sendInfo.resultCode);
+                console.log('Owner\'s IP: ' + owner_ip);
                 chrome.sockets.udp.close(createInfo.socketId, function(){});
             });
         });
@@ -128,25 +114,14 @@ Env().onJoinGroupListener.addCallback(function(info){
 });
 //end----------------------------------------
 
-//TODO
-//callback function - process join request
-var receiveJoinRequestCallback = function(info){
-    if(info.socketId !== joinSocketId){ return; }
-    ips.push(info.remoteAddress);
-    var recv_usr = JSON.parse(buffer_to_string(info.data));
-        console.log("OWN: " + recv_usr.regItem$1.name$1 + "("+ info.remoteAddress + ") has joined");
-    var new_usr = new Member(recv_usr.id$1, recv_usr.number$1, new RegistrationItem(recv_usr.regItem$1.name$1, recv_usr.regItem$1.email$1));
-    current_group.addMember(new_usr);
-    Env().onGroupUpdateListener.callAllCallback(current_group);
-    //TODO
-    //send new group info to all users (use info.socketId)
+//TODO callback function - process join request
+var receiveJoinRequestCallback = function(info){  
 };
 //end----------------------------------------
 
 //FOR OWNER - join request receiver
 function activateJoinRequestReceiver(){
     chrome.sockets.udp.create({}, function(createInfo) {
-        joinSocketId = createInfo.socketId;
         chrome.sockets.udp.onReceive.addListener(receiveJoinRequestCallback);
         chrome.sockets.udp.bind(createInfo.socketId, your_ip, join_req_port, function(){});
     });
@@ -156,7 +131,7 @@ function activateJoinRequestReceiver(){
 //FOR OWNER - callback - create new group
 Env().onCreateNewGroupListener.addCallback(function(newGroup){
     current_group = newGroup;
-    owner_ip = your_ip;
+    console.log("Created new group: " + current_group.name + " by " + current_group.owner.regItem.name);
     notifyGroupCreationToServer(current_group);
     Env().onGroupUpdateListener.callAllCallback(newGroup);
 });
@@ -180,62 +155,129 @@ function notifyGroupCreationToServer(newGroup){
     r.addEventListener("load", function(info){ 
         obj['id'] = JSON.parse(info["target"]["response"])["message"];
         current_group = group_JSON2scala(obj);
-        console.log("OWN: created new Group:");
+        console.log("New Group:");
         console.log(current_group);
     });
     r.send(JSON.stringify(obj));
 };
+
+function sendMessage(messageJson){
+  udpapi = chrome.sockets.udp;
+  
+  udpapi.create({}, function(createInfo) {
+    udpapi.getInfo(createInfo.socketId, function(info){
+      console.log(info);
+    });
+    udpapi.onReceive.addListener(function(recv){
+        
+    });
+      
+    udpapi.bind(createInfo.socketId, your_ip, join_port, function(result) {
+      
+      console.log("bytesize: " + string_to_buffer(messageJson).byteLength);
+      
+      udpapi.send(
+        createInfo.socketId,
+        string_to_buffer(messageJson),
+        owner_ip,
+        join_req_port,
+        function(sendInfo){
+          udpapi.close(createInfo.socketId, function(){});
+        });
+    });
+  });
+}
 //end----------------------------------------
 
 //new member participation notification
 //Env().onGroupUpdateListener.callAllCallback(updatedGroup)
 
-//callback - add received message object, and notify 
-var msgObjectreceiveCallback = function(obj){
-    if(obj.socketId !== msgSocketId){ return; }
-    console.log("ALL: Message received:");
-    var msg = JSON.parse(buffer_to_string(obj.data));
-    var _msg = new Message(msg_count++/*msg.id$1*/, new Member(msg.member$1.id$1, msg.member$1.number$1, new RegistrationItem(msg.member$1.regItem$1.name$1, msg.member$1.regItem$1.email$1)), msg.date$1, msg.body$1, msg.image$1, msg.flag$1);
-    console.log(_msg);
-    current_group.addMessage(_msg);
-    Env().onUpdateMessageListener.callAllCallback(_msg);
-};
-//end----------------------------------------
-
-//FOR ALL USER - message receiver and register callback to listener
-chrome.sockets.udp.create({}, function(createInfo){
-    msgSocketId = createInfo.socketId;
-    chrome.sockets.udp.onReceive.addListener(msgObjectreceiveCallback);
+/* global onUpdateMessageListener */
+//massageを受け取ってjsonにしてownerになげる
+Env().onSendMessageListener.addCallback(function(message){
+    var msg = {
+        　"u_id": message.id,
+        　"u_name": message.member.regItem.name,
+        　"date": Date.now(),
+        　"body": message.body,
+        　"image": message.image, 
+        　"flag": message.flag,//画像添付の判別
+    };
     
-    //callback - send message_request to owner
-    Env().onSendMessageListener.addCallback(function(message){
-        var msg = JSON.stringify(message);
-        chrome.sockets.udp.send(msgSocketId, string_to_buffer(msg), owner_ip, msg_req_port, function(result){
-            console.log("ALL: Message request was sent: " + result.resultCode);
-        });
-    });
-    //end---------- 
-       
-    chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(){});
-});
-//end----------------------------------------
+    sendMessage(JSON.stringify(msg));
 
-//callback - throw message to all group users
+    // if(message.flag==false){
+    //     json_text = JSON.stringify(msg);
+    //     //chrome.sockets.udp.bind(msgSocket, your_ip, msg_port, function(result){
+    //       // chrome.sockets.udp.send(msgSocket, string_to_buffer(json_text), owner_ip, msg_req_port, function(){});
+    //     //});
+         
+        
+    // } else {
+    //     msg["flag"] = true;
+    //     msg["image"] = message.image;
+    //     var json_text = JSON.stringify(msg);
+    //     //オーナーに送信処理
+    //     //chrome.sockets.udp.bind(msgSocket, your_ip, msg_req_port, function(result){
+    //       chrome.sockets.udp.send(msgSocket, string_to_buffer(json_text), owner_ip, msg_req_port,function(){});
+    //     //});
+    // }
+});
+
+var msgObjectreceiveCallback = function(obj){
+        console.log(obj.socketId + " : " + buffer_to_string(obj.data));
+        var msgobj = JSON.parse(buffer_to_string(obj.data));
+           var message = msgobj["body"];
+           Env().onUpdateMessageListener.addCallback(message);
+           current_group.addMessage(message);
+};    /*
+chrome.sockets.udp.create({}, function(createInfo) {
+        msgSocket = createInfo.socketId;
+        chrome.sockets.udp.onReceive.addListener(msgObjectreceiveCallback);
+	    chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(result){})
+});
+*/
+/*function updateMsgList(msg){
+    var message = msg["body"];
+    Env().onUpdateMessageListener.addCallback(message);
+}*/
+
+function sendGroupInfo(){
+    var group_info = jsonizeGroupInfo();
+    sendTo(dest_IP, group_info);
+}
+
+function sendMsgList(){
+    var msg_list = jsonizeMessages();
+    sendTo(dest_IP, msg_list);
+}
+
 var requestRecvCallback = function(obj){
-    if(obj.socketId !== reqSocketId){ return; }
-    console.log("OWN: Message broadcast request received");
-    for(var i in ips){
-        chrome.sockets.udp.send(obj.socketId, obj.data, ips[i], msg_port, function(sendInfo) {
-            console.log('OWN: sent done to ' + ips[i] + ": " + sendInfo.resultCode);
-        });
+    var msg = JSON.parse(buffer_to_string(obj.data));
+    //objはudp通信で受け取ったデータ(obj.dataで中身を取り出す)
+    console.log(obj.data);
+    for(var prop in ips){
+            chrome.sockets.udp.bind(reqSocket, your_ip, msg_port, function(){
+                 chrome.sockets.udp.send(createInfo.socketId, string_to_buffer(JSON.stringify(msg)), ips[prop], msg_port, function(sendInfo) {
+                     console.log('sent done: ' + sendInfo.resultCode);
+                     chrome.sockets.udp.close(createInfo.socketId, function(){});
+                 });
+            });
     }           
 };
-//end----------------------------------------
-
-//FOR OWNER - message broadcast request receiver
+/*
 chrome.sockets.udp.create({}, function(createInfo) {
-    reqSocketId = createInfo.socketId;
+        //chrome.socketsに監視してもらうcallbackの追加
+        reqSocket = createInfo.socketId;
     chrome.sockets.udp.onReceive.addListener(requestRecvCallback);
-    chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(){});
+            //socketのbind
+         chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_req_port, function(){
+         });
 });
-//end----------------------------------------
+*/
+
+function modifyUserInfo(){
+    //ユーザ情報の変更
+    //reg itemをもとにuser informationのJSONを変更してファイルに書き込む
+    //Listenerを叩いてフロントに変更を伝える
+}
