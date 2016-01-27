@@ -2,8 +2,8 @@
 //chrome.storage.local.clear();
 
 //constants for all_users
-//const server_url = 'http://192.168.222.19:19810';
 const server_url = 'http://192.168.222.19:19810';
+//const server_url = 'http://127.0.0.1:19810';
 const msg_port = 22222;
 const msg_req_port = 29999;
 const join_port = 44444;
@@ -134,7 +134,7 @@ var receiveJoinRequestCallback = function(info){
     if(info.socketId !== joinSocketId){ return; }
     ips.push(info.remoteAddress);
     var recv_usr = JSON.parse(buffer_to_string(info.data));
-        console.log("OWN: " + recv_usr.regItem$1.name$1 + "("+ info.remoteAddress + ") has joined");
+    console.log("OWN: " + recv_usr.regItem$1.name$1 + "("+ info.remoteAddress + ") has joined");
     var new_usr = new Member(recv_usr.id$1, recv_usr.number$1, new RegistrationItem(recv_usr.regItem$1.name$1, recv_usr.regItem$1.email$1));
     current_group.addMember(new_usr);
     Env().onGroupUpdateListener.callAllCallback(current_group);
@@ -198,7 +198,8 @@ var msgObjectreceiveCallback = function(obj){
     var _msg = new Message(msg_count++/*msg.id$1*/, new Member(msg.member$1.id$1, msg.member$1.number$1, new RegistrationItem(msg.member$1.regItem$1.name$1, msg.member$1.regItem$1.email$1)), msg.date$1, msg.body$1, msg.image$1, msg.flag$1);
     console.log(_msg);
     current_group.addMessage(_msg);
-    Env().onUpdateMessageListener.callAllCallback(_msg);
+    //Env().onGroupUpdateListener.callAllCallback(current_group);
+    Env().onUpdateMessageListener.callAllCallback(current_group);
 };
 //end----------------------------------------
 
@@ -215,7 +216,6 @@ chrome.sockets.udp.create({}, function(createInfo){
         });
     });
     //end---------- 
-    
     chrome.sockets.udp.bind(createInfo.socketId, your_ip, msg_port, function(){});
 });
 //end----------------------------------------
