@@ -218,6 +218,10 @@ function notifyGroupCreationToServer(newGroup){
 var msgObjectreceiveCallback = function(obj){
     if(obj.socketId !== msgSocketId){ return; }
     console.log("ALL: Message received:");
+    if(obj.data.byteLength === 4096) {
+      Env().onErrorOccurredListener.callAllCallback({code: 'byte-size-null'});
+      return;
+    }
     var msg = JSON.parse(buffer_to_string(obj.data));
     var _msg = new Message(msg_count++/*msg.id$1*/, new Member(msg.member$1.id$1, msg.member$1.number$1, new RegistrationItem(msg.member$1.regItem$1.name$1, msg.member$1.regItem$1.email$1)), msg.date$1, msg.body$1, msg.image$1, msg.flag$1);
     console.log(_msg);
