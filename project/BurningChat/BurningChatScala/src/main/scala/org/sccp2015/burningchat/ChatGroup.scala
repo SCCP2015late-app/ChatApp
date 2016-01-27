@@ -17,6 +17,11 @@ case class ChatGroup(@(JSExport @field) id: Int, @(JSExport @field) name: String
   def addMember(member: Member): Unit = {
     memberArray = memberArray :+ member
   }
+
+  @JSExport
+  def removeMember(member: Member): Unit = {
+    memberArray = memberArray.filter(_.equals(member))
+  }
 }
 
 @JSExport("RegistrationItem")
